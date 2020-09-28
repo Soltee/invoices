@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\User;
 use Auth;
-
 
 use Inertia\Inertia;
 
@@ -25,6 +25,7 @@ class ClientController extends Controller
             'search'    => request()->search,
             'clients'   => Auth::user()->clients()
                             ->withCount('projects')
+                            ->withCount('invoices')
                             // ->orderByName()
                             ->filter(request()->only('search'))
                             ->paginate(2)
@@ -33,7 +34,9 @@ class ClientController extends Controller
                                     'id'        => $client->id,
                                     'name'      => $client->first_name . ' ' . $client->last_name,
                                     'email'     => $client->email,
-                                    'projects'  => $client->projects->count()
+                                    'projects'  => $client->projects_count,
+                                    'invoices'   => $client->invoices_count,
+                                    'created'   => $client->created_at
                                 ];
                             }),
                 // 'create_url' => URL::route('users.create'),
@@ -47,7 +50,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Clients/Create');
     }
 
     /**
@@ -58,7 +61,34 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    	// dd($request->all());
+    	$data = $request->validate([
+    			'first_name'       => 'required|string|min:3|unique:clients',
+    			'last_name'        => 'required|string|min:3',
+    			'email'            => 'required|string|email|unique:clients',
+    			'gender'           => 'required|string',
+    			'project_name'     => 'required|string|min:3',
+    			'amount'           => 'required|numeric',
+    		]);
+
+
+    	//Create a client;
+    	$client   = new Client();
+    	$client->user_id         = Auth::user()->id;
+    	$client->first_name      = $data['first_name'];
+    	$client->last_name       = $data['last_name'];
+    	$client->email           = $data['email'];
+    	$client->gender          = $data['gender'];
+    	$client->save();
+
+    	//Create Project
+    	$client->projects()->create([
+    			'user_id'            => Auth::user()->id,
+    			'name'       => $data['project_name'],
+    			'amount'             => $data['amount']
+    		]);
+
+    	return redirect()->route('client.create')->with('success', 'Client added to the list.');
     }
 
     /**

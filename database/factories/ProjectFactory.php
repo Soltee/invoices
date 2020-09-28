@@ -31,7 +31,7 @@ class ProjectFactory extends Factory
             'user_id'       => $user,
             'client_id'     => $client,
             'name'          => $this->faker->name,
-            'price'         => $this->faker->numberBetween(1000, 5000),
+            'amount'        => $this->faker->numberBetween(1000, 5000),
             'is_completed'  => function(){
                 return Arr::random([true, false]);
             }

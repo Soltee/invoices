@@ -31,9 +31,9 @@ class InvoiceFactory extends Factory
         $project  = Arr::random(Project::inRandomOrder()->pluck('id')->toArray());
 
         $project_for_price = Project::findOrfail($project);
-        $price             = $project_for_price->price;
+        $amount            = $project_for_price->amount;
         $discount          = $this->faker->numberBetween(0, 400);
-        $grand             = $price + $discount;
+        $grand             = $amount + $discount;
         return [
             'user_id'              => $user,
             'client_id'            => $client,
@@ -53,7 +53,7 @@ class InvoiceFactory extends Factory
                         now()->subDays(Arr::random([10, 15, 18, 20, 24, 32, 40, 50, 44]))
                     ]);
             },
-            'sub_total'            => $price,
+            'sub_total'            => $amount,
             'discount'             => $discount,
             'grand_total'          => $grand,
             'created_at'           => function(){

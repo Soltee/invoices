@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->foreignId('user_id')->constraint();
             $table->foreignId('client_id')->constraint();
             $table->string('name');
-            $table->integer('price');
+            $table->integer('amount');
             $table->boolean('is_completed')->default(false);
             $table->timestamps();
         });

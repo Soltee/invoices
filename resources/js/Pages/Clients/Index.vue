@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-white rounded shadow mt-6 p-2">
+	<div class="bg-white rounded shadow mt-6 px-3 py-3">
 	    <div class="mb-6 flex justify-between items-center">
 	      <input class="px-3 py-3 rounded border border-indigo-500 focus:border-indigo-600" v-model="keyword"  />
 	      
@@ -16,6 +16,10 @@
 	                        <th
 	                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
 	                            Projects
+	                        </th>
+	                        <th
+	                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
+	                            Invoices
 	                        </th>
 	                        <th
 	                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
@@ -44,13 +48,18 @@
 	                            </p>
 	                        </td>
 	                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
+	                            <p class="text-gray-900 whitespace-no-wrap">
+	                                {{ 	client.invoices }}
+	                            </p>
+	                        </td>
+	                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 	                            <p class="text-gray-900 whitespace-no-wrap"> {{ client.name }}</p>
 	                        </td>
 	                         <td class="px-5 whitespace-no-wrap py-3 border-b border-gray-200 bg-white text-sm">
 	                            <p class="text-gray-900 whitespace-no-wrap">{{ client.email }}</p>
 	                        </td>
 	                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-	                            <p class="text-gray-900 whitespace-no-wrap">{{ client.created_at }}</p>
+	                            <p class="text-gray-900 whitespace-no-wrap">{{ format(client.created) }}</p>
 	                        </td>
 	                        
 	                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
@@ -97,6 +106,7 @@
     import AppLayout from './../../Layouts/AppLayout'
 	import Pagination from './../../Shared/Pagination'
 	import throttle from 'lodash/throttle'
+	var dayjs = require('dayjs')
 
 	export default {
 		layout  : AppLayout,
@@ -124,6 +134,9 @@
 			reset() {
 		      	this.keyword  = '';
 		    },
+		    format(date){
+		    	return dayjs(date).format('ddd, MMM D, YYYY h:mm A');
+		    }
 		}
 	};
 </script>

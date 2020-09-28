@@ -36,6 +36,11 @@ class Client extends Model
         return $this->hasMany(Project::class);
     }
 
+    public function invoices(){
+        return $this->hasMany(Invoice::class);
+    }
+
+
     public function user(){
     	return $this->belongsTo(User::class);
     }
