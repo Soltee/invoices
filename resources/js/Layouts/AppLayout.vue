@@ -17,6 +17,9 @@
                             <jet-nav-link href="/dashboard" :active="$page.currentRouteName == 'dashboard'">
                                 Dashboard
                             </jet-nav-link>
+                            <jet-nav-link href="/clients" :active="$page.currentRouteName == 'clients'">
+                                Clients
+                            </jet-nav-link>
                         </div>
                     </div>
 
@@ -190,7 +193,7 @@
         </header>
 
         <!-- Page Content -->
-        <main>
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <slot></slot>
         </main>
 
