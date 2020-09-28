@@ -2,10 +2,20 @@
 	<div class="bg-white rounded shadow mt-6 px-3 py-3">
 	    <div class="mb-6 flex justify-between items-center">
 	      <input class="px-3 py-3 rounded border border-indigo-500 focus:border-indigo-600" v-model="keyword"  />
-	      
-	      <inertia-link class="btn-indigo" href="/clients/create" preserve-scroll>
-	        <span class="px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded">New</span>
-	      </inertia-link>
+	      	
+	      	<div class="flex items-center">
+	      		<transition name="fade">
+					<div v-if="$page.flash.success" id="Message" class=" mr-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
+
+			        	<span class="mr-3">{{ $page.flash.success }}</span>
+
+			        </div>
+
+			    </transition>
+		        <inertia-link class="btn-indigo" href="/clients/create" preserve-scroll>
+		            <span class="px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded">New</span>
+		        </inertia-link>
+	      	</div>
 	    </div>
 
 		<div  class=" overflow-x-auto">
@@ -64,7 +74,7 @@
 	                        
 	                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
 	                            <div class="flex justify-end items-center">
-	                                <a 
+	                                <a 	:href="`/clients/${client.id}-${client.name}`"
 	                                    class="hover:font-semibold" 
 	                                     >
 	                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-900 hover:opacity-75"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -72,11 +82,42 @@
 
 	                             
 
-	                                <div 
+	                                <div @click="toggleDeleteModal();"
 	                                    class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer">
 	                                             
 	                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete text-red-600 hover:text-red-500 ml-3"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
 	                                </div>
+
+	                                <transition name="fade">
+	                                	<div 
+											v-if="deleteModal"
+											class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+										        <div @click="toggleDeleteModal();" class="h-full w-full bg-gray-300" >
+										            
+										    	</div>
+											<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
+												<div class="text-right">
+											            <button @click="toggleDeleteModal();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
+											                <svg   width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75 fill-current text-gray-900">
+											                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+											                </svg>
+											            </button>
+
+											        </div>
+											        <div class="">
+											            <p class="mt-4 text-lg font-semibold text-green-800 text-center">Are you sure?</p>
+											            <div class="mt-6 mb-3 flex justify-end">
+											                <button @click="toggleDeleteModal();" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
+											                <button @click="deleteClient(client.id);" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Delete</button>
+											            </div>
+											    </div>
+
+										    </div>
+
+										</div>
+
+
+	                                </transition>
 
 	                            </div>
 	                        </td>
@@ -119,7 +160,9 @@
 		},
 		data (){
 			return {
+				processing : false,
         		keyword: this.search,
+        		deleteModal:false
 			}
 		},
 		watch: {
@@ -136,6 +179,17 @@
 		    },
 		    format(date){
 		    	return dayjs(date).format('ddd, MMM D, YYYY h:mm A');
+		    },
+		    toggleDeleteModal(){
+		    	this.deleteModal = !this.deleteModal;
+		    },
+		    deleteClient(id){
+		    	this.$inertia.delete(`/clients/${id}`, {
+			        onStart: () => this.processing = true,
+			        onFinish: () => {
+			        		this.processing = false;
+			        	},
+			    });
 		    }
 		}
 	};

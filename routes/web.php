@@ -21,9 +21,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 								->name('clients');
 	Route::get('/clients/create', [ClientController::class, 'create'])
 								->name('client.create');
-	Route::get('/clients/{client}', [ClientController::class, 'show'])
+	Route::get('/clients/{client}-{name}', [ClientController::class, 'show'])
 								->name('client.show');
 	Route::post('/clients', [ClientController::class, 'store'])
 								->name('client.store');
+	Route::delete('/clients/{delete}', [ClientController::class, 'destroy'])
+								->name('client.destroy');
 
 });
