@@ -60,6 +60,34 @@ class ProjectController extends Controller
     }
 
     /**
+     * Update Project.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Project $project)
+    {
+        // dd($request->all());
+        $data = $request->validate([
+                'client'           => 'required|numeric',
+                'project_name'     => 'required|string|min:3|unique:projects',
+                'amount'           => 'required|numeric',
+            ]);
+
+        // dd($data);
+        $client = Client::findOrfail($data['client']);
+
+        //Create Project
+        $project->update([
+                'user_id'            => Auth::user()->id,
+                'name'               => $data['project_name'],
+                'amount'             => $data['amount']
+            ]);
+
+        return response()->json(['project' => $data], 200);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

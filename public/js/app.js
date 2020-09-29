@@ -4188,6 +4188,98 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4234,14 +4326,23 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
       search: false,
       searchData: [],
       searchErr: [],
-      selected: null,
-      gender: ['MALE', 'FEMALE']
+      selected: {},
+      editProjectModal: false
     };
   },
   watch: {
     keyword: function keyword() {
       this.searchEndpoint = "/clients/projects/".concat(this.client.id, "/search?keyword=").concat(this.keyword);
       this.searchProjects();
+    },
+    selected: function selected() {
+      if (this.editProjectModal) {
+        this.projectForm = {
+          client: this.client.id,
+          project_name: this.selected.name,
+          amount: this.selected.amount
+        };
+      }
     }
   },
   methods: {
@@ -4263,42 +4364,8 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
         _this.searchErr.push('Oops! Server error.');
       });
     },
-    createProject: function createProject() {
-      var _this2 = this;
-
-      this.processing = true; //Remove all errors
-
-      this.projectNameErr = [];
-      this.amountErr = []; //Post
-
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/clients/project", this.projectForm).then(function (res) {
-        _this2.processing = false;
-
-        if (res.status === 201) {
-          _this2.$swal("".concat(_this2.projectForm.project_name, " is created."));
-
-          _this2.projectForm = {
-            project_name: '',
-            amount: ''
-          };
-        }
-      })["catch"](function (err) {
-        _this2.processing = false;
-        var _err$response$data$er = err.response.data.errors,
-            project_name = _err$response$data$er.project_name,
-            amount = _err$response$data$er.amount;
-
-        if (project_name) {
-          _this2.projectNameErr = project_name;
-        }
-
-        if (amount) {
-          _this2.amountErr = amount;
-        }
-      });
-    },
     updateClient: function updateClient() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.processing = true; //Remove all errors
 
@@ -4308,18 +4375,67 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
       this.genderErr = []; //UPDATE
 
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.put("/clients/".concat(this.client.id), this.clientForm).then(function (res) {
-        _this3.processing = false;
+        _this2.processing = false;
 
         if (res.status === 200) {
-          _this3.$swal("".concat(_this3.clientForm.first_name, " is updated."));
+          _this2.$swal("".concat(_this2.clientForm.first_name, " is updated."));
 
-          _this3.clientForm = {
+          _this2.clientForm = {
             first_name: '',
             last_name: '',
             email: '',
             gender: ''
           };
-          _this3.editClientModal = false;
+          _this2.editClientModal = false;
+
+          _this2.$inertia.reload({
+            preserveScroll: true,
+            preserveState: false
+          });
+        }
+      })["catch"](function (err) {
+        _this2.processing = false;
+        var _err$response$data$er = err.response.data.errors,
+            first_name = _err$response$data$er.first_name,
+            last_name = _err$response$data$er.last_name,
+            email = _err$response$data$er.email,
+            gender = _err$response$data$er.gender;
+
+        if (first_name) {
+          _this2.firstNameErr = first_name;
+        }
+
+        if (last_name) {
+          _this2.lastNameErr = last_name;
+        }
+
+        if (email) {
+          _this2.emailErr = email;
+        }
+
+        if (gender) {
+          _this2.genderErr = gender;
+        }
+      });
+    },
+    createProject: function createProject() {
+      var _this3 = this;
+
+      this.processing = true; //Remove all errors
+
+      this.projectNameErr = [];
+      this.amountErr = []; //Post
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/clients/project", this.projectForm).then(function (res) {
+        _this3.processing = false;
+
+        if (res.status === 201) {
+          _this3.$swal("".concat(_this3.projectForm.project_name, " is created."));
+
+          _this3.projectForm = {
+            project_name: '',
+            amount: ''
+          };
 
           _this3.$inertia.reload({
             preserveScroll: true,
@@ -4329,39 +4445,36 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
       })["catch"](function (err) {
         _this3.processing = false;
         var _err$response$data$er2 = err.response.data.errors,
-            first_name = _err$response$data$er2.first_name,
-            last_name = _err$response$data$er2.last_name,
-            email = _err$response$data$er2.email,
-            gender = _err$response$data$er2.gender;
+            project_name = _err$response$data$er2.project_name,
+            amount = _err$response$data$er2.amount;
 
-        if (first_name) {
-          _this3.firstNameErr = first_name;
+        if (project_name) {
+          _this3.projectNameErr = project_name;
         }
 
-        if (last_name) {
-          _this3.lastNameErr = last_name;
-        }
-
-        if (email) {
-          _this3.emailErr = email;
-        }
-
-        if (gender) {
-          _this3.genderErr = gender;
+        if (amount) {
+          _this3.amountErr = amount;
         }
       });
     },
-    deleteProject: function deleteProject() {
+    updateProject: function updateProject() {
       var _this4 = this;
 
-      this.processing = true;
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("/clients/project/".concat(this.selected)).then(function (res) {
+      this.processing = true; //Remove all errors
+
+      this.projectNameErr = [];
+      this.amountErr = []; //PUt
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.put("/clients/projects/".concat(this.selected.id), this.projectForm).then(function (res) {
         _this4.processing = false;
 
-        if (res.status === 204) {
-          _this4.$swal("Project deleted.");
+        if (res.status === 200) {
+          _this4.$swal("".concat(_this4.projectForm.project_name, " is updated."));
 
-          _this4.deleteModal = false;
+          _this4.projectForm = {
+            project_name: '',
+            amount: ''
+          };
 
           _this4.$inertia.reload({
             preserveScroll: true,
@@ -4370,18 +4483,53 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
         }
       })["catch"](function (err) {
         _this4.processing = false;
+        var _err$response$data$er3 = err.response.data.errors,
+            project_name = _err$response$data$er3.project_name,
+            amount = _err$response$data$er3.amount;
 
-        _this4.$swal("Our server may have been a problem. Please try again.");
+        if (project_name) {
+          _this4.projectNameErr = project_name;
+        }
+
+        if (amount) {
+          _this4.amountErr = amount;
+        }
       });
     },
-    toggleDeleteModal: function toggleDeleteModal() {
-      this.deleteModal = !this.deleteModal;
+    deleteProject: function deleteProject() {
+      var _this5 = this;
+
+      this.processing = true;
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("/clients/project/".concat(this.selected.id)).then(function (res) {
+        _this5.processing = false;
+
+        if (res.status === 204) {
+          _this5.$swal("Project deleted.");
+
+          _this5.deleteModal = false;
+
+          _this5.$inertia.reload({
+            preserveScroll: true,
+            preserveState: false
+          });
+        }
+      })["catch"](function (err) {
+        _this5.processing = false;
+
+        _this5.$swal("Our server may have been a problem. Please try again.");
+      });
+    },
+    toggleEditClient: function toggleEditClient() {
+      this.editClientModal = !this.editClientModal;
     },
     toggleNewProjectModal: function toggleNewProjectModal() {
       this.newProjectModal = !this.newProjectModal;
     },
-    toggleEditClient: function toggleEditClient() {
-      this.editClientModal = !this.editClientModal;
+    toggleEditProjectModal: function toggleEditProjectModal() {
+      this.editProjectModal = !this.editProjectModal;
+    },
+    toggleDeleteModal: function toggleDeleteModal() {
+      this.deleteModal = !this.deleteModal;
     },
     format: function format(date) {
       return dayjs(date).format('ddd, MMM D, YYYY h:mm A');
@@ -33812,13 +33960,43 @@ var render = function() {
                                   },
                                   [
                                     _c(
+                                      "svg",
+                                      {
+                                        staticClass:
+                                          "text-yellow-600 hover:text-yellow-500 w-6 h-6 cursor-pointer hover:opacity-50",
+                                        attrs: {
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                          stroke: "currentColor",
+                                          "stroke-width": "2",
+                                          "stroke-linecap": "round",
+                                          "stroke-linejoin": "round"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.selected = project
+                                            _vm.toggleEditProjectModal()
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("path", {
+                                          attrs: {
+                                            d:
+                                              "M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
                                       "div",
                                       {
                                         staticClass:
                                           "flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer",
                                         on: {
                                           click: function($event) {
-                                            _vm.selected = project.id
+                                            _vm.selected = project
                                             _vm.toggleDeleteModal()
                                           }
                                         }
@@ -33960,13 +34138,43 @@ var render = function() {
                                   },
                                   [
                                     _c(
+                                      "svg",
+                                      {
+                                        staticClass:
+                                          "text-yellow-600 hover:text-yellow-500 w-6 h-6 cursor-pointer hover:opacity-50",
+                                        attrs: {
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                          stroke: "currentColor",
+                                          "stroke-width": "2",
+                                          "stroke-linecap": "round",
+                                          "stroke-linejoin": "round"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.selected = project
+                                            _vm.toggleEditProjectModal()
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("path", {
+                                          attrs: {
+                                            d:
+                                              "M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
                                       "div",
                                       {
                                         staticClass:
                                           "flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer",
                                         on: {
                                           click: function($event) {
-                                            _vm.selected = project.id
+                                            _vm.selected = project
                                             _vm.toggleDeleteModal()
                                           }
                                         }
@@ -34027,7 +34235,7 @@ var render = function() {
                     _vm._v(" "),
                     !_vm.search
                       ? _c("tr", [
-                          _vm.projects.length < 1
+                          _vm.projects.data.length < 1
                             ? _c("td", {}, [
                                 _c(
                                   "div",
@@ -34067,7 +34275,7 @@ var render = function() {
                     _vm._v(" "),
                     _vm.search
                       ? _c("tr", [
-                          _vm.searchData.length < 1
+                          _vm.searchData.data.length < 1
                             ? _c("td", {}, [
                                 _c(
                                   "div",
@@ -34158,6 +34366,268 @@ var render = function() {
               )
             : _vm._e()
         ])
+      ]),
+      _vm._v(" "),
+      _c("transition", { attrs: { name: "fade" } }, [
+        _vm.editProjectModal
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20"
+              },
+              [
+                _c("div", {
+                  staticClass: "h-full w-full bg-gray-300",
+                  on: {
+                    click: function($event) {
+                      return _vm.toggleEditProjectModal()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30"
+                  },
+                  [
+                    _c("div", { staticClass: "text-right" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: " cursor-pointer",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.toggleEditProjectModal()
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "hover:opacity-75 fill-current text-gray-900",
+                              attrs: {
+                                width: "18",
+                                height: "18",
+                                viewBox: "0 0 18 18"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "form",
+                      {
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.updateProject($event)
+                          }
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "mb-4 flex justify-between items-center"
+                            },
+                            [
+                              _c("div", { staticClass: "flex items-center" }, [
+                                _c(
+                                  "span",
+                                  { staticClass: "font-semibold text-md" },
+                                  [_vm._v("Edit Project")]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded",
+                                  attrs: { type: "submit" }
+                                },
+                                [
+                                  _c("span", { staticClass: "ml-2" }, [
+                                    _vm._v("Save")
+                                  ])
+                                ]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.processing
+                            ? _c("div", { staticClass: "spinner" })
+                            : _c(
+                                "div",
+                                { staticClass: "w-full  flex flex-col" },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "mb-6 flex flex-col" },
+                                    [
+                                      _c(
+                                        "label",
+                                        { attrs: { for: "project_name" } },
+                                        [_vm._v("Project name:")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.projectForm.project_name,
+                                            expression:
+                                              "projectForm.project_name"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "px-3 py-3 rounded border border-indigo-500",
+                                        attrs: {
+                                          id: "project_name",
+                                          type: "text"
+                                        },
+                                        domProps: {
+                                          value: _vm.projectForm.project_name
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.projectForm,
+                                              "project_name",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "mt-2" },
+                                        _vm._l(_vm.projectNameErr, function(
+                                          err
+                                        ) {
+                                          return _vm.projectNameErr.length > 0
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "text-red-500 text-md font-semibold mb-2"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n\t\t\t\t    \t\t\t\t\t\t" +
+                                                      _vm._s(err) +
+                                                      "\n\t\t\t\t    \t\t\t\t"
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        }),
+                                        0
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "mb-6 flex flex-col" },
+                                    [
+                                      _c(
+                                        "label",
+                                        { attrs: { for: "amount" } },
+                                        [_vm._v("Amount: ($)")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.projectForm.amount,
+                                            expression: "projectForm.amount"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "px-3 py-3 rounded border border-indigo-500",
+                                        attrs: { id: "amount", type: "number" },
+                                        domProps: {
+                                          value: _vm.projectForm.amount
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.projectForm,
+                                              "amount",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "mt-2" },
+                                    _vm._l(_vm.amountErr, function(err) {
+                                      return _vm.amountErr.length > 0
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "text-red-500 text-md font-semibold mb-2"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n\t\t\t    \t\t\t\t\t\t" +
+                                                  _vm._s(err) +
+                                                  "\n\t\t\t    \t\t\t\t"
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    }),
+                                    0
+                                  )
+                                ]
+                              )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("transition", { attrs: { name: "fade" } }, [
