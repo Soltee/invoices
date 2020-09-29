@@ -23,32 +23,27 @@ class ClientController extends Controller
     {
     	$search  = request()->search;
 
-    	if($search){
-    		return response()->json(['projects' => Project::where('name', 'LIKE', '%'. $search .'%')])->get();
-    	} else {
+        return Inertia::render('Clients/Index', [
+            'search'    => request()->search,
+            'clients'   => Auth::user()->clients()
+                            ->withCount('projects')
+                            ->withCount('invoices')
+                            // ->orderByName()
+                            ->filter(request()->only('search'))
+                            ->paginate(2)
+                            ->transform(function ($client) {
+                                return [
+                                    'id'        => $client->id,
+                                    'name'      => $client->first_name . '-' . $client->last_name,
+                                    'email'     => $client->email,
+                                    'projects'  => $client->projects_count,
+                                    'invoices'   => $client->invoices_count,
+                                    'created'   => $client->created_at
+                                ];
+                            }),
+                // 'create_url' => URL::route('users.create'),
+            ]);
 
-	        return Inertia::render('Clients/Index', [
-	            'search'    => request()->search,
-	            'clients'   => Auth::user()->clients()
-	                            ->withCount('projects')
-	                            ->withCount('invoices')
-	                            // ->orderByName()
-	                            ->filter(request()->only('search'))
-	                            ->paginate(2)
-	                            ->transform(function ($client) {
-	                                return [
-	                                    'id'        => $client->id,
-	                                    'name'      => $client->first_name . '-' . $client->last_name,
-	                                    'email'     => $client->email,
-	                                    'projects'  => $client->projects_count,
-	                                    'invoices'   => $client->invoices_count,
-	                                    'created'   => $client->created_at
-	                                ];
-	                            }),
-	                // 'create_url' => URL::route('users.create'),
-	            ]);
-
-	    }
     }
 
     /**
@@ -75,7 +70,7 @@ class ClientController extends Controller
     			'last_name'        => 'required|string|min:3',
     			'email'            => 'required|string|email|unique:clients',
     			'gender'           => 'required|string',
-    			'project_name'     => 'required|string|min:3',
+                'project_name'     => 'required|string|min:3|unique:projects',
     			'amount'           => 'required|numeric',
     		]);
 
@@ -111,9 +106,8 @@ class ClientController extends Controller
         $client = Client::findOrfail($id);
 
         return Inertia::render('Clients/Show', [
-            'search'    => request()->search,
             'client'    => $client,
-            'projects'  => $client->projects()->paginate(1)
+            'projects'  => $client->projects()->paginate(3)
             					->transform(function ($project) {
                                 return [
                                     'id'        => $project->id,
@@ -152,7 +146,7 @@ class ClientController extends Controller
     			'last_name'        => 'required|string|min:3',
     			'email'            => 'required|string|email|unique:clients',
     			'gender'           => 'required|string',
-    			'project_name'     => 'required|string|min:3',
+                'project_name'     => 'required|string|min:3|unique:projects',
     			'amount'           => 'required|numeric',
     		]);
 

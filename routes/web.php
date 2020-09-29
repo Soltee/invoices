@@ -1,16 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\ClientController;
+use App\Http\Controllers\Customer\DashboardController;
+use App\Http\Controllers\Customer\ProjectController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//     return Inertia\Inertia::render('Dashboard');
-// })->name('dashboard');
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
@@ -27,5 +25,12 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 								->name('client.store');
 	Route::delete('/clients/{delete}', [ClientController::class, 'destroy'])
 								->name('client.destroy');
+
+
+    //Projects Api
+	Route::get('/clients/projects/{client}/search', [ProjectController::class, 'index'])
+									->name('project.search');
+	Route::post('/clients/project', [ProjectController::class, 'store'])
+								->name('project.store');
 
 });
