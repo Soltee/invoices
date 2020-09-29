@@ -102,7 +102,7 @@
 
 			    	<div class="mb-6 flex flex-col"> 
 			    		<label for="amount">Amount: ($)</label>
-	    				<input id="amount" type="number" class="px-3 py-3 rounded border border-indigo-500" v-model="form.amount" />
+	    				<input id="amount" type="number" class="px-3 py-3 rounded border border-indigo-500" min="0" v-model="form.amount" />
 			    	</div>
 
 			    	<div 

@@ -82,12 +82,15 @@
 
 	                             
 
-	                                <div @click="toggleDeleteModal();"
+	                                <div @click="
+	                                	selected = client.id;
+	                                	toggleDeleteModal();"
 	                                    class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer">
 	                                             
 	                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete text-red-600 hover:text-red-500 ml-3"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
 	                                </div>
 
+	                                <!-- Confirm -->
 	                                <transition name="fade">
 	                                	<div 
 											v-if="deleteModal"
@@ -108,7 +111,7 @@
 											            <p class="mt-4 text-lg font-semibold text-green-800 text-center">Are you sure?</p>
 											            <div class="mt-6 mb-3 flex justify-end">
 											                <button @click="toggleDeleteModal();" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
-											                <button @click="deleteClient(client.id);" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Delete</button>
+											                <button @click="deleteClient();" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Delete</button>
 											            </div>
 											    </div>
 
@@ -162,7 +165,8 @@
 			return {
 				processing : false,
         		keyword: this.search,
-        		deleteModal:false
+        		deleteModal:false,
+        		selected : null,
 			}
 		},
 		watch: {
@@ -183,8 +187,8 @@
 		    toggleDeleteModal(){
 		    	this.deleteModal = !this.deleteModal;
 		    },
-		    deleteClient(id){
-		    	this.$inertia.delete(`/clients/${id}`, {
+		    deleteClient(){
+		    	this.$inertia.delete(`/clients/${this.selected}`, {
 			        onStart: () => this.processing = true,
 			        onFinish: () => {
 			        		this.processing = false;

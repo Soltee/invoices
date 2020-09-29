@@ -65,22 +65,11 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-    	
-    	// $client = Client::findOrfail($id);
 
-    	// $client->invoices()->each(function($invoice){
-     //    	$invoice->delete();
-     //    });
+        $project->delete();
 
-     //    $client->projects()->each(function($project){
-     //    	$project->delete();
-     //    });
-
-     //    $client->delete();
-
-
-     //    return redirect()->route('clients')->with('success', 'Client with projects deleted.');
+        return response()->json(['status' => 'Ok'], 204);
     }
 }

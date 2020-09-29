@@ -23,14 +23,15 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 								->name('client.show');
 	Route::post('/clients', [ClientController::class, 'store'])
 								->name('client.store');
-	Route::delete('/clients/{delete}', [ClientController::class, 'destroy'])
+	Route::put('/clients/{client}', [ClientController::class, 'update'])
+								->name('client.update');
+	Route::delete('/clients/{client}', [ClientController::class, 'destroy'])
 								->name('client.destroy');
 
 
     //Projects Api
-	Route::get('/clients/projects/{client}/search', [ProjectController::class, 'index'])
-									->name('project.search');
-	Route::post('/clients/project', [ProjectController::class, 'store'])
-								->name('project.store');
+	Route::get('/clients/projects/{client}/search', [ProjectController::class, 'index']);
+	Route::post('/clients/project', [ProjectController::class, 'store']);
+	Route::delete('/clients/project/{project}', [ProjectController::class, 'destroy']);
 
 });

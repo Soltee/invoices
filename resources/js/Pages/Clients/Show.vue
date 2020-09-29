@@ -2,17 +2,143 @@
 	<div class="bg-white rounded shadow mt-6 px-3 py-3">
 
 
-	    <div class="mb-6 flex flex-col ">
-	    	<div class="flex items-center">
-		        <inertia-link class="btn-indigo" href="/clients" preserve-scroll>
-		        	<div class="flex items-center">
-		        		
-		        		<span class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded"><</span>
-		        	</div>
+		<div class="mb-6 ">
+	    	<div class="flex justify-between items-center">
+		    	<div class="flex items-center">
+			        <inertia-link class="btn-indigo" href="/clients" preserve-scroll>
+			        	<div class="flex items-center">
+			        		
+			        		<span class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded"><</span>
+			        	</div>
 
-		        </inertia-link>
-		        <span class="ml-3 font-semibold text-md"> {{ client.first_name  }} {{ client.last_name }}</span>
+			        </inertia-link>
+			        <span class="ml-3 font-semibold text-md"> {{ client.first_name  }} {{ client.last_name }}</span>
 
+			    </div>
+
+			    <div>
+			    	<span 
+				        	@click="toggleEditClient();" 
+				        	class="px-3 py-2 cursor-pointer bg-yellow-600 hover:bg-yellow-500 text-white rounded">Edit</span>
+				    </span>
+
+				    <!-- Edit Client -->
+			        <transition name="fade">
+                    	<div 
+							v-if="editClientModal"
+							class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+					        <div @click="toggleEditClient();" class="h-full w-full bg-gray-300" >
+					            
+							<!-- editClientModal -->
+					    	</div>
+							<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
+								<div class="text-right">
+						            <button @click="toggleEditClient();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
+						                <svg   width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75 fill-current text-gray-900">
+						                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+						                </svg>
+						            </button>
+
+						        </div>
+
+						        <!--- Edit Form -->
+  								<form @submit.prevent="updateClient">
+							        <div>
+							        	<div class="mb-4 flex justify-between items-center">
+									    	<div class="flex items-center">
+										        	
+								        		<span class="ml-3 font-semibold text-md">Edit</span>
+
+										    </div>
+
+									        
+									        <button  type="submit" class="px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded">
+
+									      	    <span class="ml-2">Save</span>
+									        </button>
+
+									    </div>
+									    <div v-if="processing" class="spinner"></div>
+
+							        	<div v-else class="w-full  flex flex-col">
+									    	<div class="mb-6 flex flex-col"> 
+									    		<label for="first_name">First name:</label>
+							    				<input id="first_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="clientForm.first_name" />
+
+							    				<!-- Err -->
+							    				<div class="mt-2">
+							    				<div 
+							    					v-if="firstNameErr.length > 0"
+							    					v-for="err in firstNameErr" 
+							    					class="text-red-500 text-md font-semibold mb-2">
+							    						{{ err }}
+							    				</div>
+							    				</div>
+									    	</div>
+
+									    	<div class="mb-6 flex flex-col"> 
+									    		<label for="last_name">Last name:</label>
+							    				<input id="last_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="clientForm.last_name" />
+
+							    				<!-- Err -->
+							    				<div class="mt-2">
+							    				<div 
+							    					v-if="lastNameErr.length > 0"
+							    					v-for="err in lastNameErr" 
+							    					class="text-red-500 text-md font-semibold mb-2">
+							    						{{ err }}
+							    				</div>
+							    				</div>
+									    	</div>
+
+									    	<div class="mb-6 flex flex-col"> 
+									    		<label for="email">Email:</label>
+							    				<input id="email" type="email" class="px-3 py-3 rounded border border-indigo-500" v-model="clientForm.email" />
+									    	</div>
+
+									    	<!-- Err -->
+						    				<div class="mt-2">
+						    				<div 
+						    					v-if="emailErr.length > 0"
+						    					v-for="err in emailErr" 
+						    					class="text-red-500 text-md font-semibold mb-2">
+						    						{{ err }}
+						    				</div>
+						    				</div>
+
+						    				<div class="mb-6 flex flex-col"> 
+									    		<label for="gender">Gender:</label>
+											    <select v-model="clientForm.gender" class="border border-indigo-500 rounded w-full px-3 py-3 text-gray-900">
+									    			<option 
+									    			class="text-gray-800" disabled value="">Choose Gender</option>
+													<option value="MALE">MALE</option>
+													<option value="FEMALE">FEMALE</option>
+									    		</select>
+									    	</div>
+
+									    	<!-- Err -->
+						    				<div class="mt-2">
+						    				<div 
+						    					v-if="genderErr.length > 0"
+						    					v-for="err in genderErr" 
+						    					class="text-red-500 text-md font-semibold mb-2">
+						    						{{ err }}
+						    				</div>
+						    				</div>
+
+									    </div>
+
+
+							        </div>
+							    </form>
+
+						    </div>
+
+						</div>
+
+
+                    </transition>
+			    </div>
 		    </div>
 
 		    <div class="mt-4">
@@ -28,10 +154,6 @@
 
 		    	</div>
 
-		    	<div class="flex items-center">
-		    		<label class="w-24 mr-3">Invoices</label>
-
-		    	</div>
 		    </div>
 
 	    </div>
@@ -55,7 +177,7 @@
 			        
 			        <span 
 			        	@click="toggleNewProjectModal();" 
-			        	class="px-3 py-3 cursor-pointer bg-indigo-600 hover:bg-indigo-500 text-white rounded">New</span>
+			        	class="px-3 py-3 cursor-pointer bg-indigo-600 hover:bg-indigo-500 text-white rounded">New Project</span>
 			        </span> 
 
 
@@ -78,12 +200,12 @@
 						        </div>
 
 						        <!--- Form -->
-  								<form @submit.prevent="create">
+  								<form @submit.prevent="createProject">
 							        <div>
 							        	<div class="mb-4 flex justify-between items-center">
 									    	<div class="flex items-center">
 										        	
-								        		<span class="ml-3 font-semibold text-md">New Client</span>
+								        		<span class="font-semibold text-md">New Project</span>
 
 										    </div>
 
@@ -99,7 +221,7 @@
 							        	<div v-else class="w-full  flex flex-col">
 									    	<div class="mb-6 flex flex-col"> 
 									    		<label for="project_name">Project name:</label>
-							    				<input id="project_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="form.project_name" />
+							    				<input id="project_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="projectForm.project_name" />
 
 							    				<!-- Err -->
 							    				<div class="mt-2">
@@ -114,7 +236,7 @@
 
 									    	<div class="mb-6 flex flex-col"> 
 									    		<label for="amount">Amount: ($)</label>
-							    				<input id="amount" type="number" class="px-3 py-3 rounded border border-indigo-500" v-model="form.amount" />
+							    				<input id="amount" type="number" class="px-3 py-3 rounded border border-indigo-500" v-model="projectForm.amount" />
 									    	</div>
 
 									    	<!-- Err -->
@@ -141,6 +263,7 @@
 		      	</div>
 		    </div>
 
+		    <!-- Projects -->
 			<div  class=" overflow-x-auto">
 		        <div  class="inline-block min-w-full  rounded-lg overflow-hidden">
 		            <table class="min-w-full leading-normal">
@@ -173,19 +296,35 @@
 		                	<!-- Searched Projects -->
 		                	<tr 
 		                		v-if="!processing & search"
-		                		v-for="data in searchData.data" >
+		                		v-for="project in searchData.data" >
 		                		<td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 		                            <p class="text-gray-900 whitespace-no-wrap">
-		                                {{ 	data.name }}
+		                                {{ 	project.name }}
 		                            </p>
 		                        </td>
 		                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 		                            <p class="text-gray-900 font-bold whitespace-no-wrap">
-		                                $ {{ 	data.amount }}
+		                                $ {{ 	project.amount }}
 		                            </p>
 		                        </td>
 		                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-		                            <p class="text-gray-900 whitespace-no-wrap">{{ format(data.created) }}</p>
+		                            <p class="text-gray-900 whitespace-no-wrap">{{ format(project.created) }}</p>
+		                        </td>
+
+		                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
+		                            <div class="flex justify-end items-center">
+
+		                                <div @click="
+		                                	selected = project.id;
+		                                	toggleDeleteModal();"
+		                                    class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer">
+		                                             
+		                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete text-red-600 hover:text-red-500 ml-3"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+		                                </div>
+
+		                                
+
+		                            </div>
 		                        </td>
 		                        
 		                	</tr>
@@ -209,50 +348,31 @@
 		                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
 		                            <div class="flex justify-end items-center">
 
-		                                <div @click="toggleDeleteModal();"
+		                                <div @click="
+		                                	selected = project.id; toggleDeleteModal();"
 		                                    class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer">
 		                                             
 		                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete text-red-600 hover:text-red-500 ml-3"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
 		                                </div>
 
-		                                <transition name="fade">
-		                                	<div 
-												v-if="deleteModal"
-												class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
-											        <div @click="toggleDeleteModal();" class="h-full w-full bg-gray-300" >
-											            
-											    	</div>
-												<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
-													<div class="text-right">
-												            <button @click="toggleDeleteModal();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
-												                <svg   width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75 fill-current text-gray-900">
-												                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-												                </svg>
-												            </button>
-
-												        </div>
-												        <div class="">
-												            <p class="mt-4 text-lg font-semibold text-green-800 text-center">Are you sure?</p>
-												            <div class="mt-6 mb-3 flex justify-end">
-												                <button @click="toggleDeleteModal();" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
-												                <button @click="deleteClient(project.id);" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Delete</button>
-												            </div>
-												    </div>
-
-											    </div>
-
-											</div>
-
-
-		                                </transition>
+		                                
 
 		                            </div>
 		                        </td>
 		                    </tr>
 		                     
 		                    <!-- No projects -->  
-		                    <tr v-if="projects.length < 1">
-	                        	<td class="">
+		                    <tr v-if="!search">
+	                        	<td v-if="projects.length < 1 " class="">
+	                            <div class=" flex flex-col justify-center w-full items-center">
+						      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
+						      		<p class="mt-3">Oops! No Projects .</p>
+					     		</div>
+	                            </td>
+	                        </tr>
+
+	                        <tr v-if="search">
+	                        	<td v-if="searchData.length < 1" class="">
 	                            <div class=" flex flex-col justify-center w-full items-center">
 						      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
 						      		<p class="mt-3">Oops! No Projects .</p>
@@ -265,6 +385,7 @@
 		        </div>
 		    </div>
 
+		    <!-- Pagination -->
 		    <div class="my-6">
 		    	<!-- If Search -->
 		    	<div v-if="search" class="-mb-1 flex flex-wrap">
@@ -289,9 +410,35 @@
 		</div>
 
 
+		<!-- Delete Modal -->
+		<transition name="fade">
+        	<div 
+				v-if="deleteModal"
+				class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+			        <div @click="toggleDeleteModal();" class="h-full w-full bg-gray-300" >
+			            
+			    	</div>
+				<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
+					<div class="text-right">
+				            <button @click="toggleDeleteModal();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
+				                <svg   width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75 fill-current text-gray-900">
+				                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+				                </svg>
+				            </button>
 
+				        </div>
+				        <div class="">
+				            <p class="mt-4 text-lg font-semibold text-green-800 text-center">Are you sure?</p>
+				            <div class="mt-6 mb-3 flex justify-end">
+				                <button @click="toggleDeleteModal();" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
+				                <button @click="deleteProject();" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Delete</button>
+				            </div>
+				    </div>
 
+			    </div>
 
+			</div>
+        </transition>
 		
 	</div>
 </template>
@@ -319,7 +466,18 @@
 				keyword     : this.search,
 				deleteModal :false,
 				processing  :false,
-				form : {
+ 				editClientModal   : false,
+				clientForm  : {
+					first_name      : this.client.first_name,
+					last_name       : this.client.last_name,
+					email           : this.client.email,
+					gender          : this.client.gender
+				},
+				firstNameErr        : [],
+				lastNameErr         : [],
+				emailErr            : [],
+				genderErr           : [],
+				projectForm : {
 					client          : this.client.id,
 					project_name    : '',
 					amount          : '',
@@ -331,6 +489,10 @@
  				search       : false,
  				searchData   : [],
  				searchErr    : [],
+ 				selected     : null,
+ 				gender       : [
+ 					'MALE', 'FEMALE'
+ 				]
 			}
 		},
 		watch: {
@@ -356,7 +518,7 @@
 						this.searchErr.push('Oops! Server error.');
 					});
 			},
-			create(){
+			createProject(){
 				this.processing = true;
 
 				//Remove all errors
@@ -364,12 +526,12 @@
 				this.amountErr      = [];
 
 				//Post
-     		    axios.post(`/clients/project`, this.form)
+     		    axios.post(`/clients/project`, this.projectForm)
 					.then(res => {
 						this.processing = false;
 						if(res.status === 201){
-							this.$swal(`${this.form.project_name} is created.`);
-							this.form = {
+							this.$swal(`${this.projectForm.project_name} is created.`);
+							this.projectForm = {
 			        			project_name    : '',
 								amount          : ''
 			        		}
@@ -390,14 +552,84 @@
 					});
      	
 			},
+			updateClient(){
+				this.processing = true;
+
+				//Remove all errors
+				this.firstNameErr   = [];
+				this.lastNameErr    = [];
+				this.emailErr       = [];
+				this.genderErr      = [];
+
+				//UPDATE
+     		    axios.put(`/clients/${this.client.id}`, this.clientForm)
+					.then(res => {
+						this.processing = false;
+						if(res.status === 200){
+							this.$swal(`${this.clientForm.first_name} is updated.`);
+							this.clientForm = {
+			        			first_name      : '',
+								last_name       : '',
+								email           : '',
+								gender          : ''			        		
+							}
+							this.editClientModal = false;
+							this.$inertia.reload({preserveScroll: true, preserveState: false})
+						}
+					}).catch(err => {
+
+						this.processing = false;
+						let { first_name, last_name, email, gender } = err.response.data.errors;
+
+						if(first_name){
+							this.firstNameErr = first_name;
+						}
+
+						if(last_name){
+							this.lastNameErr = last_name;
+						}
+
+						if(email){
+							this.emailErr = email;
+						}
+
+						if(gender){
+							this.genderErr = gender;
+						}
+
+					});
+     	
+			},
+			deleteProject(){
+				this.processing = true;
+
+
+
+				axios.delete(`/clients/project/${this.selected}`)
+				.then(res => {
+						this.processing = false;
+						if(res.status === 204){
+
+							this.$swal(`Project deleted.`);
+							this.deleteModal = false;
+							this.$inertia.reload({preserveScroll: true, preserveState: false})
+
+						}
+					}).catch(err => {
+
+						this.processing = false;
+						this.$swal(`Our server may have been a problem. Please try again.`);
+
+					});
+			},
 			toggleDeleteModal(){
 				this.deleteModal = !this.deleteModal;
 			},
 			toggleNewProjectModal(){
 				this.newProjectModal = !this.newProjectModal;
 			},
-			deleteClient(id){
-				this.deleteModal = false;
+			toggleEditClient(){
+				this.editClientModal = !this.editClientModal;
 			},
 			format(date){
 		    	return dayjs(date).format('ddd, MMM D, YYYY h:mm A');

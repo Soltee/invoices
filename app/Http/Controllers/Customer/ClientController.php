@@ -41,7 +41,6 @@ class ClientController extends Controller
                                     'created'   => $client->created_at
                                 ];
                             }),
-                // 'create_url' => URL::route('users.create'),
             ]);
 
     }
@@ -64,7 +63,6 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-    	// dd($request->all());
     	$data = $request->validate([
     			'first_name'       => 'required|string|min:3|unique:clients',
     			'last_name'        => 'required|string|min:3',
@@ -86,9 +84,9 @@ class ClientController extends Controller
 
     	//Create Project
     	$client->projects()->create([
-    			'user_id'            => Auth::user()->id,
+    			'user_id'    => Auth::user()->id,
     			'name'       => $data['project_name'],
-    			'amount'             => $data['amount']
+    			'amount'     => $data['amount']
     		]);
 
     	return redirect()->route('client.create')->with('success', 'Client added to the list.');
@@ -121,18 +119,6 @@ class ClientController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id, $name)
-    {
-        $client = Client::findOrfail($id);
-
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -142,32 +128,30 @@ class ClientController extends Controller
     public function update(Request $request, Client $client)
     {
         $data = $request->validate([
-    			'first_name'       => 'required|string|min:3|unique:clients',
+    			'first_name'       => 'required|string|min:3',
     			'last_name'        => 'required|string|min:3',
     			'email'            => 'required|string|email|unique:clients',
-    			'gender'           => 'required|string',
-                'project_name'     => 'required|string|min:3|unique:projects',
-    			'amount'           => 'required|numeric',
+    			'gender'           => 'nullable|string'
     		]);
 
+        if($data['gender']){
+           $gender    = ['gender' => $data['gender']];
+        }
 
-    	//Create a client;
-    	$client   = new Client();
-    	$client->user_id         = Auth::user()->id;
-    	$client->first_name      = $data['first_name'];
-    	$client->last_name       = $data['last_name'];
-    	$client->email           = $data['email'];
-    	$client->gender          = $data['gender'];
-    	$client->save();
+    	//Update a client;
+    	$client->update(
+            array_merge([
 
-    	//Create Project
-    	$client->projects()->create([
-    			'user_id'            => Auth::user()->id,
-    			'name'       => $data['project_name'],
-    			'amount'             => $data['amount']
-    		]);
+            	'user_id'         => Auth::user()->id,
+            	'first_name'      => $data['first_name'],
+            	'last_name'       => $data['last_name'],
+            	'email'           => $data['email']
+                
+            ], 
+            $gender ?? []
+        ));
 
-    	return redirect()->route('client.create')->with('success', 'Client added to the list.');
+    	return response()->json(['client' => $client], 200);
     }
 
     /**

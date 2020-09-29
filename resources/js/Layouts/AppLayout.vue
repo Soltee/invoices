@@ -7,8 +7,9 @@
                     <div class="flex">
                         <!-- Logo -->
                         <div class="flex-shrink-0 flex items-center">
-                            <a href="/dashboard">
-                                <jet-application-mark class="block h-9 w-auto" />
+                            <a href="/dashboard" class="italic font-black">
+                                Invoice
+                                <!-- <jet-application-mark class="block h-9 w-auto" /> -->
                             </a>
                         </div>
 
