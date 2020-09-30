@@ -47,10 +47,6 @@
 						                            Due
 						                        </th>
 						                        <th
-						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Created at
-						                        </th>
-						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-custom-light-black uppercase tracking-wider">
 						                            Action
 						                        </th>
@@ -79,12 +75,19 @@
 						                            <p class="text-gray-900 whitespace-no-wrap">{{ format(invoice.due) }}</p>
 						                        </td>
 
-						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 whitespace-no-wrap">{{ format(invoice.created) }}</p>
-						                        </td>
 						                        
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
 						                            <div class="flex justify-end items-center">
+						                            	<span 
+						                            		@click="
+						                            			selected = invoice.id;
+						                            			sendInvoice();
+						                            			"
+						                        			v-text="(Number(invoice.is_sent)) ? '' : 'Send Now.' "
+						                        			:class="(Number(invoice.is_sent)) ? '' : 'bg-yellow-300 hover:opacity-50'"
+						                        			class="mr-3 px-2 py-2 rounded text-white cursor-pointer" 
+						                        			>
+						                        		</span>
 						                                <a 	:href="`/invoices/${invoice.id}-${invoice.name}`"
 						                                    class="hover:font-semibold" 
 						                                     >
@@ -207,6 +210,12 @@
 		    deleteInvoice(){
 		    	this.processing   = false;
 		    	this.$inertia.delete(`/invoices/${this.selected}`);
+
+		    	this.processing   = true;
+		    },
+		    sendInvoice(){
+		    	this.processing   = false;
+		    	this.$inertia.put(`/invoices/${this.selected}`);
 
 		    	this.processing   = true;
 		    }

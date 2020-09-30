@@ -13,6 +13,8 @@ use Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendInvoice;
 
 class InvoiceController extends Controller
 {
@@ -116,7 +118,7 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Invoice $invoice)
     {
         //
     }
@@ -127,9 +129,8 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Invoice $invoice)
     {
-        //
     }
 
     /**
@@ -139,9 +140,15 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Invoice $invoice)
     {
-        //
+        Mail::to($invoice->client->email)
+                ->send( new SendInvoice($invoice) );
+        // return (new \App\Mail\SendInvoice($invoice))->render();
+        $invoice->update([
+            'is_sent'  => !$invoice->is_sent
+        ]);
+        return redirect()->route('invoices')->with('success', 'Invoice sent.');
     }
 
     /**

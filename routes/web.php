@@ -42,10 +42,12 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 	//Invoices
 	Route::get('/invoices', [InvoiceController::class, 'index'])
 								->name('invoices');
-	Route::post('/invoices', [InvoiceController::class, 'store'])
-								->name('invoice.store');
 	Route::get('/invoices/create', [InvoiceController::class, 'create'])
 								->name('invoice.create');
+	Route::post('/invoices', [InvoiceController::class, 'store'])
+								->name('invoice.store');
+	Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])
+								->name('invoice.update');
 	Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy'])
 								->name('invoice.destroy');
 

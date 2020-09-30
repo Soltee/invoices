@@ -5093,6 +5093,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -5139,6 +5142,11 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
     deleteInvoice: function deleteInvoice() {
       this.processing = false;
       this.$inertia["delete"]("/invoices/".concat(this.selected));
+      this.processing = true;
+    },
+    sendInvoice: function sendInvoice() {
+      this.processing = false;
+      this.$inertia.put("/invoices/".concat(this.selected));
       this.processing = true;
     }
   }
@@ -36779,19 +36787,6 @@ var render = function() {
                                 "th",
                                 {
                                   staticClass:
-                                    "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t                            Created at\n\t\t\t\t\t\t                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "th",
-                                {
-                                  staticClass:
                                     "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-custom-light-black uppercase tracking-wider"
                                 },
                                 [
@@ -36886,28 +36881,6 @@ var render = function() {
                                     "td",
                                     {
                                       staticClass:
-                                        "px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm"
-                                    },
-                                    [
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass:
-                                            "text-gray-900 whitespace-no-wrap"
-                                        },
-                                        [
-                                          _vm._v(
-                                            _vm._s(_vm.format(invoice.created))
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    {
-                                      staticClass:
                                         "px-5 whitespace-no-wrap py-5 border-b border-gray-200"
                                     },
                                     [
@@ -36918,6 +36891,27 @@ var render = function() {
                                             "flex justify-end items-center"
                                         },
                                         [
+                                          _c("span", {
+                                            staticClass:
+                                              "mr-3 px-2 py-2 rounded text-white cursor-pointer",
+                                            class: Number(invoice.is_sent)
+                                              ? ""
+                                              : "bg-yellow-300 hover:opacity-50",
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                Number(invoice.is_sent)
+                                                  ? ""
+                                                  : "Send Now."
+                                              )
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                _vm.selected = invoice.id
+                                                _vm.sendInvoice()
+                                              }
+                                            }
+                                          }),
+                                          _vm._v(" "),
                                           _c(
                                             "a",
                                             {
