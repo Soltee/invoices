@@ -122,7 +122,7 @@
 																            <p class="mt-4 text-lg font-semibold text-green-800 text-center">Are you sure?</p>
 																            <div class="mt-6 mb-3 flex justify-end">
 																                <button @click="toggleDeleteModal();" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
-																                <button @click="deleteClient();" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Delete</button>
+																                <button @click="deleteInvoice();" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Delete</button>
 																            </div>
 																    </div>
 
@@ -141,7 +141,7 @@
 						                        <td class="">
 						                            <div class=" flex flex-col justify-center w-full items-center">
 											      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
-											      		<p class="mt-3">Oops! No clients .</p>
+											      		<p class="mt-3">Oops! No Invoices .</p>
 										     		</div>
 						                            </td>
 						                        </tr>
@@ -204,13 +204,11 @@
 		    toggleDeleteModal(){
 		    	this.deleteModal = !this.deleteModal;
 		    },
-		    deleteClient(){
-		    	this.$inertia.delete(`/clients/${this.selected}`, {
-			        onStart: () => this.processing = true,
-			        onFinish: () => {
-			        		this.processing = false;
-			        	},
-			    });
+		    deleteInvoice(){
+		    	this.processing   = false;
+		    	this.$inertia.delete(`/invoices/${this.selected}`);
+
+		    	this.processing   = true;
 		    }
 		}
 	};

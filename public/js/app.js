@@ -5136,17 +5136,10 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
     toggleDeleteModal: function toggleDeleteModal() {
       this.deleteModal = !this.deleteModal;
     },
-    deleteClient: function deleteClient() {
-      var _this = this;
-
-      this.$inertia["delete"]("/clients/".concat(this.selected), {
-        onStart: function onStart() {
-          return _this.processing = true;
-        },
-        onFinish: function onFinish() {
-          _this.processing = false;
-        }
-      });
+    deleteInvoice: function deleteInvoice() {
+      this.processing = false;
+      this.$inertia["delete"]("/invoices/".concat(this.selected));
+      this.processing = true;
     }
   }
 });
@@ -37176,7 +37169,7 @@ var render = function() {
                                                                       click: function(
                                                                         $event
                                                                       ) {
-                                                                        return _vm.deleteClient()
+                                                                        return _vm.deleteInvoice()
                                                                       }
                                                                     }
                                                                   },
@@ -37235,7 +37228,7 @@ var render = function() {
                                           ),
                                           _vm._v(" "),
                                           _c("p", { staticClass: "mt-3" }, [
-                                            _vm._v("Oops! No clients .")
+                                            _vm._v("Oops! No Invoices .")
                                           ])
                                         ]
                                       )

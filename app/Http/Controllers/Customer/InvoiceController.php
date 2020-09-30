@@ -28,6 +28,7 @@ class InvoiceController extends Controller
         return Inertia::render('Invoices/Index', [
             'search'     => request()->search,
             'invoices'   => Auth::user()->invoices()
+                            ->latest()
                             ->with('project')
                             ->with('client')
                             ->filter(request()->only('search'))
@@ -149,8 +150,11 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Invoice $invoice)
     {
-        //
+
+        $invoice->delete();
+
+        return redirect()->route('invoices')->with('success', 'Invoice deleted.');
     }
 }

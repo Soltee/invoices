@@ -46,5 +46,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 								->name('invoice.store');
 	Route::get('/invoices/create', [InvoiceController::class, 'create'])
 								->name('invoice.create');
+	Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy'])
+								->name('invoice.destroy');
 
 });
