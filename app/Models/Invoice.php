@@ -24,4 +24,22 @@ class Invoice extends Model
     public function project(){
     	return $this->belongsTo(Project::class);
     }
+
+    /*Scopes */
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('payment_type', 'like', '%'.$search.'%')
+                    ->orWhere('grand_total', 'like', '%'.$search.'%')
+                    ->orWhere('discount', 'like', '%'.$search.'%');
+            });
+        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+            if ($trashed === 'with') {
+                $query->withTrashed();
+            } elseif ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
+        });
+    }
 }

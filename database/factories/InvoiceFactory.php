@@ -47,12 +47,16 @@ class InvoiceFactory extends Factory
             'is_paid'              => function(){ 
                 return Arr::random([true, false]);
             },
+            'is_sent'              => function(){ 
+                return Arr::random([true, false]);
+            },
             'due'                  => function(){
                 return Arr::random([
                         now()->addDays(Arr::random([10, 15, 18, 20, 24, 32, 40, 50, 44])),
                         now()->subDays(Arr::random([10, 15, 18, 20, 24, 32, 40, 50, 44]))
                     ]);
             },
+            'feedback'             => $this->faker->sentence(300),
             'sub_total'            => $amount,
             'discount'             => $discount,
             'grand_total'          => $grand,

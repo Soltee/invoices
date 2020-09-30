@@ -11,11 +11,16 @@ class Project extends Model
     protected $guarded = [];
     
     /* Relationships */
+    public function user(){
+    	return $this->belongsTo(User::class);
+    }
+
     public function client(){
         return $this->belongsTo(Client::class);
     }
 
-    public function user(){
-    	return $this->belongsTo(User::class);
+    public function invoices(){
+        return $this->hasMany(Invoice::class);
     }
+
 }

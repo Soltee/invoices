@@ -2,14 +2,15 @@
 	<app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Clients
+                Invoices
             </h2>
         </template>
 
 	        <div class="py-6">
 	            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 	                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-						<div class="bg-white rounded shadow mt-6 px-3 py-3">
+	                    <div class="bg-white rounded shadow px-3 py-3">
+
 						    <div class="mb-6 flex justify-between items-center">
 						      <input class="px-3 py-3 rounded border border-indigo-500 focus:border-indigo-600" v-model="keyword"  />
 						      	
@@ -22,7 +23,7 @@
 								        </div>
 
 								    </transition>
-							        <inertia-link class="btn-indigo" href="/clients/create" preserve-scroll>
+							        <inertia-link class="btn-indigo" href="/invoices/create" preserve-scroll>
 							            <span class="px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded">New</span>
 							        </inertia-link>
 						      	</div>
@@ -35,19 +36,15 @@
 						                    <tr>
 						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Projects
+						                            Status
 						                        </th>
 						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Invoices
+						                            Grand Total
 						                        </th>
 						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Name
-						                        </th>
-						                        <th
-						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Email
+						                            Due
 						                        </th>
 						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
@@ -61,30 +58,34 @@
 						                    </tr>
 						                </thead>
 						                <tbody>
-						                    <tr  v-for="client in clients.data" >
+						                    <tr  v-for="invoice in invoices.data" >
+						                       
+						                        
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 whitespace-no-wrap">
-						                                {{ 	client.projects }}
-						                            </p>
+						                        	<div class="flex items-center">
+						                        		<span 
+						                        			v-text="(Number(invoice.is_paid)) ? 'Paid' : '' "
+						                        			:class="(Number(invoice.is_paid)) ? 'bg-green-600 hover:bg-green-500' : ''"
+						                        			class="mr-3 px-2 py-2 rounded text-white " 
+						                        			>
+						                        		</span>
+						                        	</div>
 						                        </td>
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 whitespace-no-wrap">
-						                                {{ 	client.invoices }}
-						                            </p>
+						                            <p class="text-gray-900 whitespace-no-wrap font-black">$ {{ invoice.grand_total }}</p>
 						                        </td>
+
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 whitespace-no-wrap"> {{ client.name }}</p>
+						                            <p class="text-gray-900 whitespace-no-wrap">{{ format(invoice.due) }}</p>
 						                        </td>
-						                         <td class="px-5 whitespace-no-wrap py-3 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 whitespace-no-wrap">{{ client.email }}</p>
-						                        </td>
-						                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 whitespace-no-wrap">{{ format(client.created) }}</p>
+
+						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
+						                            <p class="text-gray-900 whitespace-no-wrap">{{ format(invoice.created) }}</p>
 						                        </td>
 						                        
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
 						                            <div class="flex justify-end items-center">
-						                                <a 	:href="`/clients/${client.id}-${client.name}`"
+						                                <a 	:href="`/invoices/${invoice.id}-${invoice.name}`"
 						                                    class="hover:font-semibold" 
 						                                     >
 						                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-900 hover:opacity-75"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -93,7 +94,7 @@
 						                             
 
 						                                <div @click="
-						                                	selected = client.id;
+						                                	selected = invoice.id;
 						                                	toggleDeleteModal();"
 						                                    class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer">
 						                                             
@@ -136,7 +137,7 @@
 						                        </td>
 						                    </tr>
 						                            
-						                    <tr v-if="clients.length < 1">
+						                    <tr v-if="invoices.length < 1">
 						                        <td class="">
 						                            <div class=" flex flex-col justify-center w-full items-center">
 											      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
@@ -152,11 +153,11 @@
 
 						    <div class="my-6">
 
-						    	<pagination :links="clients.links" />
+						    	<pagination :links="invoices.links" />
 						    </div>
 						</div>
 
-					</div>
+	                </div>
 	            </div>
 	        </div>
 		
@@ -174,7 +175,7 @@
             Pagination
         },
 		props :  {
-			clients : Object,
+			invoices : Object,
 			search  : String
 		},
 		data (){
@@ -188,7 +189,7 @@
 		watch: {
 			keyword: {
 			    handler: throttle(function() {
-			        this.$inertia.replace(route('clients', {search :this.keyword}))
+			        this.$inertia.replace(route('invoices', {search :this.keyword}))
 			      }, 150),
 			   	deep: true,
 			},

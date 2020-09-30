@@ -28,7 +28,7 @@ class ProjectController extends Controller
     		$query  = $query->where('name', 'LIKE', '%'.$search.'%');
     	}
 
-    	return $query->paginate(3);
+    	return $query->paginate(5);
     }
 
     /**
@@ -85,6 +85,29 @@ class ProjectController extends Controller
             ]);
 
         return response()->json(['project' => $data], 200);
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $client  = Client::findOrfail($id);
+
+        return response()->json([
+            'projects' => $client->projects
+                                ->map(function($p){
+                                    return [
+                                        'id'          => $p->id, 
+                                        'name'        => $p->name, 
+                                        'amount'      => $p->amount
+                                    ];
+                                })
+        ], 200);
     }
 
     /**

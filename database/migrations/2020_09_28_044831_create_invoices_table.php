@@ -21,6 +21,8 @@ class CreateInvoicesTable extends Migration
             $table->string('generatedId');
             $table->string('payment_type')->default('stripe');
             $table->boolean('is_paid')->default(false);
+            $table->boolean('is_sent')->default(false);
+            $table->text('feedback')->nullable();
             $table->datetime('due');
             $table->integer('sub_total');
             $table->integer('discount')->nullable();

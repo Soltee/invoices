@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\ClientController;
 use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\ProjectController;
+use App\Http\Controllers\Customer\InvoiceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,5 +35,16 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 	Route::post('/clients/project', [ProjectController::class, 'store']);
 	Route::put('/clients/projects/{project}', [ProjectController::class, 'update']);
 	Route::delete('/clients/project/{project}', [ProjectController::class, 'destroy']);
+
+	//clients porjects
+	Route::get('/client_projects/{client}', [ProjectController::class, 'show']);
+
+	//Invoices
+	Route::get('/invoices', [InvoiceController::class, 'index'])
+								->name('invoices');
+	Route::post('/invoices', [InvoiceController::class, 'store'])
+								->name('invoice.store');
+	Route::get('/invoices/create', [InvoiceController::class, 'create'])
+								->name('invoice.create');
 
 });

@@ -30,7 +30,7 @@ class ClientController extends Controller
                             ->withCount('invoices')
                             // ->orderByName()
                             ->filter(request()->only('search'))
-                            ->paginate(2)
+                            ->paginate(10)
                             ->transform(function ($client) {
                                 return [
                                     'id'        => $client->id,
@@ -105,7 +105,7 @@ class ClientController extends Controller
 
         return Inertia::render('Clients/Show', [
             'client'    => $client,
-            'projects'  => $client->projects()->paginate(3)
+            'projects'  => $client->projects()->paginate(5)
             					->transform(function ($project) {
                                 return [
                                     'id'        => $project->id,
