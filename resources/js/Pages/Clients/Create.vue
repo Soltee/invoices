@@ -160,20 +160,7 @@
 		},
 		methods:{
 			create(){
-     		    this.$inertia.post('/clients', this.form, {
-			        onStart: () => this.processing = true,
-			        onFinish: () => {
-			        		this.processing = false;
-			        		this.form = {
-			        			first_name    : '',
-								last_name     : '',
-								email         : '',
-								gender        : '',
-								project_name  : '',
-								amount        : ''
-			        		}
-			        	},
-			    });
+     		    this.$inertia.post('/clients', this.form);
 
      		    this.form = {
 			        			first_name    : '',

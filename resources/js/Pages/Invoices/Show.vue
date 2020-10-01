@@ -153,7 +153,7 @@
 	                    	<div class="mb-6 ">
 						    	<div class="flex justify-between items-center">
 							    	<div class="flex items-center">
-								        <inertia-link class="btn-indigo" href="/clients" preserve-scroll>
+								        <inertia-link class="btn-indigo" href="/invoices" preserve-scroll>
 								        	<div class="flex items-center">
 								        		
 								        		<span class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded"><</span>
@@ -314,7 +314,10 @@
 <script>
     import AppLayout from './../../Layouts/AppLayout'
 	import throttle from 'lodash/throttle'
+	import axios from 'axios'
 	var dayjs = require('dayjs')
+	import 'sweetalert2/dist/sweetalert2.min.css';
+	import VueSweetalert2 from 'vue-sweetalert2';
 	import Multiselect from 'vue-multiselect'
 
 
@@ -397,10 +400,16 @@
 		    },
 		    sendInvoice(){
 		    	this.processing   = true;
-		    	// console.log(this.invoice.id);
-		    	this.$inertia.put(`/invoices/${this.invoice.id}`);
 
-		    	this.processing   = false;
+		    	axios.get(`/invoices/${this.invoice.id}/send`)
+		    	.then(res => {
+					this.$swal(`Invoice sent.`);
+		    		this.processing   = false;
+		    		this.$inertia.reload({preserveScroll: true, preserveState: false})
+		    	}).catch(e => {
+		    		this.processing   = false;
+		    		console.log(e);
+		    	});
 
 		    },
 		    toggleEditInvoice(){

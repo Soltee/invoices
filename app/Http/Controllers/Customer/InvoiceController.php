@@ -177,7 +177,7 @@ class InvoiceController extends Controller
     /**
      * Send Invoice
      */
-    public function sendInvoice(Invoice $invoice)
+    public function send(Invoice $invoice)
     {   
         Mail::to($invoice->client->email)
                 ->send( new SendInvoice($invoice) );
@@ -185,6 +185,7 @@ class InvoiceController extends Controller
         $invoice->update([
             'is_sent'  => true
         ]);
+        
         return redirect()->back()->with('success', 'Invoice sent.');
     }
 

@@ -46,6 +46,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 								->name('invoice.create');
 	Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])
 								->name('invoice.show');
+	Route::get('/invoices/{invoice}/send', [InvoiceController::class, 'send'])
+								->name('invoice.send');
 	Route::post('/invoices', [InvoiceController::class, 'store'])
 								->name('invoice.store');
 	Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])

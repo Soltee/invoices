@@ -170,7 +170,10 @@
     import AppLayout from './../../Layouts/AppLayout'
 	import Pagination from './../../Shared/Pagination'
 	import throttle from 'lodash/throttle'
+	import axios from 'axios'
 	var dayjs = require('dayjs')
+	import 'sweetalert2/dist/sweetalert2.min.css';
+	import VueSweetalert2 from 'vue-sweetalert2';
 
 	export default {
 		components: {
@@ -208,16 +211,24 @@
 		    	this.deleteModal = !this.deleteModal;
 		    },
 		    deleteInvoice(){
-		    	this.processing   = false;
+		    	this.processing   = true;
 		    	this.$inertia.delete(`/invoices/${this.selected}`);
 
-		    	this.processing   = true;
+		    	this.processing   = false;
 		    },
 		    sendInvoice(){
-		    	this.processing   = false;
-		    	this.$inertia.put(`/invoices/${this.selected}`);
-
 		    	this.processing   = true;
+
+		    	axios.get(`/invoices/${this.selected}/send`)
+		    	.then(res => {
+					this.$swal(`Invoice sent.`);
+		    		this.processing   = false;
+		    		this.$inertia.reload({preserveScroll: true, preserveState: false})
+		    	}).catch(e => {
+		    		this.processing   = false;
+		    		console.log(e);
+		    	});
+
 		    }
 		}
 	};

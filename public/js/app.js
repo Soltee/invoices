@@ -3501,24 +3501,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     create: function create() {
-      var _this = this;
-
-      this.$inertia.post('/clients', this.form, {
-        onStart: function onStart() {
-          return _this.processing = true;
-        },
-        onFinish: function onFinish() {
-          _this.processing = false;
-          _this.form = {
-            first_name: '',
-            last_name: '',
-            email: '',
-            gender: '',
-            project_name: '',
-            amount: ''
-          };
-        }
-      });
+      this.$inertia.post('/clients', this.form);
       this.form = {
         first_name: '',
         last_name: '',
@@ -4929,6 +4912,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Shared_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../Shared/Pagination */ "./resources/js/Shared/Pagination.vue");
 /* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/throttle */ "./node_modules/lodash/throttle.js");
 /* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_throttle__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sweetalert2/dist/sweetalert2.min.css */ "./node_modules/sweetalert2/dist/sweetalert2.min.css");
+/* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-sweetalert2 */ "./node_modules/vue-sweetalert2/dist/index.js");
 //
 //
 //
@@ -5097,11 +5085,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 
 var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -5141,14 +5132,27 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
       this.deleteModal = !this.deleteModal;
     },
     deleteInvoice: function deleteInvoice() {
-      this.processing = false;
-      this.$inertia["delete"]("/invoices/".concat(this.selected));
       this.processing = true;
+      this.$inertia["delete"]("/invoices/".concat(this.selected));
+      this.processing = false;
     },
     sendInvoice: function sendInvoice() {
-      this.processing = false;
-      this.$inertia.put("/invoices/".concat(this.selected));
+      var _this = this;
+
       this.processing = true;
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/invoices/".concat(this.selected, "/send")).then(function (res) {
+        _this.$swal("Invoice sent.");
+
+        _this.processing = false;
+
+        _this.$inertia.reload({
+          preserveScroll: true,
+          preserveState: false
+        });
+      })["catch"](function (e) {
+        _this.processing = false;
+        console.log(e);
+      });
     }
   }
 });
@@ -5167,8 +5171,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/throttle */ "./node_modules/lodash/throttle.js");
 /* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_throttle__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
-/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2/dist/sweetalert2.min.css */ "./node_modules/sweetalert2/dist/sweetalert2.min.css");
+/* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_sweetalert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-sweetalert2 */ "./node_modules/vue-sweetalert2/dist/index.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_5__);
 //
 //
 //
@@ -5482,16 +5491,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
 
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_2___default.a
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_5___default.a
   },
   props: {
     client: Object,
@@ -5565,10 +5577,22 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
       this.processing = true;
     },
     sendInvoice: function sendInvoice() {
-      this.processing = true; // console.log(this.invoice.id);
+      var _this2 = this;
 
-      this.$inertia.put("/invoices/".concat(this.invoice.id));
-      this.processing = false;
+      this.processing = true;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/invoices/".concat(this.invoice.id, "/send")).then(function (res) {
+        _this2.$swal("Invoice sent.");
+
+        _this2.processing = false;
+
+        _this2.$inertia.reload({
+          preserveScroll: true,
+          preserveState: false
+        });
+      })["catch"](function (e) {
+        _this2.processing = false;
+        console.log(e);
+      });
     },
     toggleEditInvoice: function toggleEditInvoice() {
       this.editInvoice = !this.editInvoice;
@@ -5595,13 +5619,13 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
       this.editInvoice = false;
     },
     getClientProjects: function getClientProjects() {
-      var _this2 = this;
+      var _this3 = this;
 
       // console.log(this.form.client);
-      axios.get("/client_projects/".concat(this.form.client.id)).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/client_projects/".concat(this.form.client.id)).then(function (res) {
         if (res.status === 200) {
           res.data.projects.forEach(function (p) {
-            _this2.clientProjects.push({
+            _this3.clientProjects.push({
               id: p.id,
               name: p.name,
               language: p.name,
@@ -38405,7 +38429,10 @@ var render = function() {
                             "inertia-link",
                             {
                               staticClass: "btn-indigo",
-                              attrs: { href: "/clients", "preserve-scroll": "" }
+                              attrs: {
+                                href: "/invoices",
+                                "preserve-scroll": ""
+                              }
                             },
                             [
                               _c("div", { staticClass: "flex items-center" }, [
