@@ -2,9 +2,36 @@
 	<app-layout>
         <template #header>
         	<div class="flex justify-between items-center">
-				<h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                	Invoices
-            	</h2>
+				<div class="flex items-center">
+	        		<inertia-link class="btn-indigo" href="/dashboard" preserve-scroll>
+			        		
+			       		<span class="px-3 py-1 text-indigo-600 hover:text-indigo-500 hover:opacity-50 rounded">Dashboard</span>
+			        	
+			        </inertia-link>
+	    			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right text-indigo-600"><polyline points="9 18 15 12 9 6"></polyline></svg>
+
+			        <inertia-link class="btn-indigo" href="/invoices" preserve-scroll>
+		
+			       		<span class="px-3 py-1 text-indigo-600  rounded">Invoices</span>
+			        	
+			        </inertia-link>
+
+			        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right text-indigo-600"><polyline points="9 18 15 12 9 6"></polyline></svg>
+
+			       	<span class="px-3 py-1 text-indigo-600  rounded">
+			       		 {{ client.first_name  }} {{ client.last_name }}
+			       	</span>
+	    		</div>
+
+	    		<transition name="fade">
+					<div v-if="$page.flash.success" id="Message" class=" mr-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
+
+			        	<span class="mr-3">{{ $page.flash.success }}</span>
+
+			        </div>
+
+			    </transition>
+
                 <div>
 			    	<span 
 				        	@click="toggleEditInvoice();" 
@@ -152,28 +179,10 @@
 
 	                    	<div class="mb-6 ">
 						    	<div class="flex justify-between items-center">
-							    	<div class="flex items-center">
-								        <inertia-link class="btn-indigo" href="/invoices" preserve-scroll>
-								        	<div class="flex items-center">
-								        		
-								        		<span class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded"><</span>
-								        	</div>
 
-								        </inertia-link>
-								        <span class="ml-3 font-semibold text-md"> {{ client.first_name  }} {{ client.last_name }}</span>
-
-								    </div>
-
-								    <transition name="fade">
-										<div v-if="$page.flash.success" id="Message" class=" mr-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
-
-								        	<span class="mr-3">{{ $page.flash.success }}</span>
-
-								        </div>
-
-								    </transition>
+								    
+								    <label class="px-2 py-2 text-center rounded mr-2 border">Status</label>
 								    <div class="flex items-center">
-								    	<label class="px-2 py-2 text-center rounded mr-2 border">Status</label>
 								    	<span 
 			                        			v-text="(Number(invoice.is_paid)) ? 'Paid' : 'Unpaid' "
 			                        			:class="(Number(invoice.is_paid)) ? 'bg-green-600 hover:bg-green-500' : 'bg-yellow-300'"
@@ -184,7 +193,7 @@
 			                        	<span 
 									    	
 					                        v-if="Number(invoice.is_sent)"
-			                        		class="cursor-pointer px-2 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded"
+			                        		class=" px-2 py-2 bg-indigo-600 text-white rounded"
 			                        		>Sent</span>
 
 			                        	<div v-else class="relative">

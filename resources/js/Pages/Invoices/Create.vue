@@ -1,9 +1,26 @@
 <template>
 	<app-layout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Invoices
-            </h2>
+            <div class="flex justify-between items-center">
+	            <div class="flex items-center">
+	        		<inertia-link class="btn-indigo" href="/dashboard" preserve-scroll>
+			        		
+			       		<span class="px-3 py-1 text-indigo-600 hover:text-indigo-500 hover:opacity-50 rounded">Dashboard</span>
+			        	
+			        </inertia-link>
+	    			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right text-indigo-600"><polyline points="9 18 15 12 9 6"></polyline></svg>
+
+			        <inertia-link class="btn-indigo" href="/invoices" preserve-scroll>
+		
+			       		<span class="px-3 py-1 text-indigo-600  rounded">Invoices</span>
+			        	
+			        </inertia-link>
+
+			        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right text-indigo-600"><polyline points="9 18 15 12 9 6"></polyline></svg>
+
+			       	<span class="px-3 py-1 text-indigo-600  rounded">New Invoice</span>
+	    		</div>
+	    	</div>
         </template>
 
 	        <div class="py-6">
@@ -15,14 +32,6 @@
 
 							    <div class="mb-6 flex justify-between items-center">
 							    	<div class="flex items-center">
-								        <inertia-link class="btn-indigo" href="/clients" preserve-scroll>
-								        	<div class="flex items-center">
-								        		
-								        		<span class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded"><</span>
-								        		<span class="ml-3 font-semibold text-md">New Invoice</span>
-								        	</div>
-
-								        </inertia-link>
 
 								        <transition name="fade">
 											<div v-if="$page.flash.success" id="Message" class=" ml-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">

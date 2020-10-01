@@ -1,165 +1,178 @@
 <template>
 	<app-layout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Clients
-            </h2>
+        	<div class="flex justify-between items-center">
+        		<div class="flex items-center">
+	        		<inertia-link class="btn-indigo" href="/dashboard" preserve-scroll>
+			        		
+			       		<span class="px-3 py-1 text-indigo-600 hover:text-indigo-500 hover:opacity-50 rounded">Dashboard</span>
+			        	
+			        </inertia-link>
+        			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right text-indigo-600"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        			<inertia-link class="btn-indigo" href="/clients" preserve-scroll>
+			        		
+			       		<span class="px-3 py-1 text-indigo-600 hover:text-indigo-500 hover:opacity-50 rounded">Clients</span>
+			        	
+			        </inertia-link>
+
+			        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right text-indigo-600"><polyline points="9 18 15 12 9 6"></polyline></svg>
+
+			       	<span class="px-3 py-1 text-indigo-600  rounded">
+			       		 {{ client.first_name  }} {{ client.last_name }}
+			       	</span>
+        		</div>
+	            
+
+	            <div>
+			    	<span 
+				        	@click="toggleEditClient();" 
+				        	class="px-3 py-2 cursor-pointer bg-yellow-600 hover:bg-yellow-500 text-white rounded">Edit</span>
+				    </span>
+
+				    <!-- Edit Client -->
+			        <transition name="fade">
+	                	<div 
+							v-if="editClientModal"
+							class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+					        <div @click="toggleEditClient();" class="h-full w-full bg-gray-300" >
+					            
+							<!-- editClientModal -->
+					    	</div>
+							<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
+								<div class="text-right">
+						            <button @click="toggleEditClient();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
+						                <svg   width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75 fill-current text-gray-900">
+						                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+						                </svg>
+						            </button>
+
+						        </div>
+
+						        <!--- Edit Form -->
+									<form @submit.prevent="updateClient">
+							        <div>
+							        	<div class="mb-4 flex justify-between items-center">
+									    	<div class="flex items-center">
+										        	
+								        		<span class="ml-3 font-semibold text-md">Edit</span>
+
+										    </div>
+
+									        
+									        <button  type="submit" class="px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded">
+
+									      	    <span class="ml-2">Save</span>
+									        </button>
+
+									    </div>
+									    <div v-if="processing" class="spinner"></div>
+
+							        	<div v-else class="w-full  flex flex-col">
+									    	<div class="mb-6 flex flex-col"> 
+									    		<label for="first_name">First name:</label>
+							    				<input id="first_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="clientForm.first_name" />
+
+							    				<!-- Err -->
+							    				<div class="mt-2">
+							    				<div 
+							    					v-if="firstNameErr.length > 0"
+							    					v-for="err in firstNameErr" 
+							    					class="text-red-500 text-md font-semibold mb-2">
+							    						{{ err }}
+							    				</div>
+							    				</div>
+									    	</div>
+
+									    	<div class="mb-6 flex flex-col"> 
+									    		<label for="last_name">Last name:</label>
+							    				<input id="last_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="clientForm.last_name" />
+
+							    				<!-- Err -->
+							    				<div class="mt-2">
+							    				<div 
+							    					v-if="lastNameErr.length > 0"
+							    					v-for="err in lastNameErr" 
+							    					class="text-red-500 text-md font-semibold mb-2">
+							    						{{ err }}
+							    				</div>
+							    				</div>
+									    	</div>
+
+									    	<div class="mb-6 flex flex-col"> 
+									    		<label for="email">Email:</label>
+							    				<input id="email" type="email" class="px-3 py-3 rounded border border-indigo-500" v-model="clientForm.email" />
+									    	</div>
+
+									    	<!-- Err -->
+						    				<div class="mt-2">
+						    				<div 
+						    					v-if="emailErr.length > 0"
+						    					v-for="err in emailErr" 
+						    					class="text-red-500 text-md font-semibold mb-2">
+						    						{{ err }}
+						    				</div>
+						    				</div>
+
+						    				<div class="mb-6 flex flex-col"> 
+									    		<label for="gender">Gender:</label>
+											    <select v-model="clientForm.gender" class="border border-indigo-500 rounded w-full px-3 py-3 text-gray-900">
+									    			<option 
+									    			class="text-gray-800" disabled value="">Choose Gender</option>
+													<option value="MALE">MALE</option>
+													<option value="FEMALE">FEMALE</option>
+									    		</select>
+									    	</div>
+
+									    	<!-- Err -->
+						    				<div class="mt-2">
+						    				<div 
+						    					v-if="genderErr.length > 0"
+						    					v-for="err in genderErr" 
+						    					class="text-red-500 text-md font-semibold mb-2">
+						    						{{ err }}
+						    				</div>
+						    				</div>
+
+									    </div>
+
+
+							        </div>
+							    </form>
+
+						    </div>
+
+						</div>
+
+
+	                </transition>
+			    </div>
+        	</div>
         </template>
+
         	<div class="py-6">
 	            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 	                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-						<div class="bg-white rounded shadow mt-6 px-3 py-3">
+						<div class="bg-white rounded shadow  px-3 py-3">
 
 
 							<div class="mb-6 ">
-						    	<div class="flex justify-between items-center">
-							    	<div class="flex items-center">
-								        <inertia-link class="btn-indigo" href="/clients" preserve-scroll>
-								        	<div class="flex items-center">
-								        		
-								        		<span class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded"><</span>
-								        	</div>
 
-								        </inertia-link>
-								        <span class="ml-3 font-semibold text-md"> {{ client.first_name  }} {{ client.last_name }}</span>
+							    <div class="">
+							    	
 
-								    </div>
-
-								    <div>
-								    	<span 
-									        	@click="toggleEditClient();" 
-									        	class="px-3 py-2 cursor-pointer bg-yellow-600 hover:bg-yellow-500 text-white rounded">Edit</span>
-									    </span>
-
-									    <!-- Edit Client -->
-								        <transition name="fade">
-					                    	<div 
-												v-if="editClientModal"
-												class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
-										        <div @click="toggleEditClient();" class="h-full w-full bg-gray-300" >
-										            
-												<!-- editClientModal -->
-										    	</div>
-												<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
-													<div class="text-right">
-											            <button @click="toggleEditClient();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
-											                <svg   width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75 fill-current text-gray-900">
-											                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-											                </svg>
-											            </button>
-
-											        </div>
-
-											        <!--- Edit Form -->
-					  								<form @submit.prevent="updateClient">
-												        <div>
-												        	<div class="mb-4 flex justify-between items-center">
-														    	<div class="flex items-center">
-															        	
-													        		<span class="ml-3 font-semibold text-md">Edit</span>
-
-															    </div>
-
-														        
-														        <button  type="submit" class="px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded">
-
-														      	    <span class="ml-2">Save</span>
-														        </button>
-
-														    </div>
-														    <div v-if="processing" class="spinner"></div>
-
-												        	<div v-else class="w-full  flex flex-col">
-														    	<div class="mb-6 flex flex-col"> 
-														    		<label for="first_name">First name:</label>
-												    				<input id="first_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="clientForm.first_name" />
-
-												    				<!-- Err -->
-												    				<div class="mt-2">
-												    				<div 
-												    					v-if="firstNameErr.length > 0"
-												    					v-for="err in firstNameErr" 
-												    					class="text-red-500 text-md font-semibold mb-2">
-												    						{{ err }}
-												    				</div>
-												    				</div>
-														    	</div>
-
-														    	<div class="mb-6 flex flex-col"> 
-														    		<label for="last_name">Last name:</label>
-												    				<input id="last_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="clientForm.last_name" />
-
-												    				<!-- Err -->
-												    				<div class="mt-2">
-												    				<div 
-												    					v-if="lastNameErr.length > 0"
-												    					v-for="err in lastNameErr" 
-												    					class="text-red-500 text-md font-semibold mb-2">
-												    						{{ err }}
-												    				</div>
-												    				</div>
-														    	</div>
-
-														    	<div class="mb-6 flex flex-col"> 
-														    		<label for="email">Email:</label>
-												    				<input id="email" type="email" class="px-3 py-3 rounded border border-indigo-500" v-model="clientForm.email" />
-														    	</div>
-
-														    	<!-- Err -->
-											    				<div class="mt-2">
-											    				<div 
-											    					v-if="emailErr.length > 0"
-											    					v-for="err in emailErr" 
-											    					class="text-red-500 text-md font-semibold mb-2">
-											    						{{ err }}
-											    				</div>
-											    				</div>
-
-											    				<div class="mb-6 flex flex-col"> 
-														    		<label for="gender">Gender:</label>
-																    <select v-model="clientForm.gender" class="border border-indigo-500 rounded w-full px-3 py-3 text-gray-900">
-														    			<option 
-														    			class="text-gray-800" disabled value="">Choose Gender</option>
-																		<option value="MALE">MALE</option>
-																		<option value="FEMALE">FEMALE</option>
-														    		</select>
-														    	</div>
-
-														    	<!-- Err -->
-											    				<div class="mt-2">
-											    				<div 
-											    					v-if="genderErr.length > 0"
-											    					v-for="err in genderErr" 
-											    					class="text-red-500 text-md font-semibold mb-2">
-											    						{{ err }}
-											    				</div>
-											    				</div>
-
-														    </div>
-
-
-												        </div>
-												    </form>
-
-											    </div>
-
-											</div>
-
-
-					                    </transition>
-								    </div>
-							    </div>
-
-							    <div class="mt-4">
-							    
-							    	<div class="flex items-center">
-							    		<label class="w-24 mr-3">Email</label>
-							    	 	<h2 class="text-lg font-semibold text-gray-700 capitalize">{{  client.email }}</h2>
+							    	<div class="flex mb-3">
+							    		<label class="w-24 border rounded-l py-2 px-2">Name</label>
+							    	 	<h2 class="text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2">{{  client.first_name }}  {{ client.last_name }}</h2>
 
 							    	</div>
-							    	<div class="flex items-center">
-							    		<label class="w-24 mr-3">Gender</label>
-							    	 	<h2 class="text-lg font-md opacity-50 text-gray-700 ">{{  client.gender }}</h2>
+							    	<div class="flex mb-3">
+							    		<label class="w-24 border rounded-l py-2 px-2">Email</label>
+							    	 	<h2 class="text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2">{{  client.email }}</h2>
+
+							    	</div>
+							    	<div class="flex mb-3">
+							    		<label class="w-24 border rounded-l py-2 px-2">Email</label>
+							    	 	<h2 class="text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2">{{  client.gender }}</h2>
 
 							    	</div>
 

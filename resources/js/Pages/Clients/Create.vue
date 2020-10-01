@@ -1,35 +1,41 @@
 <template>
 	<app-layout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Clients
-            </h2>
+        	<div class="flex justify-between items-center">
+	            <div class="flex items-center">
+	        		<inertia-link class="btn-indigo" href="/dashboard" preserve-scroll>
+			        		
+			       		<span class="px-3 py-1 text-indigo-600 hover:text-indigo-500 hover:opacity-50 rounded">Dashboard</span>
+			        	
+			        </inertia-link>
+	    			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right text-indigo-600"><polyline points="9 18 15 12 9 6"></polyline></svg>
+	    			<inertia-link class="btn-indigo" href="/clients" preserve-scroll>
+			        		
+			       		<span class="px-3 py-1 text-indigo-600 hover:text-indigo-500 hover:opacity-50 rounded">Clients</span>
+			        	
+			        </inertia-link>
+	    			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right text-indigo-600"><polyline points="9 18 15 12 9 6"></polyline></svg>
+
+			       	<span class="px-3 py-1 text-indigo-600  rounded">New Client</span>
+
+	    		</div>
+    		</div>
         </template>
 
         	<div class="py-6">
 	            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 	                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-						<div class="bg-white rounded shadow mt-6 px-3 py-3">
+						<div class="bg-white rounded shadow px-3 py-3">
 
 					  		<form @submit.prevent="create">
 
 							    <div class="mb-6 flex justify-between items-center">
 							    	<div class="flex items-center">
-								        <inertia-link class="btn-indigo" href="/clients" preserve-scroll>
-								        	<div class="flex items-center">
-								        		
-								        		<span class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded"><</span>
-								        		<span class="ml-3 font-semibold text-md">New Client</span>
-								        	</div>
-
-								        </inertia-link>
-
 								        <transition name="fade">
 											<div v-if="$page.flash.success" id="Message" class=" ml-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
 
 									        	<span class="mr-3">{{ $page.flash.success }}</span>
-									        	<!-- <svg @click="$page.flash === '';" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-red-600"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> -->
 
 									        </div>
 
@@ -84,11 +90,11 @@
 
 								    	<div class="mb-6 flex flex-col"> 
 								    		<label for="gender">Gender:</label>
-								    		<select v-model="form.gender" class="border border-indigo-500 rounded w-full px-3 py-3">
-								    			<option>Choose Gender</option>
-								    			<option value="MALE">MALE</option>
-								    			<option value="FEMALE">FEMALE</option>
-								    		</select>
+								    		<multiselect 
+													v-model="form.gender" 
+													:options="options"  
+													placeholder="Select Gender" 
+													label="name" track-by="name"></multiselect>
 								    		<div 
 						    					v-if="$page.errors.gender" 
 						    					class="text-red-500 text-md font-semibold mt-2">
@@ -136,11 +142,12 @@
 </template>
 <script>
     import AppLayout from './../../Layouts/AppLayout'
-    import VueToast from 'vue-toast-notification';
+	import Multiselect from 'vue-multiselect'
 
 	export default {
 		components: {
-            AppLayout
+            AppLayout,
+            Multiselect
         },
 		props :  {
 
@@ -148,6 +155,16 @@
 		data (){
 			return {
 				processing :false,
+				options: [
+					{
+						name : 'MALE',
+						language  : 'MALE'
+					},
+					{
+						name : 'FEMALE',
+						language  : 'FEMALE'
+					}
+			    ],
 				form : {
 					first_name    : '',
 					last_name     : '',
@@ -160,7 +177,17 @@
 		},
 		methods:{
 			create(){
-     		    this.$inertia.post('/clients', this.form);
+				let { first_name,last_name,email,gender,project_name,amount} = this.form;
+				let newForm = {
+					first_name    : first_name,
+					last_name     : last_name,
+					email         : email,
+					gender        : gender,
+					project_name  : project_name,
+					amount        : amount 
+				}
+
+     		    this.$inertia.post('/clients', newForm);
 
      		    this.form = {
 			        			first_name    : '',
@@ -174,6 +201,7 @@
 		}
 	};
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style>
 .fade-enter-active, .fade-leave-active {
