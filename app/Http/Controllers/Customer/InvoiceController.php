@@ -120,18 +120,20 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+         return Inertia::render('Invoices/Show', [
+                'invoice'   => $invoice,
+                'project'   => $invoice->project,
+                'client'    => $invoice->client,
+                'clients'   => Auth::user()->clients()->get()
+                            ->transform(function ($client) {
+                                return [
+                                    'name'    => $client->first_name . ' ' . $client->last_name,
+                                    'id' => $client->id
+                                ];
+                            }),
+            ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Invoice $invoice)
-    {
-    }
 
     /**
      * Update the specified resource in storage.
@@ -141,14 +143,49 @@ class InvoiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Invoice $invoice)
-    {
+    {   
+       $data = $request->validate([
+                'client'    => 'bail|numeric|required',
+                'project'   => 'bail|numeric|required',
+                'amount'    => 'required|numeric|min:0',
+                'discount'  => 'nullable|numeric',
+                'grand'     => 'required|numeric|min:0',
+                'due'       => 'required|date'
+            ]);
+
+        if($data['discount']){
+            $discountArr =  ['discount'     => $data['discount']];
+        }
+
+        $invoice->update(
+            array_merge(
+                [
+                    'client_id'       => $data['client'],
+                    'project_id'      => $data['project'],
+                    'sub_total'       => $data['amount'],
+                    'grand_total'     => $data['grand'],
+                    'due'             => $data['due']
+                ],
+
+                $discountArr ?? []
+            ));
+
+        return redirect()->to('invoices/' .$invoice->id)
+                                ->with('success', 'Client updated.');
+    }
+
+    /**
+     * Send Invoice
+     */
+    public function sendInvoice(Invoice $invoice)
+    {   
         Mail::to($invoice->client->email)
                 ->send( new SendInvoice($invoice) );
         // return (new \App\Mail\SendInvoice($invoice))->render();
         $invoice->update([
-            'is_sent'  => !$invoice->is_sent
+            'is_sent'  => true
         ]);
-        return redirect()->route('invoices')->with('success', 'Invoice sent.');
+        return redirect()->back()->with('success', 'Invoice sent.');
     }
 
     /**

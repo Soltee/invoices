@@ -2962,6 +2962,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -5148,6 +5149,488 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
       this.processing = false;
       this.$inertia.put("/invoices/".concat(this.selected));
       this.processing = true;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Invoices/Show.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Invoices/Show.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/throttle */ "./node_modules/lodash/throttle.js");
+/* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_throttle__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_2___default.a
+  },
+  props: {
+    client: Object,
+    project: Object,
+    invoice: Object,
+    clients: Array
+  },
+  data: function data() {
+    return {
+      processing: false,
+      editInvoice: false,
+      sendNow: false,
+      options: [],
+      form: {
+        client: {},
+        project: {},
+        due: dayjs(this.invoice.due).format('YYYY-MM-DD'),
+        amount: this.invoice.sub_total,
+        discount: this.invoice.discount,
+        grand: this.invoice.grand_total
+      },
+      clientProjects: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.clients.forEach(function (client) {
+      _this.options.push({
+        id: client.id,
+        name: client.name,
+        language: client.name
+      });
+    });
+    var clientName = "".concat(this.client.first_name, " ").concat(this.client.last_name);
+    this.form.client = {
+      id: this.client.id,
+      name: clientName,
+      language: clientName
+    };
+    this.form.project = {
+      amount: this.project.amount,
+      id: this.project.id,
+      name: this.project.name,
+      language: this.project.name
+    };
+  },
+  watch: {
+    'form.client': function formClient(newVal, oldVal) {
+      this.getClientProjects(); //to work with cha/nges in someOtherProp
+
+      console.log(oldVal);
+    },
+    'form.project': function formProject(newVal, oldVal) {
+      this.calculateAmounts('amount');
+    },
+    'form.discount': function formDiscount(newVal, oldVal) {
+      this.calculateAmounts('discount');
+    }
+  },
+  methods: {
+    format: function format(date) {
+      return dayjs(date).format('ddd, MMM D, YYYY h:mm A');
+    },
+    toggleDeleteModal: function toggleDeleteModal() {
+      this.deleteModal = !this.deleteModal;
+    },
+    deleteInvoice: function deleteInvoice() {
+      this.processing = false;
+      this.$inertia["delete"]("/invoices/".concat(this.selected));
+      this.processing = true;
+    },
+    sendInvoice: function sendInvoice() {
+      this.processing = true; // console.log(this.invoice.id);
+
+      this.$inertia.put("/invoices/".concat(this.invoice.id));
+      this.processing = false;
+    },
+    toggleEditInvoice: function toggleEditInvoice() {
+      this.editInvoice = !this.editInvoice;
+    },
+    updateInvoice: function updateInvoice() {
+      this.processing = true;
+      var _this$form = this.form,
+          client = _this$form.client,
+          project = _this$form.project,
+          amount = _this$form.amount,
+          discount = _this$form.discount,
+          grand = _this$form.grand,
+          due = _this$form.due;
+      var form = {
+        client: client.id,
+        project: project.id,
+        due: due,
+        amount: amount,
+        discount: discount,
+        grand: grand
+      };
+      this.$inertia.put("/invoices/".concat(this.invoice.id), form);
+      this.processing = false;
+      this.editInvoice = false;
+    },
+    getClientProjects: function getClientProjects() {
+      var _this2 = this;
+
+      // console.log(this.form.client);
+      axios.get("/client_projects/".concat(this.form.client.id)).then(function (res) {
+        if (res.status === 200) {
+          res.data.projects.forEach(function (p) {
+            _this2.clientProjects.push({
+              id: p.id,
+              name: p.name,
+              language: p.name,
+              amount: p.amount
+            });
+          });
+        }
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    calculateAmounts: function calculateAmounts(type) {
+      if (this.form.project) {
+        var _this$form$project = this.form.project,
+            id = _this$form$project.id,
+            name = _this$form$project.name,
+            amount = _this$form$project.amount;
+        this.form.amount = amount;
+
+        if (type === 'discount') {
+          this.form.grand = Number(amount) + Number(this.form.discount);
+        } else {
+          if (this.form.discount) {
+            this.form.grand = Number(this.form.discount) + Number(amount);
+          } else {
+            this.form.grand = amount;
+          }
+        }
+      }
     }
   }
 });
@@ -31269,7 +31752,8 @@ var render = function() {
                         href: "/invoices",
                         active:
                           _vm.$page.currentRouteName == "invoices" ||
-                          _vm.$page.currentRouteName == "invoice.create"
+                          _vm.$page.currentRouteName == "invoice.create" ||
+                          _vm.$page.currentRouteName == "invoice.show"
                       }
                     },
                     [
@@ -36918,11 +37402,7 @@ var render = function() {
                                               staticClass:
                                                 "hover:font-semibold",
                                               attrs: {
-                                                href:
-                                                  "/invoices/" +
-                                                  invoice.id +
-                                                  "-" +
-                                                  invoice.name
+                                                href: "/invoices/" + invoice.id
                                               }
                                             },
                                             [
@@ -37243,6 +37723,1091 @@ var render = function() {
                   { staticClass: "my-6" },
                   [_c("pagination", { attrs: { links: _vm.invoices.links } })],
                   1
+                )
+              ])
+            ]
+          )
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Invoices/Show.vue?vue&type=template&id=69c5ca66&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Invoices/Show.vue?vue&type=template&id=69c5ca66& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "app-layout",
+    {
+      scopedSlots: _vm._u([
+        {
+          key: "header",
+          fn: function() {
+            return [
+              _c("div", { staticClass: "flex justify-between items-center" }, [
+                _c(
+                  "h2",
+                  {
+                    staticClass:
+                      "font-semibold text-xl text-gray-800 leading-tight"
+                  },
+                  [_vm._v("\n                \tInvoices\n            \t")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "px-3 py-2 cursor-pointer bg-yellow-600 hover:bg-yellow-500 text-white rounded",
+                        on: {
+                          click: function($event) {
+                            return _vm.toggleEditInvoice()
+                          }
+                        }
+                      },
+                      [_vm._v("Edit")]
+                    ),
+                    _vm._v(" "),
+                    _c("transition", { attrs: { name: "fade" } }, [
+                      _vm.editInvoice
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20"
+                            },
+                            [
+                              _c("div", {
+                                staticClass: "h-full w-full bg-gray-300",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.toggleEditInvoice()
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30"
+                                },
+                                [
+                                  _c("div", { staticClass: "text-right" }, [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: " cursor-pointer",
+                                        attrs: {
+                                          type: "button",
+                                          "data-dismiss": "modal",
+                                          "aria-label": "Close"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.toggleEditInvoice()
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "svg",
+                                          {
+                                            staticClass:
+                                              "hover:opacity-75 fill-current text-gray-900",
+                                            attrs: {
+                                              width: "18",
+                                              height: "18",
+                                              viewBox: "0 0 18 18"
+                                            }
+                                          },
+                                          [
+                                            _c("path", {
+                                              attrs: {
+                                                d:
+                                                  "M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "form",
+                                    {
+                                      on: {
+                                        submit: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.updateInvoice($event)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("div", [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "mb-4 flex justify-between items-center"
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "flex items-center"
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "ml-3 font-semibold text-md"
+                                                  },
+                                                  [_vm._v("Edit")]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded",
+                                                attrs: { type: "submit" }
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "ml-2" },
+                                                  [_vm._v("Save")]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _vm.processing
+                                          ? _c("div", {
+                                              staticClass: "spinner"
+                                            })
+                                          : _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "w-full  flex flex-col"
+                                              },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "w-full flex flex-col mb-6 md:mb-0"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "mb-6 flex flex-col w-full"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "label",
+                                                          {
+                                                            attrs: {
+                                                              for: "client"
+                                                            }
+                                                          },
+                                                          [_vm._v("Client:")]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c("multiselect", {
+                                                          attrs: {
+                                                            options:
+                                                              _vm.options,
+                                                            placeholder:
+                                                              "Select one",
+                                                            label: "name",
+                                                            "track-by": "name"
+                                                          },
+                                                          model: {
+                                                            value:
+                                                              _vm.form.client,
+                                                            callback: function(
+                                                              $$v
+                                                            ) {
+                                                              _vm.$set(
+                                                                _vm.form,
+                                                                "client",
+                                                                $$v
+                                                              )
+                                                            },
+                                                            expression:
+                                                              "form.client"
+                                                          }
+                                                        }),
+                                                        _vm._v(" "),
+                                                        _vm.$page.errors.client
+                                                          ? _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "text-red-500 text-md font-semibold mt-2"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
+                                                                    _vm._s(
+                                                                      _vm.$page
+                                                                        .errors
+                                                                        .client
+                                                                    ) +
+                                                                    "\n\t\t\t\t\t\t    \t\t\t\t"
+                                                                )
+                                                              ]
+                                                            )
+                                                          : _vm._e()
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "mb-6 flex flex-col w-full"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "label",
+                                                          {
+                                                            attrs: {
+                                                              for: "project"
+                                                            }
+                                                          },
+                                                          [_vm._v("Project:")]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _vm.clientProjects
+                                                          .length > 0
+                                                          ? _c(
+                                                              "div",
+                                                              [
+                                                                _c(
+                                                                  "multiselect",
+                                                                  {
+                                                                    attrs: {
+                                                                      options:
+                                                                        _vm.clientProjects,
+                                                                      placeholder:
+                                                                        "Select Project",
+                                                                      label:
+                                                                        "name",
+                                                                      "track-by":
+                                                                        "name"
+                                                                    },
+                                                                    model: {
+                                                                      value:
+                                                                        _vm.form
+                                                                          .project,
+                                                                      callback: function(
+                                                                        $$v
+                                                                      ) {
+                                                                        _vm.$set(
+                                                                          _vm.form,
+                                                                          "project",
+                                                                          $$v
+                                                                        )
+                                                                      },
+                                                                      expression:
+                                                                        "form.project"
+                                                                    }
+                                                                  }
+                                                                )
+                                                              ],
+                                                              1
+                                                            )
+                                                          : _vm._e(),
+                                                        _vm._v(" "),
+                                                        _vm.$page.errors.project
+                                                          ? _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "text-red-500 text-md font-semibold mt-2"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
+                                                                    _vm._s(
+                                                                      _vm.$page
+                                                                        .errors
+                                                                        .project
+                                                                    ) +
+                                                                    "\n\t\t\t\t\t\t    \t\t\t\t"
+                                                                )
+                                                              ]
+                                                            )
+                                                          : _vm._e()
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "mb-6 flex flex-col w-full"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "label",
+                                                          {
+                                                            attrs: {
+                                                              for: "discount"
+                                                            }
+                                                          },
+                                                          [_vm._v("Discount:")]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c("input", {
+                                                          directives: [
+                                                            {
+                                                              name: "model",
+                                                              rawName:
+                                                                "v-model",
+                                                              value:
+                                                                _vm.form
+                                                                  .discount,
+                                                              expression:
+                                                                "form.discount"
+                                                            }
+                                                          ],
+                                                          staticClass:
+                                                            "px-3 py-3 rounded border border-indigo-500 w-full",
+                                                          attrs: {
+                                                            id: "due",
+                                                            type: "number",
+                                                            min: "0"
+                                                          },
+                                                          domProps: {
+                                                            value:
+                                                              _vm.form.discount
+                                                          },
+                                                          on: {
+                                                            input: function(
+                                                              $event
+                                                            ) {
+                                                              if (
+                                                                $event.target
+                                                                  .composing
+                                                              ) {
+                                                                return
+                                                              }
+                                                              _vm.$set(
+                                                                _vm.form,
+                                                                "discount",
+                                                                $event.target
+                                                                  .value
+                                                              )
+                                                            }
+                                                          }
+                                                        }),
+                                                        _vm._v(" "),
+                                                        _vm.$page.errors
+                                                          .discount
+                                                          ? _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "text-red-500 text-md font-semibold mt-2"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
+                                                                    _vm._s(
+                                                                      _vm.$page
+                                                                        .errors
+                                                                        .discount
+                                                                    ) +
+                                                                    "\n\t\t\t\t\t\t    \t\t\t\t"
+                                                                )
+                                                              ]
+                                                            )
+                                                          : _vm._e()
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "mb-6 flex flex-col w-full"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "label",
+                                                          {
+                                                            attrs: {
+                                                              for: "due"
+                                                            }
+                                                          },
+                                                          [_vm._v("Due Date:")]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c("input", {
+                                                          directives: [
+                                                            {
+                                                              name: "model",
+                                                              rawName:
+                                                                "v-model",
+                                                              value:
+                                                                _vm.form.due,
+                                                              expression:
+                                                                "form.due"
+                                                            }
+                                                          ],
+                                                          staticClass:
+                                                            "px-3 py-3 rounded border border-indigo-500 w-full",
+                                                          attrs: {
+                                                            id: "due",
+                                                            type: "date"
+                                                          },
+                                                          domProps: {
+                                                            value: _vm.form.due
+                                                          },
+                                                          on: {
+                                                            input: function(
+                                                              $event
+                                                            ) {
+                                                              if (
+                                                                $event.target
+                                                                  .composing
+                                                              ) {
+                                                                return
+                                                              }
+                                                              _vm.$set(
+                                                                _vm.form,
+                                                                "due",
+                                                                $event.target
+                                                                  .value
+                                                              )
+                                                            }
+                                                          }
+                                                        }),
+                                                        _vm._v(" "),
+                                                        _vm.$page.errors.due
+                                                          ? _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "text-red-500 text-md font-semibold mt-2"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
+                                                                    _vm._s(
+                                                                      _vm.$page
+                                                                        .errors
+                                                                        .due
+                                                                    ) +
+                                                                    "\n\t\t\t\t\t\t    \t\t\t\t"
+                                                                )
+                                                              ]
+                                                            )
+                                                          : _vm._e()
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _vm.form.project
+                                                      ? _c("div", [
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "mb-3 flex items-center"
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "label",
+                                                                {
+                                                                  staticClass:
+                                                                    "px-2 py-2 font-md font-semibold"
+                                                                },
+                                                                [_vm._v("Fee")]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "px-2 py-2"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "$ " +
+                                                                      _vm._s(
+                                                                        _vm.form
+                                                                          .amount
+                                                                      ) +
+                                                                      " "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "mb-3 flex items-center"
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "label",
+                                                                {
+                                                                  staticClass:
+                                                                    "px-2 py-2 font-md font-semibold"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Discount"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "px-2 py-2"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "$ " +
+                                                                      _vm._s(
+                                                                        _vm.form
+                                                                          .discount
+                                                                      ) +
+                                                                      " "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "mb-3 flex items-center"
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "label",
+                                                                {
+                                                                  staticClass:
+                                                                    "px-2 py-2 font-md font-semibold"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Grand"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "px-2 py-2"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "$ " +
+                                                                      _vm._s(
+                                                                        _vm.form
+                                                                          .grand
+                                                                      ) +
+                                                                      " "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                      ])
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    ])
+                  ],
+                  1
+                )
+              ])
+            ]
+          },
+          proxy: true
+        }
+      ])
+    },
+    [
+      _vm._v(" "),
+      _c("div", { staticClass: "py-6" }, [
+        _c("div", { staticClass: "max-w-7xl mx-auto sm:px-6 lg:px-8" }, [
+          _c(
+            "div",
+            { staticClass: "bg-white overflow-hidden shadow-xl sm:rounded-lg" },
+            [
+              _c("div", { staticClass: "bg-white rounded shadow px-3 py-3" }, [
+                _c("div", { staticClass: "mb-6 " }, [
+                  _c(
+                    "div",
+                    { staticClass: "flex justify-between items-center" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "flex items-center" },
+                        [
+                          _c(
+                            "inertia-link",
+                            {
+                              staticClass: "btn-indigo",
+                              attrs: { href: "/clients", "preserve-scroll": "" }
+                            },
+                            [
+                              _c("div", { staticClass: "flex items-center" }, [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded"
+                                  },
+                                  [_vm._v("<")]
+                                )
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            { staticClass: "ml-3 font-semibold text-md" },
+                            [
+                              _vm._v(
+                                " " +
+                                  _vm._s(_vm.client.first_name) +
+                                  " " +
+                                  _vm._s(_vm.client.last_name)
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("transition", { attrs: { name: "fade" } }, [
+                        _vm.$page.flash.success
+                          ? _c(
+                              "div",
+                              {
+                                staticClass:
+                                  " mr-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center",
+                                attrs: { id: "Message" }
+                              },
+                              [
+                                _c("span", { staticClass: "mr-3" }, [
+                                  _vm._v(_vm._s(_vm.$page.flash.success))
+                                ])
+                              ]
+                            )
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "flex items-center" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "px-2 py-2 text-center rounded mr-2 border"
+                          },
+                          [_vm._v("Status")]
+                        ),
+                        _vm._v(" "),
+                        _c("span", {
+                          staticClass: "mr-3 px-2 py-2 rounded text-white ",
+                          class: Number(_vm.invoice.is_paid)
+                            ? "bg-green-600 hover:bg-green-500"
+                            : "bg-yellow-300",
+                          domProps: {
+                            textContent: _vm._s(
+                              Number(_vm.invoice.is_paid) ? "Paid" : "Unpaid"
+                            )
+                          }
+                        }),
+                        _vm._v(" "),
+                        Number(_vm.invoice.is_sent)
+                          ? _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "cursor-pointer px-2 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded"
+                              },
+                              [_vm._v("Sent")]
+                            )
+                          : _c("div", { staticClass: "relative" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "flex items-center rounded border"
+                                },
+                                [
+                                  _c("span", {
+                                    staticClass:
+                                      "mr-3 px-2 py-2 rounded text-white cursor-pointer",
+                                    class: Number(_vm.invoice.is_sent)
+                                      ? "bg-green-600 hover:bg-green-500"
+                                      : "text-gray-900",
+                                    domProps: {
+                                      textContent: _vm._s(
+                                        Number(_vm.invoice.is_sent)
+                                          ? "Sent"
+                                          : "Not Sent"
+                                      )
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "svg",
+                                    {
+                                      staticClass:
+                                        "feather feather-chevron-down text-gray-900 cursor-pointer",
+                                      attrs: {
+                                        width: "24",
+                                        height: "24",
+                                        viewBox: "0 0 24 24",
+                                        fill: "none",
+                                        stroke: "currentColor",
+                                        "stroke-width": "2",
+                                        "stroke-linecap": "round",
+                                        "stroke-linejoin": "round"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.sendNow = !_vm.sendNow
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("polyline", {
+                                        attrs: { points: "6 9 12 15 18 9" }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm.sendNow
+                                ? _c("span", {
+                                    staticClass:
+                                      "absolute left-0\n\t\t\t\t                        \t\ttop-0 mt-10 cursor-pointer px-2 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded",
+                                    domProps: {
+                                      textContent: _vm._s(
+                                        Number(_vm.invoice.is_sent)
+                                          ? ""
+                                          : "Send Now"
+                                      )
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.sendInvoice()
+                                      }
+                                    }
+                                  })
+                                : _vm._e()
+                            ])
+                      ])
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "flex flex-col md:flex-row mb-6" }, [
+                  _c(
+                    "div",
+                    { staticClass: "w-full md:w-1/2 md:mr- flex flex-col" },
+                    [
+                      _c("div", { staticClass: "flex  mb-3" }, [
+                        _c(
+                          "label",
+                          { staticClass: "w-24 border rounded-l py-2 px-2" },
+                          [_vm._v("ID:")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "h2",
+                          {
+                            staticClass:
+                              "text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2"
+                          },
+                          [_vm._v(_vm._s(_vm.invoice.generatedId) + " ")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "flex  mb-3" }, [
+                        _c(
+                          "label",
+                          { staticClass: "w-24 border rounded-l py-2 px-2" },
+                          [_vm._v("Payment")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "h2",
+                          {
+                            staticClass:
+                              "text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2"
+                          },
+                          [_vm._v(_vm._s(_vm.invoice.payment_type))]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "flex  mb-3" }, [
+                        _c(
+                          "label",
+                          { staticClass: "w-24 border rounded-l py-2 px-2" },
+                          [_vm._v("Due Date")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "h2",
+                          {
+                            staticClass:
+                              "text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2"
+                          },
+                          [_vm._v(_vm._s(_vm.format(_vm.invoice.due)))]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "flex  mb-3" }, [
+                        _c(
+                          "label",
+                          { staticClass: "w-24 border rounded-l py-2 px-2" },
+                          [_vm._v("Created At")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "h2",
+                          {
+                            staticClass:
+                              "text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2"
+                          },
+                          [_vm._v(_vm._s(_vm.format(_vm.invoice.created_at)))]
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "w-full md:w-1/2 flex flex-col" }, [
+                    _c("div", { staticClass: "flex  mb-3" }, [
+                      _c(
+                        "label",
+                        { staticClass: "w-32 border rounded-l py-2 px-2" },
+                        [_vm._v("Subtotal")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "h2",
+                        {
+                          staticClass:
+                            "text-lg font-md  text-gray-700 border rounded-r py-2 px-2"
+                        },
+                        [_vm._v("$ " + _vm._s(_vm.invoice.sub_total))]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex  mb-3" }, [
+                      _c(
+                        "label",
+                        { staticClass: "w-32 border rounded-l py-2 px-2" },
+                        [_vm._v("Discount:")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "h2",
+                        {
+                          staticClass:
+                            "text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2"
+                        },
+                        [_vm._v("$ " + _vm._s(_vm.invoice.discount) + " ")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex  mb-3" }, [
+                      _c(
+                        "label",
+                        { staticClass: "w-32 border rounded-l py-2 px-2" },
+                        [_vm._v("Grand Total:")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "h2",
+                        {
+                          staticClass:
+                            "text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2"
+                        },
+                        [_vm._v("$ " + _vm._s(_vm.invoice.grand_total) + " ")]
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "border-t  pt-4 flex flex-col md:flex-row" },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "w-full md:w-1/2 md:mr- flex flex-col" },
+                      [
+                        _c("h3", { staticClass: "font-md mb-2" }, [
+                          _vm._v("Client Info")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "flex  mb-3" }, [
+                          _c(
+                            "label",
+                            { staticClass: "w-24 border rounded-l py-2 px-2" },
+                            [_vm._v("Name")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "h2",
+                            {
+                              staticClass:
+                                "text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.client.first_name) +
+                                  " " +
+                                  _vm._s(_vm.client.last_name)
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "flex  mb-3" }, [
+                          _c(
+                            "label",
+                            { staticClass: "w-24 border rounded-l py-2 px-2" },
+                            [_vm._v("Email")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "h2",
+                            {
+                              staticClass:
+                                "text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2"
+                            },
+                            [_vm._v(_vm._s(_vm.client.email))]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "flex  mb-3" }, [
+                          _c(
+                            "label",
+                            { staticClass: "w-24 border rounded-l py-2 px-2" },
+                            [_vm._v("Gender")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "h2",
+                            {
+                              staticClass:
+                                "text-lg font-md text-gray-700 border rounded-r py-2 px-2"
+                            },
+                            [_vm._v(_vm._s(_vm.client.gender))]
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "w-full md:w-1/2 flex flex-col" },
+                      [
+                        _c("h3", { staticClass: "font-md mb-2" }, [
+                          _vm._v("Project Info")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "flex  mb-3" }, [
+                          _c(
+                            "label",
+                            { staticClass: "w-24 border rounded-l py-2 px-2" },
+                            [_vm._v("Name")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "h2",
+                            {
+                              staticClass:
+                                "text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2"
+                            },
+                            [_vm._v(_vm._s(_vm.project.name) + " ")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "flex  mb-3" }, [
+                          _c(
+                            "label",
+                            { staticClass: "w-24 border rounded-l py-2 px-2" },
+                            [_vm._v("Amount")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "h2",
+                            {
+                              staticClass:
+                                "text-lg font-semibold text-gray-700 capitalize border rounded-r py-2 px-2"
+                            },
+                            [_vm._v("$ " + _vm._s(_vm.project.amount))]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
                 )
               ])
             ]
@@ -52399,6 +53964,8 @@ var map = {
 	"./Invoices/Create.vue": "./resources/js/Pages/Invoices/Create.vue",
 	"./Invoices/Index": "./resources/js/Pages/Invoices/Index.vue",
 	"./Invoices/Index.vue": "./resources/js/Pages/Invoices/Index.vue",
+	"./Invoices/Show": "./resources/js/Pages/Invoices/Show.vue",
+	"./Invoices/Show.vue": "./resources/js/Pages/Invoices/Show.vue",
 	"./Profile/DeleteUserForm": "./resources/js/Pages/Profile/DeleteUserForm.vue",
 	"./Profile/DeleteUserForm.vue": "./resources/js/Pages/Profile/DeleteUserForm.vue",
 	"./Profile/LogoutOtherBrowserSessionsForm": "./resources/js/Pages/Profile/LogoutOtherBrowserSessionsForm.vue",
@@ -53020,6 +54587,77 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_4711749c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_4711749c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Invoices/Show.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/Pages/Invoices/Show.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Show_vue_vue_type_template_id_69c5ca66___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Show.vue?vue&type=template&id=69c5ca66& */ "./resources/js/Pages/Invoices/Show.vue?vue&type=template&id=69c5ca66&");
+/* harmony import */ var _Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Show.vue?vue&type=script&lang=js& */ "./resources/js/Pages/Invoices/Show.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Show_vue_vue_type_template_id_69c5ca66___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Show_vue_vue_type_template_id_69c5ca66___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Pages/Invoices/Show.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Invoices/Show.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/Pages/Invoices/Show.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Show.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Invoices/Show.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Invoices/Show.vue?vue&type=template&id=69c5ca66&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/Pages/Invoices/Show.vue?vue&type=template&id=69c5ca66& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Show_vue_vue_type_template_id_69c5ca66___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Show.vue?vue&type=template&id=69c5ca66& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Invoices/Show.vue?vue&type=template&id=69c5ca66&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Show_vue_vue_type_template_id_69c5ca66___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Show_vue_vue_type_template_id_69c5ca66___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

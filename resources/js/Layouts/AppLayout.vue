@@ -29,7 +29,8 @@
                             <jet-nav-link href="/invoices" 
                                 :active="
                                     $page.currentRouteName == 'invoices' ||
-                                    $page.currentRouteName == 'invoice.create' 
+                                    $page.currentRouteName == 'invoice.create' ||
+                                    $page.currentRouteName == 'invoice.show'
                                 ">
                                 Invoices
                             </jet-nav-link>
