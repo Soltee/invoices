@@ -35,10 +35,17 @@
 	                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 	                    <div class="bg-white rounded shadow px-3 py-3">
 
-						    <div class="mb-6 flex justify-between items-center">
-						      <input class="px-3 py-3 rounded border border-indigo-500 focus:border-indigo-600" v-model="keyword"  />
-						      	
-						      	
+						    <div class="mb-6 flex items-center">
+						        <input class="flex-1 px-3 py-3 rounded border border-indigo-500 focus:border-indigo-600" v-model="keyword"  />
+						        <div class="py-3 px-3">
+						        <multiselect 
+									v-model="selectedFilter" 
+									:options="options"  
+									placeholder="Filters" 
+									label="name" track-by="name">
+									
+								</multiselect>
+						    	</div>
 						    </div>
 
 							<div  class=" overflow-x-auto">
@@ -186,31 +193,62 @@
 	var dayjs = require('dayjs')
 	import 'sweetalert2/dist/sweetalert2.min.css';
 	import VueSweetalert2 from 'vue-sweetalert2';
+	import Multiselect from 'vue-multiselect'
 
 	export default {
 		components: {
 			AppLayout,
-            Pagination
+            Pagination,
+            Multiselect
         },
 		props :  {
 			invoices : Object,
-			search  : String
+			search  : String,
+			filter   : String,
 		},
 		data (){
 			return {
 				processing : false,
         		keyword: this.search,
+        		selectedFilter  : {
+        			name : this.filter,
+					language  : this.filter
+        		},
         		deleteModal:false,
         		selected : null,
+        		options  : [
+        			{
+						name : 'Paid',
+						language  : 'Paid'
+					},
+					{
+						name : 'Sent',
+						language  : 'Sent'
+					}
+        		]
 			}
 		},
 		watch: {
 			keyword: {
 			    handler: throttle(function() {
-			        this.$inertia.replace(route('invoices', {search :this.keyword}))
+			    	if(this.keyword.length > 0){
+				        this.$inertia.replace(route('invoices', {
+				        	search :this.keyword,
+				        	filter :this.selectedFilter.name
+				        }));
+			    	}
 			      }, 150),
 			   	deep: true,
 			},
+			selectedFilter: {
+				handler: throttle(function() {
+			        this.$inertia.replace(route('invoices', {
+			        	search :this.keyword,
+			        	filter :this.selectedFilter.name
+			        }))
+			      }, 150),
+			   	deep: true,
+			}
 		},
 		methods:{
 			reset() {
@@ -245,3 +283,5 @@
 		}
 	};
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+

@@ -29,11 +29,12 @@ class InvoiceController extends Controller
 
         return Inertia::render('Invoices/Index', [
             'search'     => request()->search,
+            'filter'     => request()->filter,
             'invoices'   => Auth::user()->invoices()
                             ->latest()
                             ->with('project')
                             ->with('client')
-                            ->filter(request()->only('search'))
+                            ->filter(request()->only('search', 'filter'))
                             ->paginate(10)
                             ->transform(function ($invoice) {
                                 return [
@@ -44,8 +45,6 @@ class InvoiceController extends Controller
                                     'is_sent'       => $invoice->is_sent,
                                     'due'           => $invoice->due,
                                     'grand_total'   => $invoice->grand_total,
-                                    // 'projects'      => $invoice->projects_count,
-                                    // 'clients'       => $invoice->clients_count,
                                     'created'       => $invoice->created_at
                                 ];
                             }),
