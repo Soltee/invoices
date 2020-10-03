@@ -32,9 +32,6 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
     //Projects Api
 	Route::get('/clients/projects/{client}/search', [ProjectController::class, 'client_projects']);
-	Route::post('/clients/project', [ProjectController::class, 'store']);
-	Route::put('/clients/projects/{project}', [ProjectController::class, 'update']);
-	Route::delete('/clients/project/{project}', [ProjectController::class, 'destroy']);
 
 	//clients porjects
 	Route::get('/client_projects/{client}', [ProjectController::class, 'show']);
@@ -57,6 +54,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
 	//Projects
 	Route::get('/projects', [ProjectController::class, 'index'])
-								->name('projects');						
+								->name('projects');	
+	Route::post('/projects', [ProjectController::class, 'store']);
+	Route::put('/projects/{project}', [ProjectController::class, 'update']);
+	Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);					
 
 });

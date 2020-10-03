@@ -24,6 +24,7 @@ class ProjectController extends Controller
             'search'     => request()->search,
             'filter'     => request()->filter,
             'projects'   => Auth::user()->projects()
+                            ->latest()
                             ->with('client')
                             ->withCount('invoices')
                             ->filter(request()->only('search', 'filter'))
@@ -36,6 +37,17 @@ class ProjectController extends Controller
                                     'amount'          => $client->amount,
                                     'invoices'        => $client->invoices_count,
                                     'created'         => $client->created_at
+                                ];
+                            }),
+            'clients'   => Auth::user()->clients()
+                            ->latest()
+                            ->paginate(0)
+                            ->transform(function ($client) {
+                                $name = $client->first_name . '' . $client->last_name;
+                                return [
+                                    'id'              => $client->id,
+                                    'name'            => $name,
+                                    'language'        => $name
                                 ];
                             }),
             ]);
@@ -69,18 +81,20 @@ class ProjectController extends Controller
     	$data = $request->validate([
     			'client'           => 'required|numeric',
     			'project_name'     => 'required|string|min:3|unique:projects',
-    			'amount'           => 'required|numeric',
+                'amount'           => 'required|numeric',
+                'is_completed'     => 'nullable|bool',
     		]);
 
     	// dd($data);
     	$client = Client::findOrfail($data['client']);
 
+        $completedArray = ['is_completed' => $data['is_completed']];
     	//Create Project
-    	$client->projects()->create([
+    	$client->projects()->create(array_merge([
     			'user_id'            => Auth::user()->id,
     			'name'               => $data['project_name'],
     			'amount'             => $data['amount']
-    		]);
+    		]), $completedArray ?? []);
 
     	return response()->json(['project' => $data], 201);
     }

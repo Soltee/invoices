@@ -702,7 +702,7 @@
 				this.amountErr      = [];
 
 				//Post
-     		    axios.post(`/clients/project`, this.projectForm)
+     		    axios.post(`/projects`, this.projectForm)
 					.then(res => {
 						this.processing = false;
 						if(res.status === 201){
@@ -738,7 +738,7 @@
 				this.amountErr      = [];
 
 				//PUt
-     		    axios.put(`/clients/projects/${this.selected.id}`, this.projectForm)
+     		    axios.put(`/projects/${this.selected.id}`, this.projectForm)
 					.then(res => {
 						this.processing = false;
 						if(res.status === 200){
@@ -771,7 +771,7 @@
 
 
 
-				axios.delete(`/clients/project/${this.selected.id}`)
+				axios.delete(`/projects/${this.selected.id}`)
 				.then(res => {
 						this.processing = false;
 						if(res.status === 204){
