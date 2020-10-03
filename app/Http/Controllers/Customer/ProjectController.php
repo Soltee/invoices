@@ -14,21 +14,47 @@ use Inertia\Inertia;
 class ProjectController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a list of projects.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Client $client)
+    public function index()
     {
-    	// echo ($client->id);
-    	$search  = request()->keyword;
-    	$query   = $client->projects()->latest();
+        return Inertia::render('Projects/Index', [
+            'search'     => request()->search,
+            'filter'     => request()->filter,
+            'projects'   => Auth::user()->projects()
+                            ->with('client')
+                            ->withCount('invoices')
+                            ->filter(request()->only('search', 'filter'))
+                            ->paginate(10)
+                            ->transform(function ($client) {
+                                return [
+                                    'id'              => $client->id,
+                                    'name'            => $client->name,
+                                    'is_completed'    => $client->is_completed,
+                                    'amount'          => $client->amount,
+                                    'invoices'        => $client->invoices_count,
+                                    'created'         => $client->created_at
+                                ];
+                            }),
+            ]);
+    }
 
-    	if($search){
-    		$query  = $query->where('name', 'LIKE', '%'.$search.'%');
-    	}
+    /**
+     * Return client's projects to client show inertia view.
+     */
+    public function client_projects(Client $client)
+    {
+        // echo ($client->id);
+        $search  = request()->keyword;
+        $query   = $client->projects()->latest();
 
-    	return $query->paginate(5);
+        if($search){
+            $query  = $query->where('name', 'LIKE', '%'.$search.'%');
+        }
+
+        return $query->paginate(5);
     }
 
     /**

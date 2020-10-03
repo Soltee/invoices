@@ -26,6 +26,12 @@
                                 ">
                                 Clients
                             </jet-nav-link>
+                            <jet-nav-link href="/projects" 
+                                :active="
+                                    $page.currentRouteName == 'projects'
+                                ">
+                                Projects
+                            </jet-nav-link>
                             <jet-nav-link href="/invoices" 
                                 :active="
                                     $page.currentRouteName == 'invoices' ||

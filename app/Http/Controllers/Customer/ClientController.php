@@ -21,7 +21,6 @@ class ClientController extends Controller
      */
     public function index()
     {
-    	$search  = request()->search;
 
         return Inertia::render('Clients/Index', [
             'search'    => request()->search,
