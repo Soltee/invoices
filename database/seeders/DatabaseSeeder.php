@@ -36,64 +36,74 @@ class DatabaseSeeder extends Seeder
             'email_verified_at'  => now()
         ]);
 
-        for ($i=1; $i <= 30; $i++) { 
+        Client::factory(50)->create([
+            'user_id' => $user->id
+        ]);
+        Project::factory(80)->create([
+            'user_id' => $user->id
+        ]);
 
-            $gender   = Arr::random(['MALE', 'FEMALE', 'OTHERS']);
-            $client   = Client::create([
-                    'user_id'      => $user->id,
-                    'first_name'   => $faker->firstName,
-                    'last_name'    => $faker->lastName,
-                    'email'        => $faker->unique()->email,
-                    'gender'       => $gender
-                ]);
+        Invoice::factory(60)->create([
+            'user_id' => $user->id
+        ]);
+        // for ($i=1; $i <= 30; $i++) { 
+
+        //     $gender   = Arr::random(['MALE', 'FEMALE', 'OTHERS']);
+        //     $client   = Client::create([
+        //             'user_id'      => $user->id,
+        //             'first_name'   => $faker->firstName,
+        //             'last_name'    => $faker->lastName,
+        //             'email'        => $faker->unique()->email,
+        //             'gender'       => $gender
+        //         ]);
 
 
-            $bool           = Arr::random([true, false]);
-            $project        = Project::create([
-                    'user_id'       => $user->id,
-                    'client_id'     => $client->id,
-                    'name'          => $faker->name,
-                    'amount'        => $faker->numberBetween(1000, 5000),
-                    'is_completed'  => $bool
-                ]);
+        //     $bool           = Arr::random([true, false]);
+        //     $project        = Project::create([
+        //             'user_id'       => $user->id,
+        //             'client_id'     => $client->id,
+        //             'name'          => $faker->name,
+        //             'amount'        => $faker->numberBetween(1000, 5000),
+        //             'is_completed'  => $bool
+        //         ]);
 
 
-            $genId       = Str::random(11);
-            $payment     = Arr::random(['stripe', 'paypal', 'braintree']);
-            $due         = Arr::random([
-                                now()->addDays(Arr::random([10, 15, 18, 20, 24, 32, 40, 50, 44])),
-                                now()->subDays(Arr::random([10, 15, 18, 20, 24, 32, 40, 50, 44]))
-                            ]);
-            $created     = Arr::random([
-                                now(),
-                                now()->subDays(Arr::random([10, 15, 18, 20, 24, 32, 40, 50, 44]))
-                            ]);
+        //     $genId       = Str::random(11);
+        //     $payment     = Arr::random(['stripe', 'paypal', 'braintree']);
+        //     $due         = Arr::random([
+        //                         now()->addDays(Arr::random([10, 15, 18, 20, 24, 32, 40, 50, 44])),
+        //                         now()->subDays(Arr::random([10, 15, 18, 20, 24, 32, 40, 50, 44]))
+        //                     ]);
+        //     $created     = Arr::random([
+        //                         now(),
+        //                         now()->subDays(Arr::random([10, 15, 18, 20, 24, 32, 40, 50, 44]))
+        //                     ]);
 
-            $amount            = $project->amount;
-            $discount          = $faker->numberBetween(0, 400);
-            $grand             = $amount + $discount;
+        //     $amount            = $project->amount;
+        //     $discount          = $faker->numberBetween(0, 400);
+        //     $grand             = $amount + $discount;
 
-            if($bool){
-                $feedback      = $faker->sentence(300);
-            }
+        //     if($bool){
+        //         $feedback      = $faker->sentence(300);
+        //     }
 
-            Invoice::create([
-                    'user_id'            => $user->id,
-                    'client_id'          => $client->id,
-                    'project_id'         => $project->id,
-                    'generatedId'        => $genId,
-                    'payment_type'       => $payment,
-                    'is_paid'            => $bool,
-                    'is_sent'            => $bool,
-                    'due'                => $due,
-                    'feedback'           => $feedback ?? '',
-                    'sub_total'          => $amount,
-                    'discount'           => $discount,
-                    'grand_total'        => $grand,
-                    'created_at'         => $created
-                ]);
+        //     Invoice::create([
+        //             'user_id'            => $user->id,
+        //             'client_id'          => $client->id,
+        //             'project_id'         => $project->id,
+        //             'generatedId'        => $genId,
+        //             'payment_type'       => $payment,
+        //             'is_paid'            => $bool,
+        //             'is_sent'            => $bool,
+        //             'due'                => $due,
+        //             'feedback'           => $feedback ?? '',
+        //             'sub_total'          => $amount,
+        //             'discount'           => $discount,
+        //             'grand_total'        => $grand,
+        //             'created_at'         => $created
+        //         ]);
 
-        }
+        // }
 
 
     }

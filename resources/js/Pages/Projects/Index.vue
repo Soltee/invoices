@@ -73,7 +73,7 @@
 													placeholder="Select one" 
 													label="name" track-by="name"></multiselect>
 
-
+												<h5 class="text-md font-semibold mt-2 text-yellow-400">NOTE: Client cannot be changed later on.</h5>
 							    				<!-- Err -->
 							    				<div class="mt-2">
 							    				<div 
@@ -232,7 +232,7 @@
 						                        
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
 						                            <div class="flex justify-end items-center">
-						                                <a 	:href="`/projects/${project.id}`"
+						                                <a 	:href="`/projects/${project.id}-${project.name}`"
 						                                    class="hover:font-semibold" 
 						                                     >
 						                                    <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-gray-900 hover:opacity-75"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>

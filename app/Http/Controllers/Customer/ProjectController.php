@@ -107,22 +107,26 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        // dd($request->all());
         $data = $request->validate([
                 'client'           => 'required|numeric',
                 'project_name'     => 'required|string|min:3|unique:projects',
                 'amount'           => 'required|numeric',
+                'is_completed'     => 'nullable|bool',
             ]);
 
         // dd($data);
         $client = Client::findOrfail($data['client']);
 
-        //Create Project
-        $project->update([
-                'user_id'            => Auth::user()->id,
+        $completedArray = ['is_completed' => $data['is_completed']];
+
+        //Update Project
+        $project->update(array_merge(
+            [
                 'name'               => $data['project_name'],
                 'amount'             => $data['amount']
-            ]);
+            ], 
+            $completedArray ?? []
+        ));
 
         return response()->json(['project' => $data], 200);
     }
@@ -134,21 +138,31 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Project $project, $slug)
     {
-        $client  = Client::findOrfail($id);
-
-        return response()->json([
-            'projects' => $client->projects
-                                ->map(function($p){
-                                    return [
-                                        'id'          => $p->id, 
-                                        'name'        => $p->name, 
-                                        'amount'      => $p->amount
-                                    ];
-                                })
-        ], 200);
+        return Inertia::render('Projects/Show', [ 
+            'project' => $project,
+            'client'  => $project->client,
+            'invoices'  => $project->invoices()
+                                ->latest()
+                                ->paginate(1)
+        ]);
     }
+    // public function show($id)
+    // {
+    //     $client  = Client::findOrfail($id);
+
+    //     return response()->json([
+    //         'projects' => $client->projects
+    //                             ->map(function($p){
+    //                                 return [
+    //                                     'id'          => $p->id, 
+    //                                     'name'        => $p->name, 
+    //                                     'amount'      => $p->amount
+    //                                 ];
+    //                             })
+    //     ], 200);
+    // }
 
     /**
      * Remove the specified resource from storage.

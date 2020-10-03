@@ -55,6 +55,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 	//Projects
 	Route::get('/projects', [ProjectController::class, 'index'])
 								->name('projects');	
+	Route::get('/projects/{project}-{slug}', [ProjectController::class, 'show'])
+								->name('project.show');
 	Route::post('/projects', [ProjectController::class, 'store']);
 	Route::put('/projects/{project}', [ProjectController::class, 'update']);
 	Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);					
