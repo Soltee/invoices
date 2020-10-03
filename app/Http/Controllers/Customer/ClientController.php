@@ -167,6 +167,7 @@ class ClientController extends Controller
         	$invoice->delete();
         });
 
+
         $client->projects()->each(function($project){
         	$project->delete();
         });

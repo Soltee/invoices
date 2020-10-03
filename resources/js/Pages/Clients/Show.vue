@@ -142,9 +142,45 @@
 						    </div>
 
 						</div>
-
-
 	                </transition>
+
+	                <!-- Delete Modal -->
+
+					<span 
+				        	@click="
+				        		selected = client.id;
+				        		toggleDeleteClientModal();" 
+				        	class="ml-3 px-3 py-2 cursor-pointer bg-red-600 hover:bg-red-500 text-white rounded">Delete</span>
+				    </span>
+					<!-- Delete Modal -->
+					<transition name="fade">
+			        	<div 
+							v-if="deleteClientModal"
+							class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+						        <div @click="toggleDeleteClientModal();" class="h-full w-full bg-gray-300" >
+						            
+						    	</div>
+							<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
+								<div class="text-right">
+							            <button @click="toggleDeleteClientModal();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
+							                <svg   width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75 fill-current text-gray-900">
+							                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+							                </svg>
+							            </button>
+
+							        </div>
+							        <div class="">
+							            <p class="mt-4 text-lg font-semibold text-green-800 text-center">Are you sure?</p>
+							            <div class="mt-6 mb-3 flex justify-end">
+							                <button @click="toggleDeleteClientModal();" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
+							                <button @click="deleteClient();" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Delete</button>
+							            </div>
+							    </div>
+
+						    </div>
+
+						</div>
+			        </transition>
 			    </div>
         	</div>
         </template>
@@ -334,7 +370,12 @@
 
 							                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
 							                            <div class="flex justify-end items-center">
-							                            	<svg 
+							                            	<a 	:href="`/projects/${project.id}-${project.name}`"
+						                                    class="hover:font-semibold" 
+						                                     >
+							                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-900 hover:opacity-75"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+							                                </a>
+							                            	<!-- <svg 
 							                            		@click="
 														    		selected = project
 														    		toggleEditProjectModal();"
@@ -348,7 +389,7 @@
 							                                    class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer">
 							                                             
 							                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete text-red-600 hover:text-red-500 ml-3"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
-							                                </div>
+							                                </div> -->
 
 							                                
 
@@ -375,8 +416,12 @@
 							                        
 							                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
 							                            <div class="flex justify-end items-center">
-							                            	
-														    <svg 
+							                            	<a 	:href="`/projects/${project.id}-${project.name}`"
+						                                    class="hover:font-semibold" 
+						                                     >
+						                                    	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-900 hover:opacity-75"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+						                                	</a>
+														    <!-- <svg 
 														    	@click="
 														    		selected = project;
 														    		toggleEditProjectModal();"
@@ -384,11 +429,11 @@
 														    	class="text-yellow-600 hover:text-yellow-500 w-6 h-6 cursor-pointer hover:opacity-50"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
 
 							                                <div @click="
-							                                	selected = project; toggleDeleteModal();"
+							                                	selected = project; toggleDeleteProjectModal();"
 							                                    class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer">
 							                                             
 							                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete text-red-600 hover:text-red-500 ml-3"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
-							                                </div>
+							                                </div> -->
 
 							                                
 
@@ -445,7 +490,7 @@
 							</div>
 
 
-							<!-- Edit Modal -->
+							<!-- Edit  Project Modal -->
 							<transition name="fade">
 					        	<div 
 									v-if="editProjectModal"
@@ -462,7 +507,6 @@
 									            </button>
 
 									    </div>
-									    <!--- Edit Project -->
 										<form @submit.prevent="updateProject">
 									        <div>
 									        	<div class="mb-4 flex justify-between items-center">
@@ -482,7 +526,6 @@
 											    <div v-if="processing" class="spinner"></div>
 
 									        	<div v-else class="w-full  flex flex-col">
-									        		<!-- {{selected.id}} -->
 											    	<div class="mb-6 flex flex-col"> 
 											    		<label for="project_name">Project name:</label>
 									    				<input id="project_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="projectForm.project_name" />
@@ -525,16 +568,16 @@
 					        </transition>
 
 					        <!-- Delete Modal -->
-							<transition name="fade">
+							<!-- <transition name="fade">
 					        	<div 
-									v-if="deleteModal"
+									v-if="deleteProjectModal"
 									class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
-								        <div @click="toggleDeleteModal();" class="h-full w-full bg-gray-300" >
+								        <div @click="toggleDeleteProjectModal();" class="h-full w-full bg-gray-300" >
 								            
 								    	</div>
 									<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
 										<div class="text-right">
-									            <button @click="toggleDeleteModal();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
+									            <button @click="toggleDeleteProjectModal();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
 									                <svg   width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75 fill-current text-gray-900">
 									                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
 									                </svg>
@@ -544,7 +587,7 @@
 									        <div class="">
 									            <p class="mt-4 text-lg font-semibold text-green-800 text-center">Are you sure?</p>
 									            <div class="mt-6 mb-3 flex justify-end">
-									                <button @click="toggleDeleteModal();" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
+									                <button @click="toggleDeleteProjectModal();" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
 									                <button @click="deleteProject();" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Delete</button>
 									            </div>
 									    </div>
@@ -552,7 +595,7 @@
 								    </div>
 
 								</div>
-					        </transition>
+					        </transition> -->
 							
 						</div>
 					</div>
@@ -583,9 +626,7 @@
 		data (){
 			return {
 				keyword     : this.search,
-				deleteModal :false,
 				processing  :false,
- 				editClientModal   : false,
 				clientForm  : {
 					first_name      : this.client.first_name,
 					last_name       : this.client.last_name,
@@ -610,6 +651,9 @@
  				searchErr    : [],
  				selected     : {},
  				editProjectModal : false,
+ 				editClientModal   : false,
+ 				deleteProjectModal : false,
+ 				deleteClientModal  : false
 			}
 		},
 		watch: {
@@ -693,6 +737,15 @@
 
 					});
      	
+			},
+			deleteClient(){
+				this.processing = true;
+				this.$inertia.delete(`/clients/${this.selected}`, {
+			        onStart: () => this.processing = true,
+			        onFinish: () => {
+			        		this.processing = false;
+			        	},
+			    });
 			},
 			createProject(){
 				this.processing = true;
@@ -797,8 +850,11 @@
 			toggleEditProjectModal(){
 				this.editProjectModal = !this.editProjectModal;
 			},
-			toggleDeleteModal(){
-				this.deleteModal = !this.deleteModal;
+			toggleDeleteProjectModal(){
+				this.deleteProjectModal = !this.deleteProjectModal;
+			},
+			toggleDeleteClientModal(){
+				this.deleteClientModal  = !this.deleteClientModal;
 			},
 			format(date){
 		    	return dayjs(date).format('ddd, MMM D, YYYY h:mm A');

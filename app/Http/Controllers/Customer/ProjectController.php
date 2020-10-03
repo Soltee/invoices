@@ -53,21 +53,6 @@ class ProjectController extends Controller
             ]);
     }
 
-    /**
-     * Return client's projects to client show inertia view.
-     */
-    public function client_projects(Client $client)
-    {
-        // echo ($client->id);
-        $search  = request()->keyword;
-        $query   = $client->projects()->latest();
-
-        if($search){
-            $query  = $query->where('name', 'LIKE', '%'.$search.'%');
-        }
-
-        return $query->paginate(5);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -148,22 +133,7 @@ class ProjectController extends Controller
                                 ->paginate(1)
         ]);
     }
-    // public function show($id)
-    // {
-    //     $client  = Client::findOrfail($id);
-
-    //     return response()->json([
-    //         'projects' => $client->projects
-    //                             ->map(function($p){
-    //                                 return [
-    //                                     'id'          => $p->id, 
-    //                                     'name'        => $p->name, 
-    //                                     'amount'      => $p->amount
-    //                                 ];
-    //                             })
-    //     ], 200);
-    // }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -172,6 +142,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $project->invoices()->each(function($invoice){
+            $invoice->delete();
+        });
 
         $project->delete();
 

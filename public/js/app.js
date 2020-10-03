@@ -2969,6 +2969,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3564,6 +3565,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Shared_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../Shared/Pagination */ "./resources/js/Shared/Pagination.vue");
 /* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/throttle */ "./node_modules/lodash/throttle.js");
 /* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_throttle__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4381,6 +4387,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4402,9 +4451,7 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
   data: function data() {
     return {
       keyword: this.search,
-      deleteModal: false,
       processing: false,
-      editClientModal: false,
       clientForm: {
         first_name: this.client.first_name,
         last_name: this.client.last_name,
@@ -4428,7 +4475,10 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
       searchData: [],
       searchErr: [],
       selected: {},
-      editProjectModal: false
+      editProjectModal: false,
+      editClientModal: false,
+      deleteProjectModal: false,
+      deleteClientModal: false
     };
   },
   watch: {
@@ -4519,8 +4569,21 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
         }
       });
     },
-    createProject: function createProject() {
+    deleteClient: function deleteClient() {
       var _this3 = this;
+
+      this.processing = true;
+      this.$inertia["delete"]("/clients/".concat(this.selected), {
+        onStart: function onStart() {
+          return _this3.processing = true;
+        },
+        onFinish: function onFinish() {
+          _this3.processing = false;
+        }
+      });
+    },
+    createProject: function createProject() {
+      var _this4 = this;
 
       this.processing = true; //Remove all errors
 
@@ -4528,49 +4591,10 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
       this.amountErr = []; //Post
 
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/projects", this.projectForm).then(function (res) {
-        _this3.processing = false;
-
-        if (res.status === 201) {
-          _this3.$swal("".concat(_this3.projectForm.project_name, " is created."));
-
-          _this3.projectForm = {
-            project_name: '',
-            amount: ''
-          };
-
-          _this3.$inertia.reload({
-            preserveScroll: true,
-            preserveState: false
-          });
-        }
-      })["catch"](function (err) {
-        _this3.processing = false;
-        var _err$response$data$er2 = err.response.data.errors,
-            project_name = _err$response$data$er2.project_name,
-            amount = _err$response$data$er2.amount;
-
-        if (project_name) {
-          _this3.projectNameErr = project_name;
-        }
-
-        if (amount) {
-          _this3.amountErr = amount;
-        }
-      });
-    },
-    updateProject: function updateProject() {
-      var _this4 = this;
-
-      this.processing = true; //Remove all errors
-
-      this.projectNameErr = [];
-      this.amountErr = []; //PUt
-
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.put("/projects/".concat(this.selected.id), this.projectForm).then(function (res) {
         _this4.processing = false;
 
-        if (res.status === 200) {
-          _this4.$swal("".concat(_this4.projectForm.project_name, " is updated."));
+        if (res.status === 201) {
+          _this4.$swal("".concat(_this4.projectForm.project_name, " is created."));
 
           _this4.projectForm = {
             project_name: '',
@@ -4584,9 +4608,9 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
         }
       })["catch"](function (err) {
         _this4.processing = false;
-        var _err$response$data$er3 = err.response.data.errors,
-            project_name = _err$response$data$er3.project_name,
-            amount = _err$response$data$er3.amount;
+        var _err$response$data$er2 = err.response.data.errors,
+            project_name = _err$response$data$er2.project_name,
+            amount = _err$response$data$er2.amount;
 
         if (project_name) {
           _this4.projectNameErr = project_name;
@@ -4597,17 +4621,24 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
         }
       });
     },
-    deleteProject: function deleteProject() {
+    updateProject: function updateProject() {
       var _this5 = this;
 
-      this.processing = true;
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("/projects/".concat(this.selected.id)).then(function (res) {
+      this.processing = true; //Remove all errors
+
+      this.projectNameErr = [];
+      this.amountErr = []; //PUt
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.put("/projects/".concat(this.selected.id), this.projectForm).then(function (res) {
         _this5.processing = false;
 
-        if (res.status === 204) {
-          _this5.$swal("Project deleted.");
+        if (res.status === 200) {
+          _this5.$swal("".concat(_this5.projectForm.project_name, " is updated."));
 
-          _this5.deleteModal = false;
+          _this5.projectForm = {
+            project_name: '',
+            amount: ''
+          };
 
           _this5.$inertia.reload({
             preserveScroll: true,
@@ -4616,8 +4647,40 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
         }
       })["catch"](function (err) {
         _this5.processing = false;
+        var _err$response$data$er3 = err.response.data.errors,
+            project_name = _err$response$data$er3.project_name,
+            amount = _err$response$data$er3.amount;
 
-        _this5.$swal("Our server may have been a problem. Please try again.");
+        if (project_name) {
+          _this5.projectNameErr = project_name;
+        }
+
+        if (amount) {
+          _this5.amountErr = amount;
+        }
+      });
+    },
+    deleteProject: function deleteProject() {
+      var _this6 = this;
+
+      this.processing = true;
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("/projects/".concat(this.selected.id)).then(function (res) {
+        _this6.processing = false;
+
+        if (res.status === 204) {
+          _this6.$swal("Project deleted.");
+
+          _this6.deleteModal = false;
+
+          _this6.$inertia.reload({
+            preserveScroll: true,
+            preserveState: false
+          });
+        }
+      })["catch"](function (err) {
+        _this6.processing = false;
+
+        _this6.$swal("Our server may have been a problem. Please try again.");
       });
     },
     toggleEditClient: function toggleEditClient() {
@@ -4629,8 +4692,11 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
     toggleEditProjectModal: function toggleEditProjectModal() {
       this.editProjectModal = !this.editProjectModal;
     },
-    toggleDeleteModal: function toggleDeleteModal() {
-      this.deleteModal = !this.deleteModal;
+    toggleDeleteProjectModal: function toggleDeleteProjectModal() {
+      this.deleteProjectModal = !this.deleteProjectModal;
+    },
+    toggleDeleteClientModal: function toggleDeleteClientModal() {
+      this.deleteClientModal = !this.deleteClientModal;
     },
     format: function format(date) {
       return dayjs(date).format('ddd, MMM D, YYYY h:mm A');
@@ -4651,6 +4717,56 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _Jetstream_Welcome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../Jetstream/Welcome */ "./resources/js/Jetstream/Welcome.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4992,6 +5108,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-sweetalert2 */ "./node_modules/vue-sweetalert2/dist/index.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_6__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7104,6 +7227,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_sweetalert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-sweetalert2 */ "./node_modules/vue-sweetalert2/dist/index.js");
 /* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2/dist/sweetalert2.min.css */ "./node_modules/sweetalert2/dist/sweetalert2.min.css");
 /* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_5__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -32918,7 +33049,9 @@ var render = function() {
                     {
                       attrs: {
                         href: "/projects",
-                        active: _vm.$page.currentRouteName == "projects"
+                        active:
+                          _vm.$page.currentRouteName == "projects" ||
+                          _vm.$page.currentRouteName == "project.show"
                       }
                     },
                     [
@@ -34933,7 +35066,22 @@ var render = function() {
                             _vm.keyword = $event.target.value
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "px-3 py-3 rounded bg-red-600 text-white",
+                          on: {
+                            click: function($event) {
+                              _vm.keyword = ""
+                              _vm.selectedFilter = ""
+                            }
+                          }
+                        },
+                        [_vm._v("Reset")]
+                      )
                     ]
                   ),
                   _vm._v(" "),
@@ -35435,7 +35583,7 @@ var render = function() {
                                   ])
                                 }),
                                 _vm._v(" "),
-                                _vm.clients.length < 1
+                                _vm.clients.data.length < 1
                                   ? _c("tr", [
                                       _c("td", {}, [
                                         _c(
@@ -36181,6 +36329,141 @@ var render = function() {
                             ]
                           )
                         : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "ml-3 px-3 py-2 cursor-pointer bg-red-600 hover:bg-red-500 text-white rounded",
+                        on: {
+                          click: function($event) {
+                            _vm.selected = _vm.client.id
+                            _vm.toggleDeleteClientModal()
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    ),
+                    _vm._v(" "),
+                    _c("transition", { attrs: { name: "fade" } }, [
+                      _vm.deleteClientModal
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20"
+                            },
+                            [
+                              _c("div", {
+                                staticClass: "h-full w-full bg-gray-300",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.toggleDeleteClientModal()
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30"
+                                },
+                                [
+                                  _c("div", { staticClass: "text-right" }, [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: " cursor-pointer",
+                                        attrs: {
+                                          type: "button",
+                                          "data-dismiss": "modal",
+                                          "aria-label": "Close"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.toggleDeleteClientModal()
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "svg",
+                                          {
+                                            staticClass:
+                                              "hover:opacity-75 fill-current text-gray-900",
+                                            attrs: {
+                                              width: "18",
+                                              height: "18",
+                                              viewBox: "0 0 18 18"
+                                            }
+                                          },
+                                          [
+                                            _c("path", {
+                                              attrs: {
+                                                d:
+                                                  "M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", {}, [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass:
+                                          "mt-4 text-lg font-semibold text-green-800 text-center"
+                                      },
+                                      [_vm._v("Are you sure?")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "mt-6 mb-3 flex justify-end"
+                                      },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.toggleDeleteClientModal()
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Cancel")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.deleteClient()
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Delete")]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ]
+                          )
+                        : _vm._e()
                     ])
                   ],
                   1
@@ -36901,51 +37184,16 @@ var render = function() {
                                                 },
                                                 [
                                                   _c(
-                                                    "svg",
+                                                    "a",
                                                     {
                                                       staticClass:
-                                                        "text-yellow-600 hover:text-yellow-500 w-6 h-6 cursor-pointer hover:opacity-50",
+                                                        "hover:font-semibold",
                                                       attrs: {
-                                                        viewBox: "0 0 24 24",
-                                                        fill: "none",
-                                                        stroke: "currentColor",
-                                                        "stroke-width": "2",
-                                                        "stroke-linecap":
-                                                          "round",
-                                                        "stroke-linejoin":
-                                                          "round"
-                                                      },
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          _vm.selected = project
-                                                          _vm.toggleEditProjectModal()
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("path", {
-                                                        attrs: {
-                                                          d:
-                                                            "M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"
-                                                        }
-                                                      })
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticClass:
-                                                        "flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          _vm.selected = project
-                                                          _vm.toggleDeleteModal()
-                                                        }
+                                                        href:
+                                                          "/projects/" +
+                                                          project.id +
+                                                          "-" +
+                                                          project.name
                                                       }
                                                     },
                                                     [
@@ -36953,7 +37201,7 @@ var render = function() {
                                                         "svg",
                                                         {
                                                           staticClass:
-                                                            "feather feather-delete text-red-600 hover:text-red-500 ml-3",
+                                                            "feather feather-eye text-gray-900 hover:opacity-75",
                                                           attrs: {
                                                             xmlns:
                                                               "http://www.w3.org/2000/svg",
@@ -36975,23 +37223,14 @@ var render = function() {
                                                           _c("path", {
                                                             attrs: {
                                                               d:
-                                                                "M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"
+                                                                "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
                                                             }
                                                           }),
-                                                          _c("line", {
+                                                          _c("circle", {
                                                             attrs: {
-                                                              x1: "18",
-                                                              y1: "9",
-                                                              x2: "12",
-                                                              y2: "15"
-                                                            }
-                                                          }),
-                                                          _c("line", {
-                                                            attrs: {
-                                                              x1: "12",
-                                                              y1: "9",
-                                                              x2: "18",
-                                                              y2: "15"
+                                                              cx: "12",
+                                                              cy: "12",
+                                                              r: "3"
                                                             }
                                                           })
                                                         ]
@@ -37098,51 +37337,16 @@ var render = function() {
                                                 },
                                                 [
                                                   _c(
-                                                    "svg",
+                                                    "a",
                                                     {
                                                       staticClass:
-                                                        "text-yellow-600 hover:text-yellow-500 w-6 h-6 cursor-pointer hover:opacity-50",
+                                                        "hover:font-semibold",
                                                       attrs: {
-                                                        viewBox: "0 0 24 24",
-                                                        fill: "none",
-                                                        stroke: "currentColor",
-                                                        "stroke-width": "2",
-                                                        "stroke-linecap":
-                                                          "round",
-                                                        "stroke-linejoin":
-                                                          "round"
-                                                      },
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          _vm.selected = project
-                                                          _vm.toggleEditProjectModal()
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("path", {
-                                                        attrs: {
-                                                          d:
-                                                            "M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"
-                                                        }
-                                                      })
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticClass:
-                                                        "flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          _vm.selected = project
-                                                          _vm.toggleDeleteModal()
-                                                        }
+                                                        href:
+                                                          "/projects/" +
+                                                          project.id +
+                                                          "-" +
+                                                          project.name
                                                       }
                                                     },
                                                     [
@@ -37150,7 +37354,7 @@ var render = function() {
                                                         "svg",
                                                         {
                                                           staticClass:
-                                                            "feather feather-delete text-red-600 hover:text-red-500 ml-3",
+                                                            "feather feather-eye text-gray-900 hover:opacity-75",
                                                           attrs: {
                                                             xmlns:
                                                               "http://www.w3.org/2000/svg",
@@ -37172,23 +37376,14 @@ var render = function() {
                                                           _c("path", {
                                                             attrs: {
                                                               d:
-                                                                "M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"
+                                                                "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
                                                             }
                                                           }),
-                                                          _c("line", {
+                                                          _c("circle", {
                                                             attrs: {
-                                                              x1: "18",
-                                                              y1: "9",
-                                                              x2: "12",
-                                                              y2: "15"
-                                                            }
-                                                          }),
-                                                          _c("line", {
-                                                            attrs: {
-                                                              x1: "12",
-                                                              y1: "9",
-                                                              x2: "18",
-                                                              y2: "15"
+                                                              cx: "12",
+                                                              cy: "12",
+                                                              r: "3"
                                                             }
                                                           })
                                                         ]
@@ -37668,125 +37863,6 @@ var render = function() {
                           ]
                         )
                       : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("transition", { attrs: { name: "fade" } }, [
-                    _vm.deleteModal
-                      ? _c(
-                          "div",
-                          {
-                            staticClass:
-                              "fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20"
-                          },
-                          [
-                            _c("div", {
-                              staticClass: "h-full w-full bg-gray-300",
-                              on: {
-                                click: function($event) {
-                                  return _vm.toggleDeleteModal()
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30"
-                              },
-                              [
-                                _c("div", { staticClass: "text-right" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: " cursor-pointer",
-                                      attrs: {
-                                        type: "button",
-                                        "data-dismiss": "modal",
-                                        "aria-label": "Close"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.toggleDeleteModal()
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "svg",
-                                        {
-                                          staticClass:
-                                            "hover:opacity-75 fill-current text-gray-900",
-                                          attrs: {
-                                            width: "18",
-                                            height: "18",
-                                            viewBox: "0 0 18 18"
-                                          }
-                                        },
-                                        [
-                                          _c("path", {
-                                            attrs: {
-                                              d:
-                                                "M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", {}, [
-                                  _c(
-                                    "p",
-                                    {
-                                      staticClass:
-                                        "mt-4 text-lg font-semibold text-green-800 text-center"
-                                    },
-                                    [_vm._v("Are you sure?")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "mt-6 mb-3 flex justify-end"
-                                    },
-                                    [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.toggleDeleteModal()
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("Cancel")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.deleteProject()
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("Delete")]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      : _vm._e()
                   ])
                 ],
                 1
@@ -37845,11 +37921,200 @@ var render = function() {
     },
     [
       _vm._v(" "),
-      _c("div", { staticClass: "py-12" }, [
+      _c("div", { staticClass: "py-8" }, [
         _c("div", { staticClass: "max-w-7xl mx-auto sm:px-6 lg:px-8" }, [
-          _c("div", {
-            staticClass: "bg-white overflow-hidden shadow-xl sm:rounded-lg"
-          })
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white overflow-hidden shadow-xl sm:rounded-lg py-5 px-5 flex flex-col"
+            },
+            [
+              _c(
+                "span",
+                { staticClass: "text-lg font-bold mb-2 text-gray-900 " },
+                [_vm._v("Invoices")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "bg-white overflow-hidden shadow-md sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-green-600"
+                    },
+                    [
+                      _c(
+                        "h3",
+                        { staticClass: "text-xl font-black mb-3 text-white" },
+                        [
+                          _vm._v(
+                            "\n                            $ 2999\n                        "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { staticClass: "font-sm mt-2 text-white opacity-75" },
+                        [_vm._v("Paid today")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "bg-white overflow-hidden shadow-md sm:rounded-lg flex  flex-col items-start px-5 py-3 "
+                    },
+                    [
+                      _c("h3", { staticClass: "text-xl font-black mb-3" }, [
+                        _vm._v(
+                          "\n                            $ 2999\n                        "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "font-sm mt-2 text-gray-900 opacity-50"
+                        },
+                        [_vm._v("Pending")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "bg-white overflow-hidden shadow-md sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-gray-300 text-white"
+                    },
+                    [
+                      _c(
+                        "h3",
+                        {
+                          staticClass: "text-xl font-black mb-3 text-gray-900"
+                        },
+                        [
+                          _vm._v(
+                            "\n                            $ 4999\n                        "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "font-sm mt-2 text-gray-900 opacity-50"
+                        },
+                        [_vm._v("Total")]
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                { staticClass: "mt-8 text-lg font-bold mb-2 text-gray-900 " },
+                [_vm._v("Invoices")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "bg-white overflow-hidden shadow-md sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-green-600"
+                    },
+                    [
+                      _c(
+                        "h3",
+                        { staticClass: "text-xl font-black mb-3 text-white" },
+                        [
+                          _vm._v(
+                            "\n                            100\n                        "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { staticClass: "font-sm mt-2 text-white opacity-75" },
+                        [_vm._v("Invoices")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "bg-white overflow-hidden shadow-md sm:rounded-lg flex  flex-col items-start px-5 py-3 "
+                    },
+                    [
+                      _c("h3", { staticClass: "text-xl font-black mb-3" }, [
+                        _vm._v(
+                          "\n                            299\n                        "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "font-sm mt-2 text-gray-900 opacity-50"
+                        },
+                        [_vm._v("Clients")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "bg-white overflow-hidden shadow-md sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-gray-300 text-white"
+                    },
+                    [
+                      _c(
+                        "h3",
+                        {
+                          staticClass: "text-xl font-black mb-3 text-gray-900"
+                        },
+                        [
+                          _vm._v(
+                            "\n                            300\n                        "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "font-sm mt-2 text-gray-900 opacity-50"
+                        },
+                        [_vm._v("Projects")]
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
         ])
       ])
     ]
@@ -38521,6 +38786,20 @@ var render = function() {
                       })
                     ],
                     1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "px-3 py-3 rounded-r bg-red-600 text-white",
+                      on: {
+                        click: function($event) {
+                          _vm.keyword = ""
+                          _vm.selectedFilter = ""
+                        }
+                      }
+                    },
+                    [_vm._v("Reset")]
                   )
                 ]),
                 _vm._v(" "),
@@ -38981,7 +39260,7 @@ var render = function() {
                                 ])
                               }),
                               _vm._v(" "),
-                              _vm.invoices.length < 1
+                              _vm.invoices.data.length < 1
                                 ? _c("tr", [
                                     _c("td", {}, [
                                       _c(
@@ -42699,7 +42978,7 @@ var render = function() {
                                 ])
                               }),
                               _vm._v(" "),
-                              _vm.projects.length < 1
+                              _vm.projects.data.length < 1
                                 ? _c("tr", [
                                     _c("td", {}, [
                                       _c(
@@ -43850,7 +44129,46 @@ var render = function() {
                                     ]
                                   )
                                 ])
-                              })
+                              }),
+                              _vm._v(" "),
+                              _c("tr", [
+                                _vm.invoices.data.length < 1
+                                  ? _c("td", {}, [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            " flex flex-col justify-center w-full items-center"
+                                        },
+                                        [
+                                          _c(
+                                            "svg",
+                                            {
+                                              staticClass:
+                                                "h-10 w-10 text-red-600",
+                                              attrs: {
+                                                fill: "currentColor",
+                                                viewBox: "0 0 20 20"
+                                              }
+                                            },
+                                            [
+                                              _c("path", {
+                                                attrs: {
+                                                  d:
+                                                    "M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("p", { staticClass: "mt-3" }, [
+                                            _vm._v("Oops! No Invoices .")
+                                          ])
+                                        ]
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ])
                             ],
                             2
                           )

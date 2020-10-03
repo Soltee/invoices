@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\ClientController;
+use App\Http\Controllers\Customer\ClientProjectController;
 use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\ProjectController;
 use App\Http\Controllers\Customer\InvoiceController;
@@ -31,10 +32,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
 
     //Projects Api
-	Route::get('/clients/projects/{client}/search', [ProjectController::class, 'client_projects']);
-
-	//clients porjects
-	Route::get('/client_projects/{client}', [ProjectController::class, 'show']);
+	Route::get('/clients/projects/{client}/search', [ClientProjectController::class, 'index']);
+	Route::get('/client_projects/{client}', [ClientProjectController::class, 'show']);
 
 	//Invoices
 	Route::get('/invoices', [InvoiceController::class, 'index'])

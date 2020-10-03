@@ -28,7 +28,8 @@
                             </jet-nav-link>
                             <jet-nav-link href="/projects" 
                                 :active="
-                                    $page.currentRouteName == 'projects'
+                                    $page.currentRouteName == 'projects' ||
+                                    $page.currentRouteName == 'project.show'
                                 ">
                                 Projects
                             </jet-nav-link>
