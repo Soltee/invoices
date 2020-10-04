@@ -32,8 +32,7 @@ class Invoice extends Model
             $query->where(function ($query) use ($search) {
                 $query->where('payment_type', 'like', '%'.$search.'%')
                     ->orWhere('grand_total', 'like', '%'.$search.'%')
-                    ->orWhere('discount', 'like', '%'.$search.'%')
-                    ->orWhere('is_paid', );
+                    ->orWhere('discount', 'like', '%'.$search.'%');
             });
         })->when($filters['filter'] ?? null, function ($query, $filter) {
             // dd($filter);
