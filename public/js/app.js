@@ -4811,6 +4811,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -71720,10 +71723,13 @@ var staticRenderFns = [
     return _c("div", { staticClass: "flex-shrink-0 flex items-center" }, [
       _c(
         "a",
-        { staticClass: "italic font-black", attrs: { href: "/dashboard" } },
+        {
+          staticClass: "italic font-black text-blue-600",
+          attrs: { href: "/dashboard" }
+        },
         [
           _vm._v(
-            "\n                            Invoice\n                            "
+            "\n                            Invoice.\n                            "
           )
         ]
       )
@@ -76219,7 +76225,11 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "mt-10" },
-                [_c("chart", { attrs: { data: _vm.invoices_data_by_month } })],
+                [
+                  _c("chart", {
+                    attrs: { data: _vm.invoices_data_by_month, height: 250 }
+                  })
+                ],
                 1
               )
             ]

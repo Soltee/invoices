@@ -82,7 +82,10 @@
                     </div>
 
                     <div class="mt-10">
-                        <chart :data="invoices_data_by_month"></chart>
+                        <chart 
+                            :data="invoices_data_by_month"
+                            :height="250"
+                            ></chart>
                     </div>
                 </div>
             </div>
