@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'Free Invoicing.')
+
+@section('head')
+
+@endsection
+
 @section('content')
     <div class="max-w-screen-lg mx-auto flex flex-col">
         <!-- Hero Section -->
@@ -34,7 +40,7 @@
             </div>
         </div>
 
-                
+        <!-- Benefits -->
         
         <!-- FAQS -->
         <div class="mt-24  px-6 py-6">

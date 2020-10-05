@@ -1,7 +1,12 @@
+@section('title', 'Reset Password.')
+
+@section('head')
+
+@endsection
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <a href="/dashboard" class="italic font-black text-blue-600 text-2xl">
+            <a href="/" class="italic font-black text-blue-600 text-2xl">
                 <img src="{{ asset('/img/invoice.svg') }}" class="">
                 {{-- <x-jet-authentication-card-logo /> --}}
             </a>

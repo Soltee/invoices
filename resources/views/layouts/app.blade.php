@@ -5,9 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <link rel="icon" href="{{ asset('/img/invoice.svg') }}">
         <meta name="theme-color" content="#ffffff" />
         <title>@yield('title')</title>
-        <link rel="icon" href="{{ asset('/img/invoice.svg') }}">
+        @yield('head')
 
         <!-- Chrome, Firefox OS and Opera -->
         <meta name="theme-color" content="#ffffff">
