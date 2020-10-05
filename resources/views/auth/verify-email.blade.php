@@ -2,7 +2,7 @@
     <x-jet-authentication-card>
         <x-slot name="logo">
             <a href="/dashboard" class="italic font-black text-blue-600 text-2xl">
-                Invoice.
+                <img src="{{ asset('/img/invoice.svg') }}" class="">
                 {{-- <x-jet-authentication-card-logo /> --}}
             </a>
         </x-slot>

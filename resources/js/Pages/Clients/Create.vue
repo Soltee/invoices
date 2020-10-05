@@ -175,6 +175,14 @@
  				}
 			}
 		},
+		metaInfo() {
+	        return {
+	            title: `Clients | New client`,
+	            meta: [
+	                { name: 'description', content: 'Create a new client. '},
+	            ]
+	        }
+        },
 		methods:{
 			create(){
 				let { first_name,last_name,email,gender,project_name,amount} = this.form;

@@ -358,6 +358,17 @@
         		clientProjects : []
 			}
 		},
+		metaInfo() {
+	        return {
+	            title: `Invoices | ${this.client.first_name} ${this.client.last_name}`,
+	            meta: [
+	                { 
+	                	name: 'description', 
+	                	content: `Details of ${this.client.first_name}'s ${this.project.name}.`,
+	                }
+	            ]
+	        }
+        },
 		mounted(){
 			this.clients.forEach((client) => {
 				this.options.push({

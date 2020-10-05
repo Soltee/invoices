@@ -10,7 +10,7 @@
                 </p>
                 <span class="-mt-4">Invoicing For Freelancers.</span>
             </div>
-            <p class="mt-4 text-md text-blue-600 opacity-75 max-w-lg mx-auto text-center">
+            <p class="mt-4 text-md text-blue-600  max-w-lg mx-auto text-center">
                 Easy-to-use & saves you time. Start exploring all features of <span class="italic font-bold">invoice.</span> today.
             </p>
 
@@ -34,13 +34,12 @@
             </div>
         </div>
 
-        <!---->
-        
+                
         
         <!-- FAQS -->
         <div class="mt-24  px-6 py-6">
             <div class="mb-8">
-                <h2 class="text-2xl text-blue-600 font-bold text-center">Do you have any questions?</h2>
+                <h2 id="faqs" class="text-2xl text-blue-600 font-bold text-center">Do you have any questions?</h2>
             </div>
             <div
             x-data="{tab:''}"
@@ -163,11 +162,11 @@
 
         <!-- One more time Signup -->
         <div class="mt-16  px-6 py-6">
-            <div class=" flex flex-col sm:flex-row items-center justify-center px-3 py-3 shadow rounded-lg">
+            <div class=" flex flex-col md:flex-row items-center justify-center px-3 py-3 shadow rounded-lg">
                 
                 <h2 class="text-blue-600 text-2xl font-bold text-center md:text-left ">Convinced? Try <span class="italic font-bold text-2xl px-2">invoice.</span> by signing up today?</h2>
 
-                <a href="/register" class="ml-5 px-10 py-4 border border-blue-600 text-center text-xl rounded-lg bg-blue-600 hover:bg-blue-500 text-white">
+                <a href="/register" class="mt-3 md:mt-0 md:ml-5 px-10 py-4 border border-blue-600 text-center text-xl rounded-lg bg-blue-600 hover:bg-blue-500 text-white">
                     Signup for Free
                 </a>
 

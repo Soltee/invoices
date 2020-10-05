@@ -55,5 +55,13 @@
             UpdatePasswordForm,
             UpdateProfileInformationForm,
         },
+        metaInfo() {
+            return {
+                title: `Profile`,
+                meta: [
+                    { name: 'description', content: 'Update Profile'},
+                ]
+            }
+        },
     }
 </script>

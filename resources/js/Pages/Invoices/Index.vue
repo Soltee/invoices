@@ -257,6 +257,14 @@
 			   	deep: true,
 			}
 		},
+		metaInfo() {
+	        return {
+	            title: `Invoices`,
+	            meta: [
+	                { name: 'description', content: ''},
+	            ]
+	        }
+        },
 		methods:{
 			reset() {
 		      	this.keyword  = '';

@@ -363,8 +363,14 @@
  				clientErr      : []
 			}
 		},
-		mounted(){
-		},
+		metaInfo() {
+	        return {
+	            title: `Projects | ${this.project.name}`,
+	            meta: [
+	                { name: 'description', content: 'Details of. ' + this.project.name},
+	            ]
+	        }
+        },
 		methods:{
 			updateProject(){
 				this.processing = true;

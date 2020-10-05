@@ -5,7 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <meta name="theme-color" content="#ffffff" />
+        <title>@yield('title')</title>
+        <link rel="icon" href="{{ asset('/img/invoice.svg') }}">
+
+        <!-- Chrome, Firefox OS and Opera -->
+        <meta name="theme-color" content="#ffffff">
+        <!-- Windows Phone -->
+        <meta name="msapplication-navbutton-color" content="#ffffff">
+        <!-- iOS Safari -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">
+
+
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
@@ -26,8 +37,8 @@
            <nav class="">
                 <div class="relative max-w-screen-lg mx-auto flex justify-between items-center px-6 py-4 md:py-6">
                     <div>
-                        <a href="/dashboard" class="italic font-black text-blue-600">
-                            Invoice.
+                        <a href="/" class="italic font-black text-blue-600">
+                            <img src="{{ asset('/img/invoice.svg') }}" class="">
                         </a>
                     </div>
 
@@ -37,6 +48,11 @@
                             <li class="list-none mb-3 md:mb-0">
                                 <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                     Features
+                                </a>
+                            </li>
+                            <li class="list-none mb-3 md:mb-0">
+                                <a href="#faqs" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
+                                    FAQs
                                 </a>
                             </li>
                             <li class="list-none mb-3 md:mb-0">
@@ -154,7 +170,7 @@
                             <a href="#" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">
                                 Contact Us
                             </a>
-                            <a href="#" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">
+                            <a href="#faqs" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">
                                 FAQs
                             </a>
                             <a href="#" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">

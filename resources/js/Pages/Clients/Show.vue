@@ -656,6 +656,16 @@
  				deleteClientModal  : false
 			}
 		},
+		metaInfo() {
+	        return {
+	            title: `Clients | ${this.client.first_name} ${this.client.last_name}`,
+	            meta: [
+	                { name: 'description', content: 'Connect and follow ' + this.client.first_name },
+	                { property: 'og:title', content: this.client.first_name + ' - Epiloge'},
+	                { property: 'og:description', content: 'Connect and follow ' + this.client.first_name},
+	            ]
+	        }
+        },
 		watch: {
 			keyword(){
 				this.searchEndpoint = `/clients/projects/${this.client.id}/search?keyword=${this.keyword}`;

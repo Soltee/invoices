@@ -194,6 +194,12 @@
 			clients : Object,
 			search  : String
 		},
+		metaInfo: {
+          // if no subcomponents specify a metaInfo.title, this title will be used
+          title: 'Clients',
+          // all titles will be injected into this template
+          titleTemplate: '%s | My Awesome Clients'
+        },
 		data (){
 			return {
 				processing : false,

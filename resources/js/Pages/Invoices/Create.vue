@@ -177,6 +177,14 @@
          		clientProjects : []
 			}
 		},
+		metaInfo() {
+	        return {
+	            title: `Invoices | New Invoice`,
+	            meta: [
+	                { name: 'description', content: 'Create a new invoice'},
+	            ]
+	        }
+        },
 		mounted(){
 			this.clients.forEach((client) => {
 				this.options.push({
