@@ -1,18 +1,18 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <a href="/dashboard" class="italic font-black">
-                Invoice
+            <a href="/dashboard" class="italic font-black text-blue-600 text-2xl">
+                Invoice.
                 {{-- <x-jet-authentication-card-logo /> --}}
             </a>
         </x-slot>
 
         <div x-data="{ recovery: false }">
-            <div class="mb-4 text-sm text-gray-600" x-show="! recovery">
+            <div class="mb-4 text-sm text-blue-600" x-show="! recovery">
                 {{ __('Please confirm access to your account by entering the authentication code provided by your authenticator application.') }}
             </div>
 
-            <div class="mb-4 text-sm text-gray-600" x-show="recovery">
+            <div class="mb-4 text-sm text-blue-600" x-show="recovery">
                 {{ __('Please confirm access to your account by entering one of your emergency recovery codes.') }}
             </div>
 
@@ -22,17 +22,17 @@
                 @csrf
 
                 <div class="mt-4" x-show="! recovery">
-                    <x-jet-label value="{{ __('Code') }}" />
+                    <x-jet-label value="{{ __('Code') }}" class="text-blue-600"/>
                     <x-jet-input class="block mt-1 w-full" type="text" name="code" autofocus x-ref="code" autocomplete="one-time-code" />
                 </div>
 
                 <div class="mt-4" x-show="recovery">
-                    <x-jet-label value="{{ __('Recovery Code') }}" />
+                    <x-jet-label value="{{ __('Recovery Code') }}" class="text-blue-600" />
                     <x-jet-input class="block mt-1 w-full" type="text" name="recovery_code" x-ref="recovery_code" autocomplete="one-time-code" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <button type="button" class="text-sm text-gray-600 hover:text-gray-900 underline cursor-pointer"
+                    <button type="button" class="text-sm text-blue-600 hover:text-blue-500 text-white underline cursor-pointer"
                                     x-show="! recovery"
                                     x-on:click="
                                         recovery = true;
@@ -41,7 +41,7 @@
                         {{ __('Use a recovery code') }}
                     </button>
 
-                    <button type="button" class="text-sm text-gray-600 hover:text-gray-900 underline cursor-pointer"
+                    <button type="button" class="text-sm text-blue-600 hover:text-blue-500 text-white underline cursor-pointer"
                                     x-show="recovery"
                                     x-on:click="
                                         recovery = false;
@@ -50,7 +50,7 @@
                         {{ __('Use an authentication code') }}
                     </button>
 
-                    <x-jet-button class="ml-4">
+                    <x-jet-button class="ml-4 bg-blue-600 hover:bg-blue-500 text-white">
                         {{ __('Login') }}
                     </x-jet-button>
                 </div>

@@ -89,7 +89,7 @@
                             <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
                         </svg>
                         <div x-show.transition.60ms="menu"
-                            class="bg-gray-100 rounded md:rounded-none md:bg-transparent absolute left-0 right-0 top-0 h-auto mx-6 mt-65 md:mt-0 md:mx-0 md:static py-3 md:py-0 z-10 md:z-0"
+                            class="bg-white shadow rounded-lg md:rounded-none md:bg-transparent absolute left-0 right-0 top-0 h-auto mx-6 mt-65 md:mt-0 md:mx-0 md:static py-3 md:py-0 z-10 md:z-0"
                             >
                             
                             <ul class=" flex flex-col md:flex-row md:static md:items-center md:m-0">

@@ -1,13 +1,13 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <a href="/dashboard" class="italic font-black">
-                Invoice
+            <a href="/dashboard" class="italic font-black text-blue-600 text-2xl">
+                Invoice.
                 {{-- <x-jet-authentication-card-logo /> --}}
             </a>
         </x-slot>
 
-        <div class="mb-4 text-sm text-gray-600">
+        <div class="mb-4 text-sm text-blue-600">
             {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
         </div>
 
@@ -31,7 +31,7 @@
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
 
-                <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
+                <button type="submit" class="underline text-sm text-blue-600 hover:text-blue-500">
                     {{ __('Logout') }}
                 </button>
             </form>
