@@ -37,8 +37,9 @@
         <div>
            <nav class="">
                 <div class="relative max-w-screen-lg mx-auto flex justify-between items-center px-6 py-4 md:py-6">
-                    <div>
-                        <a href="/" class="italic font-black text-blue-600">
+                    <div class="flex items-center">
+
+                        <a href="/" class="ml-3 md:ml-0 italic font-black text-blue-600">
                             <img src="{{ asset('/img/invoice.svg') }}" class="">
                         </a>
                     </div>
@@ -47,7 +48,7 @@
                     <div class="flex-1 space-x-10 ">
                         <ul class="hidden md:flex md:flex-row justify-center md:items-center md:m-0">
                             <li class="list-none mb-3 md:mb-0">
-                                <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
+                                <a href="#features" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                     Features
                                 </a>
                             </li>
@@ -85,65 +86,107 @@
                     </div>
 
 
+                    @auth
+                        <div 
+                            x-data="{ open: false }"
+                            class="relative flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                            <img 
+                                x-on:click="open = !open"
+                                class="h-10 w-10 rounded-full object-cover cursor-pointer" 
+                                src="{{ Auth::user()->profile_photo_url }}" 
+                                alt="{{ Auth::user()->name }}" />
 
-                    <div class="hidden md:block ml-4 flex items-center justify-end">
-                        <a href="/login" class="px-6 py-2 rounded-lg text-blue-600 border border-blue-600 hover:border-none hover:border-transparent  hover:text-white hover:bg-blue-600">
-                            Login
-                        </a>
-                        <a href="/register" class="ml-3 px-6 py-2 border border-blue-600 rounded-lg bg-blue-600 hover:bg-blue-500 text-white">
-                            Sign up for free
-                        </a>
-                    </div>
-
-                    <!-- Small Screen -->
-                    <div 
-                        x-data="{ menu : false }"
-                        class="flex items-center">
-                        <svg 
-                            x-on:click="menu = !menu;" 
-                            xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" 
-                            class="md:hidden h-10 w-10 border rounded border-blue-600 p-1 text-blue-600 cursor-pointer hover:opacity-75">
-                            <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
-                        <div x-show.transition.60ms="menu"
-                            class="bg-white shadow rounded-lg md:rounded-none md:bg-transparent absolute left-0 right-0 top-0 h-auto mx-6 mt-65 md:mt-0 md:mx-0 md:static py-3 md:py-0 z-10 md:z-0"
-                            >
-                            
-                            <ul class=" flex flex-col md:flex-row md:static md:items-center md:m-0">
-                                <li class="list-none mb-3 md:mb-0">
-                                    <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
-                                        Features
-                                    </a>
-                                </li>
-                                <li class="list-none mb-3 md:mb-0">
-
-                                    <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
-                                        Contact Us
-                                    </a>
-                                </li>
-                                <li class="list-none">
-
-                                    <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
-                                        About Us
-                                    </a>
-                                </li>
-
-                                <!--- Auth button links only on small screen -->
-                                <div class="flex flex-col mt-5 md:hidden">
-                                    
-                                    <a href="/login" class="px-3 py-3 ml-3 rounded-lg text-blue-600 border border-blue-600 hover:border-none hover:border-transparent w-40  hover:text-white hover:bg-blue-600 text-center mb-4">
-                                        Login
-                                    </a>
-
-                                    <a href="/register" class="px-3 py-3 ml-3 border border-blue-600 text-center w-40 rounded-lg bg-blue-600 hover:bg-blue-500 text-white mb-3">
-                                        Signup for Free
-                                    </a>
-
+                           
+                            <div 
+                                x-show.transition.60ms="open"
+                                x-on:click.away="open = false"
+                                class="z-10 bg-white absolute right-0 top-0 mt-10 rounded shadow w-40 flex flex-col items-start">
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    Manage Account
                                 </div>
-                            </ul>
+                                <a href="/dashboard" class="w-full text-left block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+                                    Dashboard
+                                </a>
+                                <a href="/user/profile" class="w-full text-left block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+                                    Profile
+                                </a>
+
+                                <form class="w-full" action="/logout" method="POST">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
                         </div>
 
-                    </div>
+                    @else
+                        <div class="hidden md:block ml-4 flex items-center justify-end">
+                            <a href="/login" class="px-6 py-2 rounded-lg text-blue-600 border border-blue-600 hover:border-none hover:border-transparent  hover:text-white hover:bg-blue-600">
+                                Login
+                            </a>
+                            <a href="/register" class="ml-3 px-6 py-2 border border-blue-600 rounded-lg bg-blue-600 hover:bg-blue-500 text-white">
+                                Sign up for free
+                            </a>
+                        </div>
+
+                    @endif
+
+                    <!-- Small Screen -->
+                        <div 
+                            x-data="{ menu : false }"
+                            class="ml-3 flex items-center">
+                            <svg 
+                                x-on:click="menu = !menu;" 
+                                xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" 
+                                class="md:hidden h-10 w-10 border rounded border-blue-600 p-1 text-blue-600 cursor-pointer hover:opacity-75">
+                                <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+                            </svg>
+                            <div x-show.transition.60ms="menu"
+                                class="bg-white shadow rounded-lg md:rounded-none md:bg-transparent absolute left-0 right-0 top-0 h-auto mx-6 mt-65 md:mt-0 md:mx-0 md:static py-3 md:py-0 z-10 md:z-0"
+                                >
+                                
+                                <ul class=" flex flex-col md:flex-row md:static md:items-center md:m-0">
+                                    <li class="list-none mb-3 md:mb-0">
+                                        <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
+                                            Features
+                                        </a>
+                                    </li>
+                                    <li class="list-none mb-3 md:mb-0">
+
+                                        <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
+                                            Contact Us
+                                        </a>
+                                    </li>
+                                    <li class="list-none">
+
+                                        <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
+                                            About Us
+                                        </a>
+                                    </li>
+
+                                    <!--- Auth button links only on small screen -->
+                                    @guest
+                                    <div class="flex flex-col mt-5 md:hidden">
+                                        
+                                        <a href="/login" class="px-3 py-3 ml-3 rounded-lg text-blue-600 border border-blue-600 hover:border-none hover:border-transparent w-40  hover:text-white hover:bg-blue-600 text-center mb-4">
+                                            Login
+                                        </a>
+
+                                        <a href="/register" class="px-3 py-3 ml-3 border border-blue-600 text-center w-40 rounded-lg bg-blue-600 hover:bg-blue-500 text-white mb-3">
+                                            Signup for Free
+                                        </a>
+
+                                    </div>
+                                    @else
+                                    
+                                    @endif
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    
                 </div>
            </nav> 
         </div>
@@ -165,7 +208,7 @@
                             <a href="#" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">
                                 About Us
                             </a>
-                            <a href="#" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">
+                            <a href="#features" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">
                                 Features
                             </a>
                             <a href="#" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">

@@ -15,10 +15,14 @@
 
                         <!-- Navigation Links -->
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <jet-nav-link href="/dashboard" :active="$page.currentRouteName == 'dashboard'">
+                            <jet-nav-link 
+                                class="text-blue-600"
+                                href="/dashboard" :active="$page.currentRouteName == 'dashboard'">
                                 Dashboard
                             </jet-nav-link>
-                            <jet-nav-link href="/clients" 
+                            <jet-nav-link 
+                                class="text-blue-600"
+                                href="/clients" 
                                 :active="
                                     $page.currentRouteName == 'clients' || 
                                     $page.currentRouteName == 'client.create' ||
@@ -26,14 +30,18 @@
                                 ">
                                 Clients
                             </jet-nav-link>
-                            <jet-nav-link href="/projects" 
+                            <jet-nav-link 
+                                class="text-blue-600"
+                                href="/projects" 
                                 :active="
                                     $page.currentRouteName == 'projects' ||
                                     $page.currentRouteName == 'project.show'
                                 ">
                                 Projects
                             </jet-nav-link>
-                            <jet-nav-link href="/invoices" 
+                            <jet-nav-link 
+                                class="text-blue-600"
+                                href="/invoices" 
                                 :active="
                                     $page.currentRouteName == 'invoices' ||
                                     $page.currentRouteName == 'invoice.create' ||
@@ -135,6 +143,34 @@
                     <jet-responsive-nav-link href="/dashboard" :active="$page.currentRouteName == 'dashboard'">
                         Dashboard
                     </jet-responsive-nav-link>
+                    <jet-responsive-nav-link href="/clients" 
+                        :active="
+                            $page.currentRouteName == 'clients' || 
+                            $page.currentRouteName == 'client.create' ||
+                            $page.currentRouteName == 'client.show'
+                        ">
+                        Clients
+                    </jet-responsive-nav-link>
+                    <jet-responsive-nav-link 
+                        class="text-blue-600"
+                        href="/projects" 
+                        :active="
+                            $page.currentRouteName == 'projects' ||
+                            $page.currentRouteName == 'project.show'
+                        ">
+                        Projects
+                    </jet-responsive-nav-link>
+                    <jet-responsive-nav-link 
+                        class="text-blue-600"
+                        href="/invoices" 
+                        :active="
+                            $page.currentRouteName == 'invoices' ||
+                            $page.currentRouteName == 'invoice.create' ||
+                            $page.currentRouteName == 'invoice.show'
+                        ">
+                        Invoices
+                    </jet-responsive-nav-link>
+                    
                 </div>
 
                 <!-- Responsive Settings Options -->

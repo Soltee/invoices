@@ -2970,6 +2970,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3542,7 +3578,7 @@ __webpack_require__.r(__webpack_exports__);
         first_name: first_name,
         last_name: last_name,
         email: email,
-        gender: gender,
+        gender: gender.name,
         project_name: project_name,
         amount: amount
       };
@@ -7838,7 +7874,7 @@ __webpack_require__.r(__webpack_exports__);
       labels: newLabels,
       datasets: [{
         label: 'Invoices',
-        backgroundColor: '#F9564F',
+        backgroundColor: '#0000FF',
         data: newData
       }]
     }, this.options);
@@ -71173,6 +71209,7 @@ var render = function() {
                   _c(
                     "jet-nav-link",
                     {
+                      staticClass: "text-blue-600",
                       attrs: {
                         href: "/dashboard",
                         active: _vm.$page.currentRouteName == "dashboard"
@@ -71188,6 +71225,7 @@ var render = function() {
                   _c(
                     "jet-nav-link",
                     {
+                      staticClass: "text-blue-600",
                       attrs: {
                         href: "/clients",
                         active:
@@ -71206,6 +71244,7 @@ var render = function() {
                   _c(
                     "jet-nav-link",
                     {
+                      staticClass: "text-blue-600",
                       attrs: {
                         href: "/projects",
                         active:
@@ -71223,6 +71262,7 @@ var render = function() {
                   _c(
                     "jet-nav-link",
                     {
+                      staticClass: "text-blue-600",
                       attrs: {
                         href: "/invoices",
                         active:
@@ -71574,6 +71614,49 @@ var render = function() {
                     }
                   },
                   [_vm._v("\n                    Dashboard\n                ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "jet-responsive-nav-link",
+                  {
+                    attrs: {
+                      href: "/clients",
+                      active:
+                        _vm.$page.currentRouteName == "clients" ||
+                        _vm.$page.currentRouteName == "client.create" ||
+                        _vm.$page.currentRouteName == "client.show"
+                    }
+                  },
+                  [_vm._v("\n                    Clients\n                ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "jet-responsive-nav-link",
+                  {
+                    staticClass: "text-blue-600",
+                    attrs: {
+                      href: "/projects",
+                      active:
+                        _vm.$page.currentRouteName == "projects" ||
+                        _vm.$page.currentRouteName == "project.show"
+                    }
+                  },
+                  [_vm._v("\n                    Projects\n                ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "jet-responsive-nav-link",
+                  {
+                    staticClass: "text-blue-600",
+                    attrs: {
+                      href: "/invoices",
+                      active:
+                        _vm.$page.currentRouteName == "invoices" ||
+                        _vm.$page.currentRouteName == "invoice.create" ||
+                        _vm.$page.currentRouteName == "invoice.show"
+                    }
+                  },
+                  [_vm._v("\n                    Invoices\n                ")]
                 )
               ],
               1
@@ -76089,7 +76172,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-green-600"
+                        "bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-blue-600"
                     },
                     [
                       _c(
@@ -76153,13 +76236,13 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-gray-300 text-white"
+                        "bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-gray-100 text-white"
                     },
                     [
                       _c(
                         "h3",
                         {
-                          staticClass: "text-xl font-black mb-3 text-gray-900"
+                          staticClass: "text-xl font-black mb-3 text-blue-600"
                         },
                         [
                           _vm._v(
@@ -76172,9 +76255,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "span",
-                        {
-                          staticClass: "font-sm mt-2 text-gray-900 opacity-50"
-                        },
+                        { staticClass: "font-sm mt-2 text-blue-600" },
                         [
                           _c("strong", { staticClass: "opacity-1" }, [
                             _vm._v(_vm._s(_vm.current_mth_overall))
@@ -76206,7 +76287,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-green-600"
+                        "bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-blue-600"
                     },
                     [
                       _c(
@@ -76270,13 +76351,13 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-gray-300 text-white"
+                        "bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-gray-100 text-white"
                     },
                     [
                       _c(
                         "h3",
                         {
-                          staticClass: "text-xl font-black mb-3 text-gray-900"
+                          staticClass: "text-xl font-black mb-3 text-blue-600"
                         },
                         [
                           _vm._v(
@@ -76289,9 +76370,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "span",
-                        {
-                          staticClass: "font-sm mt-2 text-gray-900 opacity-50"
-                        },
+                        { staticClass: "font-sm mt-2 text-blue-600" },
                         [
                           _c("strong", { staticClass: "opacity-1" }, [
                             _vm._v(_vm._s(_vm.overall))
@@ -76308,7 +76387,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "mt-10" },
+                { staticClass: "mt-12" },
                 [
                   _c("chart", {
                     attrs: { data: _vm.invoices_data_by_month, height: 250 }
@@ -77095,12 +77174,12 @@ var render = function() {
                                               "mr-3 px-2 py-2 rounded text-white ",
                                             class: Number(invoice.is_paid)
                                               ? "bg-green-600 hover:bg-green-500"
-                                              : "",
+                                              : "bg-red-600",
                                             domProps: {
                                               textContent: _vm._s(
                                                 Number(invoice.is_paid)
                                                   ? "Paid"
-                                                  : ""
+                                                  : "Unpaid"
                                               )
                                             }
                                           })
@@ -77169,14 +77248,14 @@ var render = function() {
                                         [
                                           _c("span", {
                                             staticClass:
-                                              "mr-3 px-2 py-2 rounded text-white cursor-pointer",
+                                              "mr-3 px-2 py-2 rounded text-white ",
                                             class: Number(invoice.is_sent)
-                                              ? ""
-                                              : "bg-yellow-300 hover:opacity-50",
+                                              ? "bg-green-600 cursor-auto"
+                                              : "bg-yellow-300 hover:opacity-50 cursor-pointer",
                                             domProps: {
                                               textContent: _vm._s(
                                                 Number(invoice.is_sent)
-                                                  ? ""
+                                                  ? "Sent"
                                                   : "Send Now."
                                               )
                                             },
@@ -78346,7 +78425,7 @@ var render = function() {
                           staticClass: "mr-3 px-2 py-2 rounded text-white ",
                           class: Number(_vm.invoice.is_paid)
                             ? "bg-green-600 hover:bg-green-500"
-                            : "bg-yellow-300",
+                            : "bg-red-600",
                           domProps: {
                             textContent: _vm._s(
                               Number(_vm.invoice.is_paid) ? "Paid" : "Unpaid"

@@ -20,7 +20,7 @@ export default {
         datasets: [
         	{
         		label: 'Invoices',
-	            backgroundColor: '#F9564F',
+	            backgroundColor: '#0000FF',
 	            data: newData
         	}
         ]

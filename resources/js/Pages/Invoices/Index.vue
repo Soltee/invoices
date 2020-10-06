@@ -86,8 +86,8 @@
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 						                        	<div class="flex items-center">
 						                        		<span 
-						                        			v-text="(Number(invoice.is_paid)) ? 'Paid' : '' "
-						                        			:class="(Number(invoice.is_paid)) ? 'bg-green-600 hover:bg-green-500' : ''"
+						                        			v-text="(Number(invoice.is_paid)) ? 'Paid' : 'Unpaid' "
+						                        			:class="(Number(invoice.is_paid)) ? 'bg-green-600 hover:bg-green-500' : 'bg-red-600'"
 						                        			class="mr-3 px-2 py-2 rounded text-white " 
 						                        			>
 						                        		</span>
@@ -109,9 +109,9 @@
 						                            			selected = invoice.id;
 						                            			sendInvoice();
 						                            			"
-						                        			v-text="(Number(invoice.is_sent)) ? '' : 'Send Now.' "
-						                        			:class="(Number(invoice.is_sent)) ? '' : 'bg-yellow-300 hover:opacity-50'"
-						                        			class="mr-3 px-2 py-2 rounded text-white cursor-pointer" 
+						                        			v-text="(Number(invoice.is_sent)) ? 'Sent' : 'Send Now.' "
+						                        			:class="(Number(invoice.is_sent)) ? 'bg-green-600 cursor-auto' : 'bg-yellow-300 hover:opacity-50 cursor-pointer'"
+						                        			class="mr-3 px-2 py-2 rounded text-white " 
 						                        			>
 						                        		</span>
 						                                <a 	:href="`/invoices/${invoice.id}`"

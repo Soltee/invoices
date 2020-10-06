@@ -185,7 +185,7 @@
 								    <div class="flex items-center">
 								    	<span 
 			                        			v-text="(Number(invoice.is_paid)) ? 'Paid' : 'Unpaid' "
-			                        			:class="(Number(invoice.is_paid)) ? 'bg-green-600 hover:bg-green-500' : 'bg-yellow-300'"
+			                        			:class="(Number(invoice.is_paid)) ? 'bg-green-600 hover:bg-green-500' : 'bg-red-600'"
 			                        			class="mr-3 px-2 py-2 rounded text-white " 
 			                        			>
 			                        		</span> 

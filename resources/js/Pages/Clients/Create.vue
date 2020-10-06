@@ -190,7 +190,7 @@
 					first_name    : first_name,
 					last_name     : last_name,
 					email         : email,
-					gender        : gender,
+					gender        : gender.name,
 					project_name  : project_name,
 					amount        : amount 
 				}

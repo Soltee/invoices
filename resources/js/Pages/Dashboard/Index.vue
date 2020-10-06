@@ -16,7 +16,7 @@
 
                     <span class="text-xl font-bold mb-2 text-gray-900 ">This Month</span>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-green-600">
+                        <div class="bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-blue-600">
                             <h3 class="text-xl font-black mb-3 text-white">
                                 $ {{ current_mth_paid_tot }}
                             </h3>
@@ -35,11 +35,11 @@
                             </span>
                         </div>
 
-                        <div class="bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-gray-300 text-white">
-                            <h3 class="text-xl font-black mb-3 text-gray-900">
+                        <div class="bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-gray-100 text-white">
+                            <h3 class="text-xl font-black mb-3 text-blue-600">
                                 $ {{ current_mth_overall_total }}
                             </h3>
-                            <span class="font-sm mt-2 text-gray-900 opacity-50">
+                            <span class="font-sm mt-2 text-blue-600">
                                 <strong class="opacity-1">{{ current_mth_overall }}</strong>
                                 Total
                             </span>
@@ -50,7 +50,7 @@
                     <!-- Overall -->
                     <span class="mt-12 text-xl font-bold mb-2 text-gray-900 ">Overall</span>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-green-600">
+                        <div class="bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-blue-600">
                             <h3 class="text-xl font-black mb-3 text-white">
                                 $ {{ overall_paid_total }}
                             </h3>
@@ -69,11 +69,11 @@
                             </span>
                         </div>
 
-                        <div class="bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-gray-300 text-white">
-                            <h3 class="text-xl font-black mb-3 text-gray-900">
+                        <div class="bg-white overflow-hidden shadow-md rounded sm:rounded-lg flex  flex-col items-start px-5 py-3 bg-gray-100 text-white">
+                            <h3 class="text-xl font-black mb-3 text-blue-600">
                                 $ {{ overall_total }}
                             </h3>
-                            <span class="font-sm mt-2 text-gray-900 opacity-50">
+                            <span class="font-sm mt-2 text-blue-600">
                                 <strong class="opacity-1">{{ overall }}</strong>
                                 Total
                             </span>
@@ -81,7 +81,7 @@
                         
                     </div>
 
-                    <div class="mt-10">
+                    <div class="mt-12">
                         <chart 
                             :data="invoices_data_by_month"
                             :height="250"

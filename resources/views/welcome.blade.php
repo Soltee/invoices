@@ -21,7 +21,7 @@
             </p>
 
             <div class="mt-4">
-                <img src="{{ asset('/img/hero.png') }}" class="object-contain w-full rounded-lg shadow-lg">
+                <img src="{{ asset('/img/dashboard.png') }}" class="object-contain w-full rounded-lg shadow-lg">
             </div>
         </div>
 
@@ -41,11 +41,43 @@
         </div>
 
         <!-- Benefits -->
-        
+        <div id="features" class="mt-24  px-6 py-6">
+            <div class="flex  flex-col md:flex-row ">
+                <img src="{{ asset('/img/features.svg') }}" class="w-full md:w-1/2">
+
+                <div class="w-full md:w-1/2 md:ml-3 flex flex-col items-start my-6 md:my-8">
+                    <h3 class="text-xl text-blue-600 font-bold text-center">Features</h3>
+
+                    <div class="mt-4">
+                        <div class="mb-4">    
+                            <li class="text-2xl font-bold text-blue-600"> Unlimited Client Creation.</li>
+                            <p class="text-blue-600 mt-3">
+                                There is no restriction of how many clients can be created.
+                            </p>
+                        </div>
+
+                        <div class="mb-4">    
+                            <li class="text-2xl font-bold text-blue-600"> Unlimited Projects for Clients Creation.</li>
+                            <p class="text-blue-600 mt-3">
+                                There is no restriction of how many project can be created for a particular client.
+                            </p>
+                        </div>
+
+                        <div class="mb-3">    
+                            <li class="text-2xl font-bold text-blue-600"> Unlimited Invoice Generation.</li>
+                            <p class="text-blue-600 mt-3">
+                                You can create any number of invoices for the client & projects that you have created.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- FAQS -->
-        <div class="mt-24  px-6 py-6">
-            <div class="mb-8">
-                <h2 id="faqs" class="text-2xl text-blue-600 font-bold text-center">Do you have any questions?</h2>
+        <div id="faqs" class="mt-24  px-6 py-6 flex flex-col">
+            <div class="mb-10">
+                <h2  class="text-xl text-blue-600 font-bold text-center">Do you have any questions?</h2>
             </div>
             <div
             x-data="{tab:''}"
@@ -58,7 +90,7 @@
                             <h3 
                                 x-on:click="tab = 'free'"
                                 :class=" (tab === 'free') ? '' : ''"
-                                class="text-blue-600 cursor-pointer hover:bg-custom-light-orange  rounded-t rounded-l rounded-r-none hover:text-white font-semibold text-lg font-bold">It is really free?</h3>
+                                class="text-blue-600 cursor-pointer hover:bg-custom-light-orange  rounded-t rounded-l rounded-r-none hover:text-white font-semibold text-2xl font-bold">It is really free?</h3>
 
                             <div
                                 >
@@ -96,7 +128,7 @@
                             <h3 
                                 x-on:click="tab = 'card'"
                                 :class=" (tab === 'card') ? '' : ''"
-                                class="text-blue-600 cursor-pointer hover:bg-custom-light-orange  rounded-t rounded-l rounded-r-none hover:text-white font-semibold text-lg font-bold">Do I need credit card?</h3>
+                                class="text-blue-600 cursor-pointer hover:bg-custom-light-orange  rounded-t rounded-l rounded-r-none hover:text-white font-semibold text-2xl font-bold">Do I need credit card?</h3>
                             <div
                                 >
                                 <svg 
@@ -132,7 +164,7 @@
                             <h3 
                                 x-on:click="tab = 'application'"
                                 :class=" (tab === 'application') ? '' : ''"
-                                class="text-blue-600 cursor-pointer hover:bg-custom-light-orange  rounded-t rounded-l rounded-r-none hover:text-white font-semibold text-lg font-bold">Do I work on Windows or Mac or Linux?</h3>
+                                class="text-blue-600 cursor-pointer hover:bg-custom-light-orange  rounded-t rounded-l rounded-r-none hover:text-white font-semibold text-2xl font-bold">Do I work on Windows or Mac or Linux?</h3>
                             <div
                                 >
                                 <svg 
