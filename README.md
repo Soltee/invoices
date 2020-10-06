@@ -18,7 +18,7 @@ Invoice is  a simple invoicing web application for freelancers.
 
 
 
-##After Login
+## After Login
 ![](https://raw.githubusercontent.com/soltee/invoices/master/public/img/dashboard.png)
 
 ![](https://raw.githubusercontent.com/soltee/invoices/master/public/img/dashboard_mobile.png)
