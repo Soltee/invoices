@@ -33,6 +33,8 @@
 
     </head>
     <body>
+        @include('sweetalert::alert')
+
         <!--- Header -->
         <div>
            <nav class="">
@@ -59,7 +61,7 @@
                             </li>
                             <li class="list-none mb-3 md:mb-0">
 
-                                <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
+                                <a href="{{ route('contact') }}" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                     Contact Us
                                 </a>
                             </li>
@@ -154,7 +156,7 @@
                                     </li>
                                     <li class="list-none mb-3 md:mb-0">
 
-                                        <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
+                                        <a href="{{ route('contact') }}" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                             Contact Us
                                         </a>
                                     </li>
@@ -211,7 +213,7 @@
                             <a href="#features" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">
                                 Features
                             </a>
-                            <a href="#" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">
+                            <a href="{{ route('contact') }}" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">
                                 Contact Us
                             </a>
                             <a href="#faqs" class="mb-3 text-white px-2 border rounded border-transparent hover:border-white hover:opacity-75">

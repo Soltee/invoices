@@ -7,10 +7,14 @@ use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\ProjectController;
 use App\Http\Controllers\Customer\InvoiceController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\WelcomeController;
 
+Route::get('/', [WelcomeController::class, 'index'])
+									->name('welcome');
+Route::get('/contact-us', [WelcomeController::class, 'contact'])
+									->name('contact');
+Route::post('/new_contact', [WelcomeController::class, 'contact'])
+									->name('contact.save');
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 

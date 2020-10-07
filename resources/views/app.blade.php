@@ -21,6 +21,8 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
+        @include('sweetalert::alert')
+
         @inertia
     </body>
 </html>
