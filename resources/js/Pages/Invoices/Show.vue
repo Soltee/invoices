@@ -183,12 +183,12 @@
 								    
 								    <label class="px-2 py-2 text-center rounded mr-2 border">Status</label>
 								    <div class="flex items-center">
-								    	<span 
+								    	<!-- <span 
 			                        			v-text="(Number(invoice.is_paid)) ? 'Paid' : 'Unpaid' "
 			                        			:class="(Number(invoice.is_paid)) ? 'bg-green-600 hover:bg-green-500' : 'bg-red-600'"
 			                        			class="mr-3 px-2 py-2 rounded text-white " 
 			                        			>
-			                        		</span> 
+			                        		</span>  -->
 
 			                        	<span 
 									    	

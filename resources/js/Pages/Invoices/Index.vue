@@ -60,10 +60,10 @@
 						            <table class="min-w-full leading-normal">
 						                <thead>
 						                    <tr>
-						                        <th
+						                        <!-- <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
 						                            Status
-						                        </th>
+						                        </th> -->
 						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
 						                            Grand Total
@@ -83,7 +83,7 @@
 						                    <tr  v-for="invoice in invoices.data" >
 						                       
 						                        
-						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
+						                       <!--  <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 						                        	<div class="flex items-center">
 						                        		<span 
 						                        			v-text="(Number(invoice.is_paid)) ? 'Paid' : 'Unpaid' "
@@ -92,7 +92,7 @@
 						                        			>
 						                        		</span>
 						                        	</div>
-						                        </td>
+						                        </td> -->
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 						                            <p class="text-gray-900 whitespace-no-wrap font-black">$ {{ invoice.grand_total }}</p>
 						                        </td>

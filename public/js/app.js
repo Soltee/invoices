@@ -77107,19 +77107,6 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n\t\t\t\t\t\t                            Status\n\t\t\t\t\t\t                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "th",
-                                {
-                                  staticClass:
-                                    "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider"
-                                },
-                                [
-                                  _vm._v(
                                     "\n\t\t\t\t\t\t                            Grand Total\n\t\t\t\t\t\t                        "
                                   )
                                 ]
@@ -77158,36 +77145,6 @@ var render = function() {
                             [
                               _vm._l(_vm.invoices.data, function(invoice) {
                                 return _c("tr", [
-                                  _c(
-                                    "td",
-                                    {
-                                      staticClass:
-                                        "px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm"
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        { staticClass: "flex items-center" },
-                                        [
-                                          _c("span", {
-                                            staticClass:
-                                              "mr-3 px-2 py-2 rounded text-white ",
-                                            class: Number(invoice.is_paid)
-                                              ? "bg-green-600 hover:bg-green-500"
-                                              : "bg-red-600",
-                                            domProps: {
-                                              textContent: _vm._s(
-                                                Number(invoice.is_paid)
-                                                  ? "Paid"
-                                                  : "Unpaid"
-                                              )
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
                                   _c(
                                     "td",
                                     {
@@ -78421,18 +78378,6 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "flex items-center" }, [
-                        _c("span", {
-                          staticClass: "mr-3 px-2 py-2 rounded text-white ",
-                          class: Number(_vm.invoice.is_paid)
-                            ? "bg-green-600 hover:bg-green-500"
-                            : "bg-red-600",
-                          domProps: {
-                            textContent: _vm._s(
-                              Number(_vm.invoice.is_paid) ? "Paid" : "Unpaid"
-                            )
-                          }
-                        }),
-                        _vm._v(" "),
                         Number(_vm.invoice.is_sent)
                           ? _c(
                               "span",
