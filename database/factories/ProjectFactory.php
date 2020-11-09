@@ -31,6 +31,7 @@ class ProjectFactory extends Factory
             'user_id'       => $user,
             'client_id'     => $client,
             'name'          => $this->faker->name,
+            'description'   => $this->faker->sentence(100),
             'amount'        => $this->faker->numberBetween(1000, 5000),
             'is_completed'  => function(){
                 return Arr::random([true, false]);

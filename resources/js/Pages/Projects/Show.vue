@@ -38,7 +38,7 @@
 							        <div @click="toggleEditProjectModal();" class="h-full w-full bg-gray-300" >
 							            
 							    	</div>
-								<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
+								<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30 h-full overflow-y-scroll">
 									<div class="text-right">
 								            <button @click="toggleEditProjectModal();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
 								                <svg   width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75 fill-current text-gray-900">
@@ -103,6 +103,22 @@
 							    					class="text-red-500 text-md font-semibold mb-2">
 							    						{{ err }}
 							    				</div>
+							    				</div>
+
+							    				<!-- Description -->
+							    				<div class="mb-6">
+							    				
+							    					<VueTrix v-model="form.description" placeholder="Project Description"/>
+
+							    				</div>
+							    				<!-- Err -->
+							    				<div class="mt-2">
+							    					<div 
+								    					v-if="descriptionErr.length > 0"
+								    					v-for="err in descriptionErr" 
+								    					class="text-red-500 text-md font-semibold mb-2">
+								    						{{ err }}
+								    				</div>
 							    				</div>
 
 
@@ -199,6 +215,14 @@
 			                        		:class="(Number(project.is_completed)) ? 'bg-green-600 hover:bg-green-500' : 'bg-yellow-300'">
 							    	 			
 							    	 		</h2>
+
+							    	</div>
+
+							    	<div class="flex mb-3">
+							    		<label class="w-24 border rounded-l py-2 px-2">Description</label>
+							    	 	<p class="text-lg font-semibold text-gray-700  border rounded py-2 px-2"
+							    	 		v-html="project.description">
+							    	 	</p>
 
 							    	</div>
 
@@ -335,11 +359,13 @@
 	import axios from 'axios'
 	import VueSweetalert2 from 'vue-sweetalert2';
 	import 'sweetalert2/dist/sweetalert2.min.css';
+	import VueTrix from "vue-trix";
 
 	export default {
 		components: {
 			AppLayout,
-            Pagination
+            Pagination,
+            VueTrix
         },
 		props :  {
 			client   : Object,
@@ -356,9 +382,11 @@
 					client          : this.client.id,
 					project_name    : this.project.name,
 					amount          : this.project.amount,
+					description          : this.project.description,
 					is_completed    : Number(this.project.is_completed)
  				},
  				projectNameErr : [],
+ 				descriptionErr : [],
  				amountErr      : [],
  				clientErr      : []
 			}
@@ -378,6 +406,7 @@
 				//Remove all errors
 				this.projectNameErr = [];
 				this.amountErr      = [];
+				this.descriptionErr      = [];
 				this.clientErr      = [];
 
 				//PUt
@@ -389,7 +418,8 @@
 							this.projectForm = {
 			        			project_name    : '',
 								amount          : '',
-								is_completed    : false
+								is_completed    : false,
+								description     : ''
 			        		}
 			        		this.$inertia.reload({preserveScroll: true, preserveState: false})
 
@@ -397,7 +427,7 @@
 					}).catch(err => {
 
 						this.processing = false;
-						let { client, project_name, amount } = err.response.data.errors;
+						let { client, project_name, description, amount } = err.response.data.errors;
 
 						if(client){
 							this.clientErr = client;
@@ -409,6 +439,10 @@
 
 						if(amount){
 							this.amountErr = amount;
+						}
+
+						if(description){
+							this.descriptionErr = description;
 						}
 
 					});

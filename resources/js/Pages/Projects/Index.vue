@@ -35,7 +35,7 @@
 					        <div @click="toggleCreateProjectModal();" class="h-full w-full bg-gray-300" >
 					            
 					    	</div>
-							<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
+							<div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30 h-full overflow-y-scroll">
 								<div class="text-right">
 						            <button @click="toggleCreateProjectModal();"  type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
 						                <svg   width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75 fill-current text-gray-900">
@@ -114,6 +114,23 @@
 							    						{{ err }}
 							    				</div>
 						    				</div>
+
+						    				<!-- Description -->
+						    				<div class="mb-6">
+						    				
+						    					<VueTrix v-model="form.description" placeholder="Project Description"/>
+
+						    				</div>
+						    				<!-- Err -->
+						    				<div class="mt-2">
+						    					<div 
+							    					v-if="descriptionErr.length > 0"
+							    					v-for="err in descriptionErr" 
+							    					class="text-red-500 text-md font-semibold mb-2">
+							    						{{ err }}
+							    				</div>
+						    				</div>
+
 
 						    				<div class="mb-6 flex flex-col"> 
 									    		<label for="amount">Status:</label>
@@ -319,12 +336,14 @@
 	import 'sweetalert2/dist/sweetalert2.min.css';
 	import VueSweetalert2 from 'vue-sweetalert2';
 	import Multiselect from 'vue-multiselect'
+	import VueTrix from "vue-trix";
 
 	export default {
 		components: {
 			AppLayout,
             Pagination,
-            Multiselect
+            Multiselect,
+            VueTrix
         },
 		props :  {
 			projects : Object,
@@ -345,11 +364,13 @@
         			project_name : '',
         			amount : '',
         			is_completed : false,
+        			description  : ''
         		},
         		options : [],
         		clientErr: [],
         		nameErr: [],
-        		amountErr : []
+        		amountErr : [],
+        		descriptionErr : []
 			}
 		},
 		metaInfo() {
@@ -402,13 +423,15 @@
 
 				//Remove all errors
 				this.clientErr        = [];
-				this.nameErr        = [];
+				this.nameErr          = [];
+				this.descriptionErr   = [];
 				this.amountErr      = [];
 
-				let { client, project_name, amount, is_completed } = this.form;
+				let { client, project_name, amount, description, is_completed } = this.form;
 				const form = {
 					client : client.id,
 					project_name   : project_name,
+					description  : description,
 					amount : amount,
 					is_completed : is_completed
 				}
@@ -422,6 +445,7 @@
 							this.form = {
 			        			client          : {},
 			        			project_name    : '',
+			        			description     : '',
 								amount          : '',
 								is_completed    : false,
 			        		}
@@ -432,7 +456,7 @@
 					}).catch(err => {
 
 						this.processing = false;
-						let { client, project_name, amount } = err.response.data.errors;
+						let { client, project_name, description, amount } = err.response.data.errors;
 
 						if(client){
 							this.clientErr = client;
@@ -440,6 +464,10 @@
 
 						if(project_name){
 							this.nameErr = project_name;
+						}
+
+						if(description){
+							this.descriptionErr = description;
 						}
 
 						if(amount){
@@ -450,7 +478,7 @@
      	
 			},
 		    deleteProject(){
-		    	axios.delete(`/projects/${this.selected.id}`)
+		    	axios.delete(`/projects/${this.selected}`)
 				.then(res => {
 					this.processing = false;
 					if(res.status === 204){

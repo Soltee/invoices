@@ -10,6 +10,8 @@ use App\Models\User;
 use Auth;
 
 use Inertia\Inertia;
+use App\Http\Requests\ProjectValidation;
+use App\Services\ProjectService;
 
 class ProjectController extends Controller
 {
@@ -60,26 +62,12 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectValidation $request)
     {
-    	// dd($request->all());
-    	$data = $request->validate([
-    			'client'           => 'required|numeric',
-    			'project_name'     => 'required|string|min:3|unique:projects',
-                'amount'           => 'required|numeric',
-                'is_completed'     => 'nullable|bool',
-    		]);
 
-    	// dd($data);
-    	$client = Client::findOrfail($data['client']);
+        $data = $request->validated();
 
-        $completedArray = ['is_completed' => $data['is_completed']];
-    	//Create Project
-    	$client->projects()->create(array_merge([
-    			'user_id'            => Auth::user()->id,
-    			'name'               => $data['project_name'],
-    			'amount'             => $data['amount']
-    		]), $completedArray ?? []);
+        ProjectService::create($data);
 
     	return response()->json(['project' => $data], 201);
     }
@@ -90,28 +78,12 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(ProjectValidation $request, Project $project)
     {
-        $data = $request->validate([
-                'client'           => 'required|numeric',
-                'project_name'     => 'required|string|min:3|unique:projects',
-                'amount'           => 'required|numeric',
-                'is_completed'     => 'nullable|bool',
-            ]);
+       
+        $data = $request->validated();
 
-        // dd($data);
-        $client = Client::findOrfail($data['client']);
-
-        $completedArray = ['is_completed' => $data['is_completed']];
-
-        //Update Project
-        $project->update(array_merge(
-            [
-                'name'               => $data['project_name'],
-                'amount'             => $data['amount']
-            ], 
-            $completedArray ?? []
-        ));
+        ProjectService::update($data, $project);
 
         return response()->json(['project' => $data], 200);
     }
