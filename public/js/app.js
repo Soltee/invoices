@@ -7929,20 +7929,6 @@ __webpack_require__.r(__webpack_exports__);
   "extends": vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["Bar"],
   props: ['data', 'options'],
   mounted: function mounted() {
-    // this.renderChart(this.chartdata, this.options)
-    console.log(this.data);
-    var sentData = [];
-    var notSentData = [];
-    var newLabels = []; // let newData        = [
-    //   this.data[0], this.data[1]
-    // ];
-    // this.data.forEach(arr => {
-    //         arr.forEach((d) => {
-    //           newLabels.push(d.month);
-    //         });
-    //       });
-    // console.log(newData[0]);
-
     this.renderChart({
       labels: Array.from(new Set(this.data[2])),
       datasets: [{
