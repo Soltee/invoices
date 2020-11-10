@@ -4886,14 +4886,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    current_mth_paid: Number,
-    current_mth_paid_tot: String,
-    current_mth_pend: Number,
-    current_mth_pend_tot: String,
-    current_mth_overall: Number,
-    current_mth_overall_total: String,
-    overall_paid: Number,
-    overall_paid_total: String,
+    current_mth_invoice_sent: Number,
+    current_mth_invoice_sent_tot: String,
+    current_mth_invoice_pend: Number,
+    current_mth_invoice_pend_tot: String,
+    current_mth_invoice_overall: Number,
+    current_mth_invoice_overall_total: String,
+    overall_sent: Number,
+    overall_sent_total: String,
     overall_pending: Number,
     overall_pending_total: String,
     overall: Number,
@@ -7930,19 +7930,29 @@ __webpack_require__.r(__webpack_exports__);
   props: ['data', 'options'],
   mounted: function mounted() {
     // this.renderChart(this.chartdata, this.options)
-    // console.log(this.data);
-    var newData = [];
-    var newLabels = [];
-    this.data.reverse().forEach(function (d) {
-      newData.push(d.total);
-      newLabels.push(d.month);
-    });
+    console.log(this.data);
+    var sentData = [];
+    var notSentData = [];
+    var newLabels = []; // let newData        = [
+    //   this.data[0], this.data[1]
+    // ];
+    // this.data.forEach(arr => {
+    //         arr.forEach((d) => {
+    //           newLabels.push(d.month);
+    //         });
+    //       });
+    // console.log(newData[0]);
+
     this.renderChart({
-      labels: newLabels,
+      labels: Array.from(new Set(this.data[2])),
       datasets: [{
-        label: 'Invoices',
+        label: 'Ready to Send',
+        backgroundColor: '#75DA8B',
+        data: this.data[1]
+      }, {
+        label: 'Sent',
         backgroundColor: '#0000FF',
-        data: newData
+        data: this.data[0]
       }]
     }, this.options);
   }
@@ -76310,7 +76320,7 @@ var render = function() {
               _c(
                 "span",
                 { staticClass: "text-xl font-bold mb-2 text-gray-900 " },
-                [_vm._v("This Month")]
+                [_vm._v("Invoices : This Month")]
               ),
               _vm._v(" "),
               _c(
@@ -76332,10 +76342,13 @@ var render = function() {
                         { staticClass: "text-xl font-black mb-3 text-white" },
                         [
                           _vm._v(
-                            "\n                            $ " +
-                              _vm._s(_vm.current_mth_paid_tot) +
-                              "\n                        "
-                          )
+                            "\n                             " +
+                              _vm._s(_vm.current_mth_invoice_sent) +
+                              " "
+                          ),
+                          _c("span", { staticClass: "text-sm font-sm" }, [
+                            _vm._v("Sent")
+                          ])
                         ]
                       ),
                       _vm._v(" "),
@@ -76344,9 +76357,10 @@ var render = function() {
                         { staticClass: "font-sm mt-2 text-white opacity-75" },
                         [
                           _c("strong", { staticClass: "opacity-1" }, [
-                            _vm._v(_vm._s(_vm.current_mth_paid))
-                          ]),
-                          _vm._v(" Paid today\n                        ")
+                            _vm._v(
+                              "$ " + _vm._s(_vm.current_mth_invoice_sent_tot)
+                            )
+                          ])
                         ]
                       )
                     ]
@@ -76361,10 +76375,13 @@ var render = function() {
                     [
                       _c("h3", { staticClass: "text-xl font-black mb-3" }, [
                         _vm._v(
-                          "\n                            $ " +
-                            _vm._s(_vm.current_mth_pend_tot) +
-                            "\n                        "
-                        )
+                          "\n                            " +
+                            _vm._s(_vm.current_mth_invoice_pend) +
+                            " "
+                        ),
+                        _c("span", { staticClass: "text-sm font-sm" }, [
+                          _vm._v("Pending")
+                        ])
                       ]),
                       _vm._v(" "),
                       _c(
@@ -76374,11 +76391,10 @@ var render = function() {
                         },
                         [
                           _c("strong", { staticClass: "opacity-1" }, [
-                            _vm._v(_vm._s(_vm.current_mth_pend))
-                          ]),
-                          _vm._v(
-                            "\n                            Pending\n                        "
-                          )
+                            _vm._v(
+                              "$ " + _vm._s(_vm.current_mth_invoice_pend_tot)
+                            )
+                          ])
                         ]
                       )
                     ]
@@ -76398,10 +76414,13 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                            $ " +
-                              _vm._s(_vm.current_mth_overall_total) +
-                              "\n                        "
-                          )
+                            "\n                            " +
+                              _vm._s(_vm.current_mth_invoice_overall) +
+                              " "
+                          ),
+                          _c("span", { staticClass: "text-sm font-sm" }, [
+                            _vm._v("Total")
+                          ])
                         ]
                       ),
                       _vm._v(" "),
@@ -76410,11 +76429,11 @@ var render = function() {
                         { staticClass: "font-sm mt-2 text-blue-600" },
                         [
                           _c("strong", { staticClass: "opacity-1" }, [
-                            _vm._v(_vm._s(_vm.current_mth_overall))
-                          ]),
-                          _vm._v(
-                            "\n                            Total\n                        "
-                          )
+                            _vm._v(
+                              "$ " +
+                                _vm._s(_vm.current_mth_invoice_overall_total)
+                            )
+                          ])
                         ]
                       )
                     ]
@@ -76447,10 +76466,13 @@ var render = function() {
                         { staticClass: "text-xl font-black mb-3 text-white" },
                         [
                           _vm._v(
-                            "\n                            $ " +
-                              _vm._s(_vm.overall_paid_total) +
-                              "\n                        "
-                          )
+                            "\n                            " +
+                              _vm._s(_vm.overall_sent) +
+                              " "
+                          ),
+                          _c("span", { staticClass: "text-sm font-sm" }, [
+                            _vm._v("Sent")
+                          ])
                         ]
                       ),
                       _vm._v(" "),
@@ -76459,9 +76481,9 @@ var render = function() {
                         { staticClass: "font-sm mt-2 text-white opacity-75" },
                         [
                           _c("strong", { staticClass: "opacity-1" }, [
-                            _vm._v(_vm._s(_vm.overall_paid))
+                            _vm._v("$ " + _vm._s(_vm.overall_sent_total))
                           ]),
-                          _vm._v(" Paid \n                        ")
+                          _vm._v(" Sent \n                        ")
                         ]
                       )
                     ]
@@ -76476,10 +76498,13 @@ var render = function() {
                     [
                       _c("h3", { staticClass: "text-xl font-black mb-3" }, [
                         _vm._v(
-                          "\n                            $ " +
-                            _vm._s(_vm.overall_pending_total) +
-                            "\n                        "
-                        )
+                          "\n                            " +
+                            _vm._s(_vm.overall_pending) +
+                            " "
+                        ),
+                        _c("span", { staticClass: "text-sm font-sm" }, [
+                          _vm._v("Pending")
+                        ])
                       ]),
                       _vm._v(" "),
                       _c(
@@ -76489,7 +76514,7 @@ var render = function() {
                         },
                         [
                           _c("strong", { staticClass: "opacity-1" }, [
-                            _vm._v(_vm._s(_vm.overall_pending))
+                            _vm._v("$ " + _vm._s(_vm.overall_pending_total))
                           ]),
                           _vm._v(
                             "\n                            Pending\n                        "
@@ -76513,10 +76538,13 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                            $ " +
-                              _vm._s(_vm.overall_total) +
-                              "\n                        "
-                          )
+                            "\n                            " +
+                              _vm._s(_vm.overall) +
+                              " "
+                          ),
+                          _c("span", { staticClass: "text-sm font-sm" }, [
+                            _vm._v("Total")
+                          ])
                         ]
                       ),
                       _vm._v(" "),
@@ -76525,7 +76553,7 @@ var render = function() {
                         { staticClass: "font-sm mt-2 text-blue-600" },
                         [
                           _c("strong", { staticClass: "opacity-1" }, [
-                            _vm._v(_vm._s(_vm.overall))
+                            _vm._v("$ " + _vm._s(_vm.overall_total))
                           ]),
                           _vm._v(
                             "\n                            Total\n                        "

@@ -23,85 +23,129 @@ class DashboardController extends Controller
     public function index()
     {   
         $month  = request()->month;
-
-        //This Month
-        $current_mth_paid       =  Auth::user()->invoices()
-                                        ->whereDate('due', '<=', now())
-                                        ->where('is_paid', true)
+        //Invoices
+        //Sent , NOt Sent & Total
+        $current_mth_invoice_sent       =  Auth::user()->invoices()
+                                        ->whereMonth('created_at',  Carbon::now())
+                                        ->where('is_sent', true)
                                         ->count();
-        $current_mth_paid_tot   =  Auth::user()->invoices()
-                                        ->whereDate('due', '<=', now())
-                                        ->where('is_paid', true)
+
+        $current_mth_invoice_sent_tot   =  Auth::user()->invoices()
+                                        ->whereMonth('created_at',  Carbon::now())
+                                        ->where('is_sent', true)
                                         ->sum('grand_total');
 
-        $current_mth_pend       =  Auth::user()->invoices()
-                                        ->whereDate('due', '<=', now())
-                                        ->where('is_paid', false)
+        $current_mth_invoice_pend       =  Auth::user()->invoices()
+                                        ->whereMonth('created_at',  Carbon::now())
+                                        ->where('is_sent', false)
                                         ->count();
-        $current_mth_pend_tot   =  Auth::user()->invoices()
-                                        ->whereDate('due', '<=', now())
-                                        ->where('is_paid', false)
+
+        $current_mth_invoice_pend_tot   =  Auth::user()->invoices()
+                                        ->whereMonth('created_at',  Carbon::now())
+                                        ->where('is_sent', false)
                                         ->sum('grand_total');
 
-        $current_mth_overall    = Auth::user()->invoices()
-                                        ->whereDate('due', '<=', now())
+        $current_mth_invoice_overall    = Auth::user()->invoices()
+                                        ->whereMonth('created_at',  Carbon::now())
                                         ->count();
-        $current_mth_overall_total  = Auth::user()->invoices()
-                                        ->whereDate('due', '<=', now())
-                                        ->sum('grand_total');
+        $current_mth_invoice_overall_total  = Auth::user()->invoices()
+                                                ->whereMonth('created_at',  Carbon::now())
+                                                ->sum('grand_total');
 
+        //Projects
+        $current_mth_project_completed      = Auth::user()->projects()
+                                                ->whereMonth('created_at',  Carbon::now())
+                                                ->where('is_completed', true)
+                                                ->count();
+
+        $current_mth_project_incomplete     = Auth::user()->projects()
+                                                ->whereMonth('created_at',  Carbon::now())
+                                                ->where('is_completed', false)
+                                                ->count();
+
+        $current_mth_project_total          = Auth::user()->projects()
+                                                ->whereMonth('created_at',  Carbon::now())
+                                                ->count();
 
 
         //Overall
-        $overall_paid           = Auth::user()->invoices()
-                                        ->where('is_paid', true)
+        $overall_sent           = Auth::user()->invoices()
+                                        ->where('is_sent', true)
                                         ->count();
-        $overall_paid_total     = Auth::user()->invoices()
-                                        ->where('is_paid', true)
+        $overall_sent_total     = Auth::user()->invoices()
+                                        ->where('is_sent', true)
                                         ->sum('grand_total');
 
         $overall_pending        = Auth::user()->invoices()
-                                            ->where('is_paid', false)
+                                            ->where('is_sent', false)
                                             ->count();
 
         $overall_pending_total  = Auth::user()->invoices()
-                                        ->where('is_paid', false)
+                                        ->where('is_sent', false)
                                         ->sum('grand_total');
 
         $overall                = Auth::user()->invoices()->count();
         $overall_total          = Auth::user()->invoices()->sum('grand_total');
 
         //For Chart
-        $invoices_data_by_month    = [];
+        $invoices_sent_data        = [];
+        $invoices_not_send_data    = [];
+        $months                    = [];
 
         for ($i=0; $i <= 5; $i++) { 
-            array_push($invoices_data_by_month, $this->getDatafromMonth($i));
-        }
+            array_push($invoices_sent_data, $this->getDatafromMonth($i, 'is_sent', 1));
+            array_push($invoices_not_send_data, $this->getDatafromMonth($i, 'is_sent', 0));
 
-        // dd($invoices_data_by_month);
+            array_push($months, $this->getMonths($i));
+        }
+        // dd($months);
+
+        // dd([
+        //     $invoices_sent_data,
+        //     $invoices_not_send_data
+        // ]);
 
         return Inertia::render('Dashboard/Index', [
-                'current_mth_paid'            => $current_mth_paid,
-                'current_mth_paid_tot'        => $current_mth_paid_tot,
-                'current_mth_pend'            => $current_mth_pend,
-                'current_mth_pend_tot'        => $current_mth_pend_tot,
-                'current_mth_overall'         => $current_mth_overall,
-                'current_mth_overall_total'   => $current_mth_overall_total,
+                'current_mth_invoice_sent'            => $current_mth_invoice_sent,
+                'current_mth_invoice_sent_tot'        => $current_mth_invoice_sent_tot,
+                'current_mth_invoice_pend'            => $current_mth_invoice_pend,
+                'current_mth_invoice_pend_tot'        => $current_mth_invoice_pend_tot,
+                'current_mth_invoice_overall'         => $current_mth_invoice_overall,
+                'current_mth_invoice_overall_total'   => $current_mth_invoice_overall_total,
 
-                'overall_paid'                => $overall_paid,
-                'overall_paid_total'          => $overall_paid_total,
+                'overall_sent'                => $overall_sent,
+                'overall_sent_total'          => $overall_sent_total,
                 'overall_pending'             => $overall_pending,
                 'overall_pending_total'       => $overall_pending_total,
                 'overall'                     => $overall,
                 'overall_total'               => $overall_total,
 
-                'invoices_data_by_month'      => $invoices_data_by_month
+                'invoices_data_by_month'      => [
+                                                    array_reverse($invoices_sent_data),
+                                                    array_reverse($invoices_not_send_data),
+                                                    array_reverse($months)
+                                                ]
             ]);
     }
 
 
-    //Get Data based on Month Helper
-    protected function getDatafromMonth($mth)
+    //Get Data from Data
+    protected function getDatafromMonth($mth, string $type, bool $value)
+    {
+        return 
+            Auth::user()->invoices()
+                            ->where(''. $type .'', $value) 
+                            ->whereMonth('created_at', '==', Carbon::now()->subMonths($mth))
+                            ->count();
+    }
+
+    //Get Month
+    protected function getMonths($mth){
+        return Carbon::now()->subMonth($mth)->format('F');
+    }
+    
+    //Get Paid based on Month Helper
+    protected function getPaidDatafromMonth($mth)
     {
         return [
                 
