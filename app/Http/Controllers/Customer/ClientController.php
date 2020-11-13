@@ -25,6 +25,7 @@ class ClientController extends Controller
         return Inertia::render('Clients/Index', [
             'search'    => request()->search,
             'clients'   => Auth::user()->clients()
+                            ->latest()
                             ->withCount('projects')
                             ->withCount('invoices')
                             // ->orderByName()
@@ -67,10 +68,9 @@ class ClientController extends Controller
     			'last_name'        => 'required|string|min:3',
     			'email'            => 'required|string|email|unique:clients',
     			'gender'           => 'required|string',
-                'project_name'     => 'required|string|min:3|unique:projects',
+                'project_name'     => 'required|string|min:3|unique:projects,name',
     			'amount'           => 'required|numeric',
     		]);
-
 
     	//Create a client;
     	$client   = new Client();
