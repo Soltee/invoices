@@ -135,7 +135,7 @@ class DashboardController extends Controller
         return 
             Auth::user()->invoices()
                             ->where(''. $type .'', $value) 
-                            ->whereMonth('created_at', '==', Carbon::now()->subMonths($mth))
+                            ->whereMonth('created_at', Carbon::now()->subMonths($mth))
                             ->count();
     }
 
