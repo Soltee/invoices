@@ -86,7 +86,7 @@ class InvoiceController extends Controller
                 'amount'    => 'required|numeric|min:0',
                 'discount'  => 'nullable|numeric',
                 'grand'     => 'required|numeric|min:0',
-                'due'       => 'required|date'
+                'due'       => 'nullable|date'
             ]);
 
         if($data['discount']){
@@ -100,8 +100,7 @@ class InvoiceController extends Controller
                     'client_id'       => $data['client'],
                     'project_id'      => $data['project'],
                     'sub_total'       => $data['amount'],
-                    'grand_total'     => $data['grand'],
-                    'due'             => $data['due']
+                    'grand_total'     => $data['grand']
                 ],
 
                 $discountArr ?? []
@@ -149,7 +148,7 @@ class InvoiceController extends Controller
                 'amount'    => 'required|numeric|min:0',
                 'discount'  => 'nullable|numeric',
                 'grand'     => 'required|numeric|min:0',
-                'due'       => 'required|date'
+                'due'       => 'nullable|date'
             ]);
 
         if($data['discount']){
@@ -162,8 +161,7 @@ class InvoiceController extends Controller
                     'client_id'       => $data['client'],
                     'project_id'      => $data['project'],
                     'sub_total'       => $data['amount'],
-                    'grand_total'     => $data['grand'],
-                    'due'             => $data['due']
+                    'grand_total'     => $data['grand']
                 ],
 
                 $discountArr ?? []

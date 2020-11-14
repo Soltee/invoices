@@ -70,7 +70,7 @@
 						                        </th>
 						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Due
+						                            Created
 						                        </th>
 						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-custom-light-black uppercase tracking-wider">
@@ -98,7 +98,7 @@
 						                        </td>
 
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 whitespace-no-wrap">{{ format(invoice.due) }}</p>
+						                            <p class="text-gray-900 whitespace-no-wrap">{{ format(invoice.created_at) }}</p>
 						                        </td>
 
 						                        
@@ -224,10 +224,6 @@
         		deleteModal:false,
         		selected : null,
         		options  : [
-        			{
-						name : 'Paid',
-						language  : 'Paid'
-					},
 					{
 						name : 'Sent',
 						language  : 'Sent'

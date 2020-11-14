@@ -23,7 +23,7 @@ class CreateInvoicesTable extends Migration
             $table->boolean('is_paid')->default(false);
             $table->boolean('is_sent')->default(false);
             $table->text('feedback')->nullable();
-            $table->datetime('due');
+            $table->datetime('due')->nullable();
             $table->integer('sub_total');
             $table->integer('discount')->nullable();
             $table->integer('grand_total');

@@ -50,12 +50,12 @@
                     <div class="flex-1 space-x-10 ">
                         <ul class="hidden md:flex md:flex-row justify-center md:items-center md:m-0">
                             <li class="list-none mb-3 md:mb-0">
-                                <a href="#features" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
+                                <a href="/#features" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                     Features
                                 </a>
                             </li>
                             <li class="list-none mb-3 md:mb-0">
-                                <a href="#faqs" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
+                                <a href="/#faqs" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                     FAQs
                                 </a>
                             </li>
@@ -67,7 +67,7 @@
                             </li>
                             <li class="list-none">
 
-                                <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
+                                <a href="/#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                     About Us
                                 </a>
                             </li>

@@ -102,7 +102,7 @@
 						    				</div>
 
 								    	</div>
-								    	<div class="mb-6 flex flex-col w-full"> 
+								    	<!-- <div class="mb-6 flex flex-col w-full"> 
 								    		<label for="due">Due Date:</label>
 						    				<input id="due" type="date" class="px-3 py-3 rounded border border-indigo-500 w-full" v-model="form.due" />
 
@@ -112,7 +112,7 @@
 						    						{{ $page.errors.due }}
 						    				</div>
 
-								    	</div>
+								    	</div> -->
 
 
 							    		<div v-if="form.project">
@@ -151,11 +151,13 @@
     import AppLayout from './../../Layouts/AppLayout'
 	import throttle from 'lodash/throttle'
 	import Multiselect from 'vue-multiselect'
-
+	import 'sweetalert2/dist/sweetalert2.min.css';
+	import VueSweetalert2 from 'vue-sweetalert2';
 	export default {
 		components: {
 			AppLayout,
             Multiselect,
+            VueSweetalert2
         },
 		props :  {
 			clients : Array
@@ -225,13 +227,16 @@
 		    	let form = {
 		    		client     : client.id,
         			project    : project.id,
-        			due        : due,
+        			// due        : due,
         			amount     : amount,
         			discount   : discount,
         			grand      : grand
 		    	}
 		    	this.$inertia.post(`/invoices`, form);
-		    	this.processing = false;
+		    	this.processing = false;	
+		    	this.$swal(`Invoice created.`);
+				this.$inertia.reload({preserveScroll: true, preserveState: false})
+
 		    	this.reset();
 		    },
 		    getClientProjects(){

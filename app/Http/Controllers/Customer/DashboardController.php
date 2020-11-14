@@ -22,7 +22,6 @@ class DashboardController extends Controller
      */
     public function index()
     {   
-        $month  = request()->month;
         //Invoices
         //Sent , NOt Sent & Total
         $current_mth_invoice_sent       =  Auth::user()->invoices()

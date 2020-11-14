@@ -25,7 +25,7 @@
 |      |   |
 |:----------|:-------------:|
 | Subtotal| ${{ $invoice->sub_total }} |  
-| Discount | ${{  $invoice->discount }} | 
+| Discount | ${{  $invoice->discount ?? 0  }} | 
 | Grandtotal |${{  $invoice->grand_total }} |
 
 @endcomponent

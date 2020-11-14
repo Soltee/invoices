@@ -35,7 +35,7 @@
 								        <transition name="fade">
 											<div v-if="$page.flash.success" id="Message" class=" ml-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
 
-									        	<span class="mr-3">{{ $page.flash.success }}</span>
+									        	<!-- <span class="mr-3">{{ $page.flash.success }}</span> -->
 
 									        </div>
 
@@ -45,7 +45,6 @@
 
 							        
 							        <button  type="submit" class="px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded">
-							        	<div v-if="processing" class="spinner"></div>
 
 							      	    <span class="ml-2">Create</span>
 							        </button>
@@ -143,11 +142,13 @@
 <script>
     import AppLayout from './../../Layouts/AppLayout'
 	import Multiselect from 'vue-multiselect'
-
+	import 'sweetalert2/dist/sweetalert2.min.css';
+	import VueSweetalert2 from 'vue-sweetalert2';
 	export default {
 		components: {
             AppLayout,
-            Multiselect
+            Multiselect,
+            VueSweetalert2
         },
 		props :  {
 
@@ -185,6 +186,7 @@
         },
 		methods:{
 			create(){
+	     		this.processing = true;	
 				let { first_name,last_name,email,gender,project_name,amount} = this.form;
 				let newForm = {
 					first_name    : first_name,
@@ -196,15 +198,20 @@
 				}
 
      		    this.$inertia.post('/clients', newForm);
+     		    setTimeout(() => {
 
-     		    this.form = {
-			        			first_name    : '',
-								last_name     : '',
-								email         : '',
-								gender        : '',
-								project_name  : '',
-								amount        : ''
-			        		}
+	     		   	this.processing = false;	
+	     		    this.$swal(`Client created.`);
+					this.$inertia.reload({preserveScroll: true, preserveState: false});
+	     		    this.form = {
+				        			first_name    : '',
+									last_name     : '',
+									email         : '',
+									gender        : '',
+									project_name  : '',
+									amount        : ''
+				        		}
+     		    }, 2000);
 			},
 		}
 	};
