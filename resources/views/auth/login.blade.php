@@ -20,6 +20,13 @@
             </div>
         @endif
 
+        <div class="flex w-full justify-center items-center mt-3 mb-6">
+            <p class="text-blue-500 mr-3">Not a User? </p>
+            <a class="underline text-lg text-center text-blue-500 hover:text-gray-900" href="{{ route('register') }}">
+                {{ __('Signup') }}
+            </a>
+        </div>
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
@@ -41,11 +48,11 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
+                {{-- @if (Route::has('password.request'))
                     <a class="underline text-sm text-blue-500 hover:text-gray-900" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
-                @endif
+                @endif --}}
 
                 {{-- <x-jet-button class="ml-4">
                     {{ __('Login') }}
@@ -55,12 +62,7 @@
                 </button>
             </div>
 
-            <div class="flex justify-start items-center">
-                
-                <a class="underline text-md text-center text-blue-500 hover:text-gray-900" href="{{ route('register') }}">
-                    {{ __('Signup') }}
-                </a>
-            </div>
+            
 
         </form>
     </x-jet-authentication-card>

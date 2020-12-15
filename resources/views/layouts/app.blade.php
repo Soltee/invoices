@@ -18,7 +18,6 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">
 
 
-
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 
