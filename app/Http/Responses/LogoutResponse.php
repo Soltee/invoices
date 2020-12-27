@@ -15,8 +15,6 @@ class LogoutResponse implements LogoutResponseContract
      */
     public function toResponse($request)
     {
-        // replace this with your own code
-        // the user can be located with Auth facade
         
         return $request->wantsJson()
                     ? new JsonResponse('', 204)

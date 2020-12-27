@@ -33,9 +33,9 @@
                     <img src="{{ asset('/img/marc.jpg') }}" class="w-40 h-40 rounded-full object-cover object-center">
                 </div>
                 <div class="flex flex-col md:w-2/3 flex justify-center items-center md:items-start">
-                    <p class="text-blue-600 text-lg font-bold text-center md:text-left italic">Invoice definitely saves me anywhere from one to two hours a week. The invoice tracking is excellent and the reporting for year end is super, super helpful—I can just run off a couple of reports, send them to my accountant...it’s a three button process at the end of the year.</p>
+                    <p class="text-blue-600 text-lg font-bold text-center md:text-left italic">Invoices is such an awesome tool for a freelancer like me. So I definitely recommend it. </p>
 
-                    <span class="mt-3 text-blue-600 opacity-75 font-medium">Lanzo Deferer - Owner, myproduction.com</span>
+                    <span class="mt-3 text-blue-600 opacity-75 font-medium">Lanzo Site - Owner, myproduction.com</span>
                 </div>
             </div>
         </div>
@@ -152,7 +152,7 @@
                             >
                             <p class="text-blue-600">
                                 No! 
-                                <span class="font-bold italic text-xl">Invoice.</span> doesnot required credit card whatsoever.
+                                <span class="font-bold italic text-xl">Invoice.</span> is  free forever.
                             </p>
                         </div>
 
@@ -164,7 +164,7 @@
                             <h3 
                                 x-on:click="tab = 'application'"
                                 :class=" (tab === 'application') ? '' : ''"
-                                class="text-blue-600 cursor-pointer hover:bg-custom-light-orange  rounded-t rounded-l rounded-r-none hover:text-white font-semibold text-2xl font-bold">Do I work on Windows or Mac or Linux?</h3>
+                                class="text-blue-600 cursor-pointer hover:bg-custom-light-orange  rounded-t rounded-l rounded-r-none hover:text-white font-semibold text-2xl font-bold">Does it work on Windows or Mac or Linux?</h3>
                             <div
                                 >
                                 <svg 
@@ -187,7 +187,7 @@
                             >
                             <p class="text-blue-600">
                                 <span class="font-bold italic text-xl">Invoice.</span>
-                                 works on all major platforms including Windows, Mac & Linux.
+                                 is a web based app. So it works on all major platforms including Windows, Mac & Linux.
                             </p>
                         </div>
 
