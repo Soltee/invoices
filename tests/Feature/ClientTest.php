@@ -58,3 +58,39 @@ class ClientTest extends TestCase
 
     }
 
+
+
+    /**
+     * 
+        @test
+     */
+    public function notLoggedInUserReturnUnauthenticatedWhenCreateingAClient()
+    {
+        // Data - client & project details
+        //Client
+        $client  = [
+                'first_name'  => 'Helina',
+                'last_name'   => 'ryo',
+                'email'       => 'helina@gmail.com',
+                'gender'      => 'FEMALE',
+            ];
+
+        //Project    
+        $project = [
+                'project_name'    => 'TestProject',
+                'amount'           => 2000
+            ];
+
+        //POst to /clients with  first_name, last_name, email, gender
+        $response = $this->post('/clients', array_merge($client, $project));
+
+        //Return 401 Unauthenticated Error
+        $response->assertStatus(302);
+
+        //Database Assert to 0 in clients & projects table
+        $this->assertDatabaseCount('clients', 0);
+        $this->assertDatabaseCount('projects', 0);
+
+    }
+
+}
