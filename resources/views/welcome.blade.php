@@ -14,10 +14,10 @@
                 <p class="m-0 p-0">
                     <span class="font-bold text-5xl">Free</span> & <span class="font-bold text-5xl">Easy</span> 
                 </p>
-                <span class="-mt-4">Invoicing For Freelancers.</span>
+                <span class="">Invoicing For Freelancers.</span>
             </div>
             <p class="mt-4 text-md text-blue-600  max-w-lg mx-auto text-center">
-                Easy-to-use & saves you time. Start exploring all features of <span class="italic font-bold">invoice.</span> today.
+                Easy-to-use. Start exploring all features of <span class="italic font-bold">invoice.</span> today.
             </p>
 
             <div class="mt-4">
@@ -35,7 +35,7 @@
                 <div class="flex flex-col md:w-2/3 flex justify-center items-center md:items-start">
                     <p class="text-blue-600 text-lg font-bold text-center md:text-left italic">Invoices is such an awesome tool for a freelancer like me. So I definitely recommend it. </p>
 
-                    <span class="mt-3 text-blue-600 opacity-75 font-medium">Lanzo Site - Owner, myproduction.com</span>
+                    <span class="mt-3 text-blue-600 opacity-75 font-medium">Lanzo Site, freelancer</span>
                 </div>
             </div>
         </div>
