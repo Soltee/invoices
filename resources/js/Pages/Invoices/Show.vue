@@ -24,9 +24,9 @@
 	    		</div>
 
 	    		<transition name="fade">
-					<div v-if="$page.flash.success" id="Message" class=" mr-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
+					<div v-if="$page.props.flash.success" id="Message" class=" mr-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
 
-			        	<span class="mr-3">{{ $page.flash.success }}</span>
+			        	<span class="mr-3">{{ $page.props.flash.success }}</span>
 
 			        </div>
 

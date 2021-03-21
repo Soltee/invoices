@@ -175,6 +175,6 @@ class ClientController extends Controller
         $client->delete();
 
 
-        return redirect()->route('clients')->with('success', 'Client with projects deleted.');
+        return redirect('/clients')->with('success', 'Client with projects deleted.');
     }
 }

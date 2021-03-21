@@ -3470,7 +3470,8 @@ __webpack_require__.r(__webpack_exports__);
         gender: '',
         project_name: '',
         amount: ''
-      }
+      },
+      success: false
     };
   },
   metaInfo: function metaInfo() {
@@ -3484,8 +3485,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     create: function create() {
-      var _this = this;
-
       this.processing = true;
       var _this$form = this.form,
           first_name = _this$form.first_name,
@@ -3503,25 +3502,6 @@ __webpack_require__.r(__webpack_exports__);
         amount: amount
       };
       this.$inertia.post('/clients', newForm);
-      setTimeout(function () {
-        _this.processing = false;
-
-        _this.$swal("Client created.");
-
-        _this.$inertia.reload({
-          preserveScroll: true,
-          preserveState: false
-        });
-
-        _this.form = {
-          first_name: '',
-          last_name: '',
-          email: '',
-          gender: '',
-          project_name: '',
-          amount: ''
-        };
-      }, 2000);
     }
   }
 });
@@ -3543,21 +3523,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Shared_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../Shared/Pagination */ "./resources/js/Shared/Pagination.vue");
 /* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/throttle */ "./node_modules/lodash/throttle.js");
 /* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_throttle__WEBPACK_IMPORTED_MODULE_2__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3782,9 +3747,14 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
         },
         onFinish: function onFinish() {
           _this.processing = false;
+          _this.deleteModal = false;
         }
       });
     }
+  },
+  computed: {// flash(){
+    // 	return this.$page.props.success
+    // }
   }
 });
 
@@ -5370,14 +5340,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -5476,6 +5438,7 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
         });
       })["catch"](function (e) {
         _this.processing = false;
+        _this.deleteModal = false;
         console.log(e);
       });
     }
@@ -79231,12 +79194,22 @@ var render = function() {
                           { staticClass: "flex items-center" },
                           [
                             _c("transition", { attrs: { name: "fade" } }, [
-                              _vm.$page.flash.success
-                                ? _c("div", {
-                                    staticClass:
-                                      " ml-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center",
-                                    attrs: { id: "Message" }
-                                  })
+                              _vm.$page.props.flash.success
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        " ml-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center",
+                                      attrs: { id: "Message" }
+                                    },
+                                    [
+                                      _c("span", { staticClass: "mr-3" }, [
+                                        _vm._v(
+                                          _vm._s(_vm.$page.props.flash.success)
+                                        )
+                                      ])
+                                    ]
+                                  )
                                 : _vm._e()
                             ])
                           ],
@@ -79305,7 +79278,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm.$page.errors.first_name
+                            _vm.$page.props.errors.first_name
                               ? _c(
                                   "div",
                                   {
@@ -79315,7 +79288,9 @@ var render = function() {
                                   [
                                     _vm._v(
                                       "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
-                                        _vm._s(_vm.$page.errors.first_name) +
+                                        _vm._s(
+                                          _vm.$page.props.errors.first_name
+                                        ) +
                                         "\n\t\t\t\t\t\t    \t\t\t\t"
                                     )
                                   ]
@@ -79355,7 +79330,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm.$page.errors.last_name
+                            _vm.$page.props.errors.last_name
                               ? _c(
                                   "div",
                                   {
@@ -79365,7 +79340,9 @@ var render = function() {
                                   [
                                     _vm._v(
                                       "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
-                                        _vm._s(_vm.$page.errors.last_name) +
+                                        _vm._s(
+                                          _vm.$page.props.errors.last_name
+                                        ) +
                                         "\n\t\t\t\t\t\t    \t\t\t\t"
                                     )
                                   ]
@@ -79405,7 +79382,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm.$page.errors.email
+                            _vm.$page.props.errors.email
                               ? _c(
                                   "div",
                                   {
@@ -79415,7 +79392,7 @@ var render = function() {
                                   [
                                     _vm._v(
                                       "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
-                                        _vm._s(_vm.$page.errors.email) +
+                                        _vm._s(_vm.$page.props.errors.email) +
                                         "\n\t\t\t\t\t\t    \t\t\t\t"
                                     )
                                   ]
@@ -79447,7 +79424,7 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _vm.$page.errors.gender
+                              _vm.$page.props.errors.gender
                                 ? _c(
                                     "div",
                                     {
@@ -79457,7 +79434,9 @@ var render = function() {
                                     [
                                       _vm._v(
                                         "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
-                                          _vm._s(_vm.$page.errors.gender) +
+                                          _vm._s(
+                                            _vm.$page.props.errors.gender
+                                          ) +
                                           "\n\t\t\t\t\t\t    \t\t\t\t"
                                       )
                                     ]
@@ -79513,7 +79492,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm.$page.errors.project_name
+                            _vm.$page.props.errors.project_name
                               ? _c(
                                   "div",
                                   {
@@ -79523,7 +79502,9 @@ var render = function() {
                                   [
                                     _vm._v(
                                       "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
-                                        _vm._s(_vm.$page.errors.project_name) +
+                                        _vm._s(
+                                          _vm.$page.props.errors.project_name
+                                        ) +
                                         "\n\t\t\t\t\t\t    \t\t\t\t"
                                     )
                                   ]
@@ -79564,7 +79545,7 @@ var render = function() {
                             })
                           ]),
                           _vm._v(" "),
-                          _vm.$page.errors.amount
+                          _vm.$page.props.errors.amount
                             ? _c(
                                 "div",
                                 {
@@ -79574,7 +79555,7 @@ var render = function() {
                                 [
                                   _vm._v(
                                     "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
-                                      _vm._s(_vm.$page.errors.amount) +
+                                      _vm._s(_vm.$page.props.errors.amount) +
                                       "\n\t\t\t\t\t\t    \t\t\t\t"
                                   )
                                 ]
@@ -79680,24 +79661,6 @@ var render = function() {
                   "div",
                   { staticClass: "flex items-center" },
                   [
-                    _c("transition", { attrs: { name: "fade" } }, [
-                      _vm.$page.flash.success
-                        ? _c(
-                            "div",
-                            {
-                              staticClass:
-                                " mr-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center",
-                              attrs: { id: "Message" }
-                            },
-                            [
-                              _c("span", { staticClass: "mr-3" }, [
-                                _vm._v(_vm._s(_vm.$page.flash.success))
-                              ])
-                            ]
-                          )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
                     _c(
                       "inertia-link",
                       {
@@ -79844,19 +79807,6 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "\n\t\t\t\t\t\t                            Email\n\t\t\t\t\t\t                        "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "th",
-                                  {
-                                    staticClass:
-                                      "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider"
-                                  },
-                                  [
-                                    _vm._v(
                                       "\n\t\t\t\t\t\t                            Created at\n\t\t\t\t\t\t                        "
                                     )
                                   ]
@@ -79944,24 +79894,6 @@ var render = function() {
                                               "text-gray-900 whitespace-no-wrap"
                                           },
                                           [_vm._v(" " + _vm._s(client.name))]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      {
-                                        staticClass:
-                                          "px-5 whitespace-no-wrap py-3 border-b border-gray-200 bg-white text-sm"
-                                      },
-                                      [
-                                        _c(
-                                          "p",
-                                          {
-                                            staticClass:
-                                              "text-gray-900 whitespace-no-wrap"
-                                          },
-                                          [_vm._v(_vm._s(client.email))]
                                         )
                                       ]
                                     ),
@@ -83048,7 +82980,7 @@ var render = function() {
                           { staticClass: "flex items-center" },
                           [
                             _c("transition", { attrs: { name: "fade" } }, [
-                              _vm.$page.flash.success
+                              _vm.$page.props.flash.success
                                 ? _c(
                                     "div",
                                     {
@@ -83058,7 +82990,9 @@ var render = function() {
                                     },
                                     [
                                       _c("span", { staticClass: "mr-3" }, [
-                                        _vm._v(_vm._s(_vm.$page.flash.success))
+                                        _vm._v(
+                                          _vm._s(_vm.$page.props.flash.success)
+                                        )
                                       ])
                                     ]
                                   )
@@ -83117,7 +83051,7 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _vm.$page.errors.client
+                              _vm.$page.props.errors.client
                                 ? _c(
                                     "div",
                                     {
@@ -83127,7 +83061,9 @@ var render = function() {
                                     [
                                       _vm._v(
                                         "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
-                                          _vm._s(_vm.$page.errors.client) +
+                                          _vm._s(
+                                            _vm.$page.props.errors.client
+                                          ) +
                                           "\n\t\t\t\t\t\t    \t\t\t\t"
                                       )
                                     ]
@@ -83169,7 +83105,7 @@ var render = function() {
                                   )
                                 : _vm._e(),
                               _vm._v(" "),
-                              _vm.$page.errors.project
+                              _vm.$page.props.errors.project
                                 ? _c(
                                     "div",
                                     {
@@ -83179,7 +83115,9 @@ var render = function() {
                                     [
                                       _vm._v(
                                         "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
-                                          _vm._s(_vm.$page.errors.project) +
+                                          _vm._s(
+                                            _vm.$page.props.errors.project
+                                          ) +
                                           "\n\t\t\t\t\t\t    \t\t\t\t"
                                       )
                                     ]
@@ -83223,7 +83161,7 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _vm.$page.errors.discount
+                              _vm.$page.props.errors.discount
                                 ? _c(
                                     "div",
                                     {
@@ -83233,7 +83171,9 @@ var render = function() {
                                     [
                                       _vm._v(
                                         "\n\t\t\t\t\t\t    \t\t\t\t\t\t" +
-                                          _vm._s(_vm.$page.errors.discount) +
+                                          _vm._s(
+                                            _vm.$page.props.errors.discount
+                                          ) +
                                           "\n\t\t\t\t\t\t    \t\t\t\t"
                                       )
                                     ]
@@ -83408,24 +83348,6 @@ var render = function() {
                   "div",
                   { staticClass: "flex items-center" },
                   [
-                    _c("transition", { attrs: { name: "fade" } }, [
-                      _vm.$page.flash.success
-                        ? _c(
-                            "div",
-                            {
-                              staticClass:
-                                " mr-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center",
-                              attrs: { id: "Message" }
-                            },
-                            [
-                              _c("span", { staticClass: "mr-3" }, [
-                                _vm._v(_vm._s(_vm.$page.flash.success))
-                              ])
-                            ]
-                          )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
                     _c(
                       "inertia-link",
                       {
@@ -84143,7 +84065,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("transition", { attrs: { name: "fade" } }, [
-                    _vm.$page.flash.success
+                    _vm.$page.props.flash.success
                       ? _c(
                           "div",
                           {
@@ -84153,7 +84075,7 @@ var render = function() {
                           },
                           [
                             _c("span", { staticClass: "mr-3" }, [
-                              _vm._v(_vm._s(_vm.$page.flash.success))
+                              _vm._v(_vm._s(_vm.$page.props.flash.success))
                             ])
                           ]
                         )
@@ -86500,7 +86422,7 @@ var render = function() {
                   { staticClass: "flex items-center" },
                   [
                     _c("transition", { attrs: { name: "fade" } }, [
-                      _vm.$page.flash.success
+                      _vm.$page.props.flash.success
                         ? _c(
                             "div",
                             {
@@ -86510,7 +86432,7 @@ var render = function() {
                             },
                             [
                               _c("span", { staticClass: "mr-3" }, [
-                                _vm._v(_vm._s(_vm.$page.flash.success))
+                                _vm._v(_vm._s(_vm.$page.props.flash.success))
                               ])
                             ]
                           )

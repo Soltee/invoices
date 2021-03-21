@@ -33,9 +33,9 @@
 							    <div class="mb-6 flex justify-between items-center">
 							    	<div class="flex items-center">
 								        <transition name="fade">
-											<div v-if="$page.flash.success" id="Message" class=" ml-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
+											<div v-if="$page.props.flash.success" id="Message" class=" ml-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
 
-									        	<!-- <span class="mr-3">{{ $page.flash.success }}</span> -->
+									        	<span class="mr-3">{{ $page.props.flash.success }}</span>
 
 									        </div>
 
@@ -59,9 +59,9 @@
 						    				<input id="first_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="form.first_name" />
 
 						    				<div 
-						    					v-if="$page.errors.first_name" 
+						    					v-if="$page.props.errors.first_name" 
 						    					class="text-red-500 text-md font-semibold mt-2">
-						    						{{ $page.errors.first_name }}
+						    						{{ $page.props.errors.first_name }}
 						    				</div>
 
 								    	</div>
@@ -70,9 +70,9 @@
 								    		<label for="last_name">Last name:</label>
 						    				<input id="last_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="form.last_name" />
 						    				<div 
-						    					v-if="$page.errors.last_name" 
+						    					v-if="$page.props.errors.last_name" 
 						    					class="text-red-500 text-md font-semibold mt-2">
-						    						{{ $page.errors.last_name }}
+						    						{{ $page.props.errors.last_name }}
 						    				</div>
 								    	</div>
 
@@ -80,9 +80,9 @@
 								    		<label for="email">Email:</label>
 						    				<input id="email" type="email" class="px-3 py-3 rounded border border-indigo-500" v-model="form.email" />
 						    				<div 
-						    					v-if="$page.errors.email" 
+						    					v-if="$page.props.errors.email" 
 						    					class="text-red-500 text-md font-semibold mt-2">
-						    						{{ $page.errors.email }}
+						    						{{ $page.props.errors.email }}
 						    				</div>
 
 								    	</div>
@@ -95,9 +95,9 @@
 													placeholder="Select Gender" 
 													label="name" track-by="name"></multiselect>
 								    		<div 
-						    					v-if="$page.errors.gender" 
+						    					v-if="$page.props.errors.gender" 
 						    					class="text-red-500 text-md font-semibold mt-2">
-						    						{{ $page.errors.gender }}
+						    						{{ $page.props.errors.gender }}
 						    				</div>
 								    	</div>
 
@@ -110,9 +110,9 @@
 								    		<label for="project_name">Project name:</label>
 						    				<input id="project_name" type="text" class="px-3 py-3 rounded border border-indigo-500" v-model="form.project_name" />
 						    				<div 
-						    					v-if="$page.errors.project_name" 
+						    					v-if="$page.props.errors.project_name" 
 						    					class="text-red-500 text-md font-semibold mt-2">
-						    						{{ $page.errors.project_name }}
+						    						{{ $page.props.errors.project_name }}
 						    				</div>
 								    	</div>
 
@@ -122,9 +122,9 @@
 								    	</div>
 
 								    	<div 
-						    					v-if="$page.errors.amount" 
+						    					v-if="$page.props.errors.amount" 
 						    					class="text-red-500 text-md font-semibold mt-2">
-						    						{{ $page.errors.amount }}
+						    						{{ $page.props.errors.amount }}
 						    				</div>
 
 								    </div>
@@ -173,7 +173,8 @@
 					gender        : '',
 					project_name  : '',
 					amount        : ''
- 				}
+ 				},
+ 				success : false,
 			}
 		},
 		metaInfo() {
@@ -197,21 +198,9 @@
 					amount        : amount 
 				}
 
-     		    this.$inertia.post('/clients', newForm);
-     		    setTimeout(() => {
 
-	     		   	this.processing = false;	
-	     		    this.$swal(`Client created.`);
-					this.$inertia.reload({preserveScroll: true, preserveState: false});
-	     		    this.form = {
-				        			first_name    : '',
-									last_name     : '',
-									email         : '',
-									gender        : '',
-									project_name  : '',
-									amount        : ''
-				        		}
-     		    }, 2000);
+     		    this.$inertia.post('/clients', newForm);
+
 			},
 		}
 	};

@@ -15,14 +15,6 @@
 	    		</div>
 
  				<div class="flex items-center">
-		      		<transition name="fade">
-						<div v-if="$page.flash.success" id="Message" class=" mr-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
-
-				        	<span class="mr-3">{{ $page.flash.success }}</span>
-
-				        </div>
-
-				    </transition>
 			        <inertia-link class="btn-indigo" href="/invoices/create" preserve-scroll>
 			            <span class="px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded">New Invoice</span>
 			        </inertia-link>
@@ -287,6 +279,7 @@
 		    		this.$inertia.reload({preserveScroll: true, preserveState: false})
 		    	}).catch(e => {
 		    		this.processing   = false;
+		    		this.deleteModal = false;
 		    		console.log(e);
 		    	});
 

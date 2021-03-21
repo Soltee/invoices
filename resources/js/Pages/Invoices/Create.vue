@@ -34,9 +34,9 @@
 							    	<div class="flex items-center">
 
 								        <transition name="fade">
-											<div v-if="$page.flash.success" id="Message" class=" ml-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
+											<div v-if="$page.props.flash.success" id="Message" class=" ml-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
 
-									        	<span class="mr-3">{{ $page.flash.success }}</span>
+									        	<span class="mr-3">{{ $page.props.flash.success }}</span>
 
 									        </div>
 
@@ -68,9 +68,9 @@
 
 
 						    				<div 
-						    					v-if="$page.errors.client" 
+						    					v-if="$page.props.errors.client" 
 						    					class="text-red-500 text-md font-semibold mt-2">
-						    						{{ $page.errors.client }}
+						    						{{ $page.props.errors.client }}
 						    				</div>
 
 								    	</div>
@@ -85,9 +85,9 @@
 													label="name" track-by="name"></multiselect>
 								    		</div>
 						    				<div 
-						    					v-if="$page.errors.project" 
+						    					v-if="$page.props.errors.project" 
 						    					class="text-red-500 text-md font-semibold mt-2">
-						    						{{ $page.errors.project }}
+						    						{{ $page.props.errors.project }}
 						    				</div>
 
 								    	</div>
@@ -96,9 +96,9 @@
 								    		<label for="discount">Discount:</label>
 						    				<input id="due" type="number" min="0" class="px-3 py-3 rounded border border-indigo-500 w-full" v-model="form.discount" />
 						    				<div 
-						    					v-if="$page.errors.discount" 
+						    					v-if="$page.props.errors.discount" 
 						    					class="text-red-500 text-md font-semibold mt-2">
-						    						{{ $page.errors.discount }}
+						    						{{ $page.props.errors.discount }}
 						    				</div>
 
 								    	</div>
@@ -107,9 +107,9 @@
 						    				<input id="due" type="date" class="px-3 py-3 rounded border border-indigo-500 w-full" v-model="form.due" />
 
 						    				<div 
-						    					v-if="$page.errors.due" 
+						    					v-if="$page.props.errors.due" 
 						    					class="text-red-500 text-md font-semibold mt-2">
-						    						{{ $page.errors.due }}
+						    						{{ $page.props.errors.due }}
 						    				</div>
 
 								    	</div> -->

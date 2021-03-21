@@ -15,14 +15,6 @@
 	    		</div>
 
  				<div class="flex items-center">
-		      		<transition name="fade">
-						<div v-if="$page.flash.success" id="Message" class=" mr-4 px-10 py-3 rounded text-green-600 bg-green-300 flex items-center">
-
-				        	<span class="mr-3">{{ $page.flash.success }}</span>
-
-				        </div>
-
-				    </transition>
 			        <inertia-link class="btn-indigo" href="/clients/create" preserve-scroll>
 			            <span class="px-3 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded">New</span>
 			        </inertia-link>
@@ -64,10 +56,6 @@
 						                        </th>
 						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Email
-						                        </th>
-						                        <th
-						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
 						                            Created at
 						                        </th>
 						                        <th
@@ -91,9 +79,6 @@
 						                        </td>
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 						                            <p class="text-gray-900 whitespace-no-wrap"> {{ client.name }}</p>
-						                        </td>
-						                         <td class="px-5 whitespace-no-wrap py-3 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 whitespace-no-wrap">{{ client.email }}</p>
 						                        </td>
 						                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 						                            <p class="text-gray-900 whitespace-no-wrap">{{ format(client.created) }}</p>
@@ -231,9 +216,16 @@
 			        onStart: () => this.processing = true,
 			        onFinish: () => {
 			        		this.processing = false;
+			        		this.deleteModal = false;
+
 			        	},
 			    });
 		    }
+		},
+		computed: {
+			// flash(){
+			// 	return this.$page.props.success
+			// }
 		}
 	};
 </script>

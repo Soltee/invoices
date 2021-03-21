@@ -197,6 +197,6 @@ class InvoiceController extends Controller
 
         $invoice->delete();
 
-        return redirect()->route('invoices')->with('success', 'Invoice deleted.');
+        return redirect('invoices')->with('success', 'Invoice deleted.');
     }
 }

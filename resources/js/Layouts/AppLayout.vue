@@ -227,7 +227,7 @@
             },
             user() {
                 return this.$page.props.user
-            }
+            },
         }
     };
 </script>
