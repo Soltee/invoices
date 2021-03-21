@@ -104,6 +104,8 @@ class DashboardController extends Controller
         //     $invoices_not_send_data
         // ]);
 
+        // dd($current_mth_invoice_sent);
+
         return Inertia::render('Dashboard/Index', [
                 'current_mth_invoice_sent'            => $current_mth_invoice_sent,
                 'current_mth_invoice_sent_tot'        => $current_mth_invoice_sent_tot,
