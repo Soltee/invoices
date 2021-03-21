@@ -8035,7 +8035,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_5__.default.use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__.InertiaApp);
+vue__WEBPACK_IMPORTED_MODULE_5__.default.use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__.plugin);
 vue__WEBPACK_IMPORTED_MODULE_5__.default.use(laravel_jetstream__WEBPACK_IMPORTED_MODULE_2__.InertiaForm);
 vue__WEBPACK_IMPORTED_MODULE_5__.default.use(portal_vue__WEBPACK_IMPORTED_MODULE_3__.default);
 vue__WEBPACK_IMPORTED_MODULE_5__.default.use(vue_sweetalert2__WEBPACK_IMPORTED_MODULE_4__.default);
@@ -8043,7 +8043,7 @@ vue__WEBPACK_IMPORTED_MODULE_5__.default.use(vue_meta__WEBPACK_IMPORTED_MODULE_0
 var app = document.getElementById('app');
 new vue__WEBPACK_IMPORTED_MODULE_5__.default({
   render: function render(h) {
-    return h(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__.InertiaApp, {
+    return h(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__.App, {
       props: {
         initialPage: JSON.parse(app.dataset.page),
         resolveComponent: function resolveComponent(name) {
