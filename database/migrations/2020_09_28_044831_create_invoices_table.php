@@ -24,8 +24,12 @@ class CreateInvoicesTable extends Migration
             $table->boolean('is_sent')->default(false);
             $table->text('feedback')->nullable();
             $table->datetime('due')->nullable();
+            $table->datetime('delivery');
+            $table->text('link')->nullable();
+            $table->text('file_name')->nullable();
             $table->integer('sub_total');
             $table->integer('discount')->nullable();
+            $table->integer('sales_tax');
             $table->integer('grand_total');
             $table->timestamps();
         });

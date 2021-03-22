@@ -62,8 +62,13 @@
 						                        </th>
 						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
+						                            Filename
+						                        </th>
+						                        <th
+						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
 						                            Created
 						                        </th>
+
 						                        <th
 						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-right text-xs font-semibold text-custom-light-black uppercase tracking-wider">
 						                            Action
@@ -88,6 +93,9 @@
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 						                            <p class="text-gray-900 whitespace-no-wrap font-black">$ {{ invoice.grand_total }}</p>
 						                        </td>
+						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
+						                            <p class="text-gray-900 whitespace-no-wrap font-black">{{ invoice.file_name }}</p>
+						                        </td>
 
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 						                            <p class="text-gray-900 whitespace-no-wrap">{{ format(invoice.created_at) }}</p>
@@ -96,7 +104,7 @@
 						                        
 						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
 						                            <div class="flex justify-end items-center">
-						                            	<span 
+						                            	<!-- <span 
 						                            		@click="
 						                            			selected = invoice.id;
 						                            			sendInvoice();
@@ -105,8 +113,8 @@
 						                        			:class="(Number(invoice.is_sent)) ? 'bg-green-600 cursor-auto' : 'bg-yellow-300 hover:opacity-50 cursor-pointer'"
 						                        			class="mr-3 px-2 py-2 rounded text-white " 
 						                        			>
-						                        		</span>
-						                                <a 	:href="`/invoices/${invoice.id}`"
+						                        		</span> -->
+						                                <a 	:href="`${invoice.link}`"
 						                                    class="hover:font-semibold" 
 						                                     >
 						                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-900 hover:opacity-75"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -139,8 +147,9 @@
 																            </button>
 
 																        </div>
-																        <div class="">
-																            <p class="mt-4 text-lg font-semibold text-green-800 text-center">Are you sure?</p>
+																        <div class="flex flex-col items-center">
+																        	<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-yellow-600 h-10 w-10 "><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+																            <p class="mt-4 text-lg font-semibold text-green-800 text-center">Invoice will be deleted?</p>
 																            <div class="mt-6 mb-3 flex justify-end">
 																                <button @click="toggleDeleteModal();" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
 																                <button @click="deleteInvoice();" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Delete</button>
@@ -154,7 +163,7 @@
 
 						                                </transition>
 
-						                            </div>
+						                            </div> 
 						                        </td>
 						                    </tr>
 						                            
@@ -264,10 +273,23 @@
 		    	this.deleteModal = !this.deleteModal;
 		    },
 		    deleteInvoice(){
-		    	this.processing   = true;
-		    	this.$inertia.delete(`/invoices/${this.selected}`);
-
 		    	this.processing   = false;
+		    	axios.delete(`/invoices/${this.selected}`)
+				.then(res => {
+					this.processing = false;
+					if(res.status === 204){
+
+						this.$swal(`Invoice deleted.`);
+						this.deleteModal = false;
+						this.$inertia.reload({preserveScroll: true, preserveState: false})
+
+					}
+				}).catch(err => {
+
+					this.processing = false;
+					this.$swal(`Our server may have been a problem. Please try again.`);
+
+				});
 		    },
 		    sendInvoice(){
 		    	this.processing   = true;
