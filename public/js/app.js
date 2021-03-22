@@ -4463,6 +4463,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -81196,53 +81198,105 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _c("div", {}, [
-                                    _c(
-                                      "p",
-                                      {
-                                        staticClass:
-                                          "mt-4 text-lg font-semibold text-green-800 text-center"
-                                      },
-                                      [_vm._v("Are you sure?")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "mt-6 mb-3 flex justify-end"
-                                      },
-                                      [
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4",
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.toggleDeleteClientModal()
-                                              }
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "flex flex-col items-center"
+                                    },
+                                    [
+                                      _c(
+                                        "svg",
+                                        {
+                                          staticClass:
+                                            "feather feather-alert-circle text-yellow-600 h-10 w-10 ",
+                                          attrs: {
+                                            xmlns: "http://www.w3.org/2000/svg",
+                                            viewBox: "0 0 24 24",
+                                            fill: "none",
+                                            stroke: "currentColor",
+                                            "stroke-width": "2",
+                                            "stroke-linecap": "round",
+                                            "stroke-linejoin": "round"
+                                          }
+                                        },
+                                        [
+                                          _c("circle", {
+                                            attrs: {
+                                              cx: "12",
+                                              cy: "12",
+                                              r: "10"
                                             }
-                                          },
-                                          [_vm._v("Cancel")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg",
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.deleteClient()
-                                              }
+                                          }),
+                                          _c("line", {
+                                            attrs: {
+                                              x1: "12",
+                                              y1: "8",
+                                              x2: "12",
+                                              y2: "12"
                                             }
-                                          },
-                                          [_vm._v("Delete")]
-                                        )
-                                      ]
-                                    )
-                                  ])
+                                          }),
+                                          _c("line", {
+                                            attrs: {
+                                              x1: "12",
+                                              y1: "16",
+                                              x2: "12.01",
+                                              y2: "16"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass:
+                                            "mt-2 text-lg font-semibold text-yellow-600 text-center"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n\t\t\t\t\t\t\t             Are you sure? Projects and Invoices related to clients will also be deleted."
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "mt-6 mb-3 flex justify-end"
+                                        },
+                                        [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4",
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.toggleDeleteClientModal()
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Cancel")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg",
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.deleteClient()
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Delete")]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
                                 ]
                               )
                             ]
