@@ -111,12 +111,12 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $project->invoices()->each(function($invoice){
-            $invoice->delete();
-        });
+        // $project->invoices()->each(function($invoice){
+        //     $invoice->delete();
+        // });
 
         $project->delete();
 
-        return response()->json(['status' => 'Ok'], 204);
+        return response()->json([], 204);
     }
 }
