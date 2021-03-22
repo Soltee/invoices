@@ -47,18 +47,18 @@
 
                     <!-- Large Screen -->
                     <div class="flex-1 space-x-10 ">
-                        <ul class="hidden md:flex md:flex-row justify-center md:items-center md:m-0">
-                            <li class="list-none mb-3 md:mb-0">
+                        <ul class="hidden lg:flex lg:flex-row justify-center lg:items-center lg:m-0">
+                            <li class="list-none mb-3 lg:mb-0">
                                 <a href="/#features" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                     Features
                                 </a>
                             </li>
-                            <li class="list-none mb-3 md:mb-0">
+                            <li class="list-none mb-3 lg:mb-0">
                                 <a href="/#faqs" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                     FAQs
                                 </a>
                             </li>
-                            <li class="list-none mb-3 md:mb-0">
+                            <li class="list-none mb-3 lg:mb-0">
 
                                 <a href="{{ route('contact') }}" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                     Contact Us
@@ -72,7 +72,7 @@
                             </li>
 
                             <!--- Auth button links only on small screen -->
-                            <div class="flex flex-col mt-5 md:hidden">
+                            <div class="flex flex-col mt-5 lg:hidden">
                                 
                                 <a href="/login" class="px-3 py-3 ml-3 rounded-lg text-blue-600 border border-blue-600 hover:border-none hover:border-transparent w-40  hover:text-white hover:bg-blue-600 text-center mb-4">
                                     Login
@@ -122,7 +122,7 @@
                         </div>
 
                     @else
-                        <div class="hidden md:block ml-4 flex items-center justify-end">
+                        <div class="hidden lg:block ml-4 flex items-center justify-end">
                             <a href="/login" class="px-6 py-2 rounded-lg text-blue-600 border border-blue-600 hover:border-none hover:border-transparent  hover:text-white hover:bg-blue-600">
                                 Login
                             </a>
@@ -140,20 +140,20 @@
                             <svg 
                                 x-on:click="menu = !menu;" 
                                 xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" 
-                                class="md:hidden h-10 w-10 border rounded border-blue-600 p-1 text-blue-600 cursor-pointer hover:opacity-75">
+                                class="lg:hidden h-10 w-10 border rounded border-blue-600 p-1 text-blue-600 cursor-pointer hover:opacity-75">
                                 <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
                             </svg>
                             <div x-show.transition.60ms="menu"
-                                class="bg-white shadow rounded-lg md:rounded-none md:bg-transparent absolute left-0 right-0 top-0 h-auto mx-6 mt-65 md:mt-0 md:mx-0 md:static py-3 md:py-0 z-10 md:z-0"
+                                class="bg-white shadow rounded-lg lg:hidden lg:rounded-none lg:bg-transparent absolute left-0 right-0 top-0 h-auto mx-6 mt-65 lg:mt-0 lg:mx-0 lg:static py-3 lg:py-0 z-10 lg:z-0"
                                 >
                                 
-                                <ul class=" flex flex-col md:flex-row md:static md:items-center md:m-0">
-                                    <li class="list-none mb-3 md:mb-0">
+                                <ul class=" flex flex-col lg:flex-row lg:static lg:items-center lg:m-0">
+                                    <li class="list-none mb-3 lg:mb-0">
                                         <a href="#" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                             Features
                                         </a>
                                     </li>
-                                    <li class="list-none mb-3 md:mb-0">
+                                    <li class="list-none mb-3 lg:mb-0">
 
                                         <a href="{{ route('contact') }}" class="px-3 py-3 ml-3 text-blue-600 hover:opacity-50">
                                             Contact Us
@@ -168,7 +168,7 @@
 
                                     <!--- Auth button links only on small screen -->
                                     @guest
-                                    <div class="flex flex-col mt-5 md:hidden">
+                                    <div class="flex flex-col mt-5 lg:hidden">
                                         
                                         <a href="/login" class="px-3 py-3 ml-3 rounded-lg text-blue-600 border border-blue-600 hover:border-none hover:border-transparent w-40  hover:text-white hover:bg-blue-600 text-center mb-4">
                                             Login
