@@ -201,6 +201,15 @@
 
      		    this.$inertia.post('/clients', newForm);
 
+     		    this.form = {
+     		    	first_name    : first_name,
+					last_name     : last_name,
+					email         : email,
+					gender        : gender.name,
+					project_name  : project_name,
+					amount        : amount 
+     		    }
+
 			},
 		}
 	};

@@ -129,7 +129,7 @@ class ClientController extends Controller
         $data = $request->validate([
     			'first_name'       => 'required|string|min:3',
     			'last_name'        => 'required|string|min:3',
-    			'email'            => 'required|string|email|unique:clients',
+    			'email'            => 'required|string|email',
     			'gender'           => 'nullable|string'
     		]);
 
@@ -174,7 +174,6 @@ class ClientController extends Controller
 
         $client->delete();
 
-
-        return redirect('/clients')->with('success', 'Client with projects deleted.');
+        return response()->json([], 204);
     }
 }

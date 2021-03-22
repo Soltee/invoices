@@ -3550,6 +3550,14 @@ __webpack_require__.r(__webpack_exports__);
         amount: amount
       };
       this.$inertia.post('/clients', newForm);
+      this.form = {
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        gender: gender.name,
+        project_name: project_name,
+        amount: amount
+      };
     }
   }
 });
@@ -3571,6 +3579,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Shared_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../Shared/Pagination */ "./resources/js/Shared/Pagination.vue");
 /* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/throttle */ "./node_modules/lodash/throttle.js");
 /* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_throttle__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_sweetalert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-sweetalert2 */ "./node_modules/vue-sweetalert2/dist/index.js");
+/* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2/dist/sweetalert2.min.css */ "./node_modules/sweetalert2/dist/sweetalert2.min.css");
+//
+//
 //
 //
 //
@@ -3743,6 +3757,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
 
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -3789,14 +3806,27 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
     deleteClient: function deleteClient() {
       var _this = this;
 
-      this.$inertia["delete"]("/clients/".concat(this.selected), {
-        onStart: function onStart() {
-          return _this.processing = true;
-        },
-        onFinish: function onFinish() {
-          _this.processing = false;
+      // this.$inertia.delete(`/clients/${this.selected}`, {
+      //     onStart: () => this.processing = true,
+      //     onFinish: () => {
+      //     		this.processing = false;
+      //     		this.deleteModal = false;
+      //     	},
+      // });
+      axios__WEBPACK_IMPORTED_MODULE_3___default().delete("/clients/".concat(this.selected)).then(function (res) {
+        _this.processing = false;
+
+        if (res.status === 204) {
+          _this.$swal("Client deleted.");
+
           _this.deleteModal = false;
+
+          _this.$inertia.replace('/clients');
         }
+      })["catch"](function (err) {
+        _this.processing = false;
+
+        _this.$swal("Our server may have been a problem. Please try again.");
       });
     }
   },
@@ -4549,12 +4579,6 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
         if (res.status === 200) {
           _this2.$swal("".concat(_this2.clientForm.first_name, " is updated."));
 
-          _this2.clientForm = {
-            first_name: '',
-            last_name: '',
-            email: '',
-            gender: ''
-          };
           _this2.editClientModal = false;
 
           _this2.$inertia.reload({
@@ -4591,13 +4615,20 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
       var _this3 = this;
 
       this.processing = true;
-      this.$inertia["delete"]("/clients/".concat(this.selected), {
-        onStart: function onStart() {
-          return _this3.processing = true;
-        },
-        onFinish: function onFinish() {
-          _this3.processing = false;
+      axios__WEBPACK_IMPORTED_MODULE_3___default().delete("/clients/".concat(this.selected)).then(function (res) {
+        _this3.processing = false;
+
+        if (res.status === 204) {
+          _this3.$swal("Client deleted.");
+
+          _this3.deleteModal = false;
+
+          _this3.$inertia.replace('/clients');
         }
+      })["catch"](function (err) {
+        _this3.processing = false;
+
+        _this3.$swal("Our server may have been a problem. Please try again.");
       });
     },
     createProject: function createProject() {
@@ -7658,95 +7689,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -7765,8 +7707,7 @@ var dayjs = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js"
   },
   props: {
     client: Object,
-    project: Object,
-    invoices: Object
+    project: Object
   },
   data: function data() {
     return {
@@ -80280,69 +80221,136 @@ var render = function() {
                                                               ]
                                                             ),
                                                             _vm._v(" "),
-                                                            _c("div", {}, [
-                                                              _c(
-                                                                "p",
-                                                                {
-                                                                  staticClass:
-                                                                    "mt-4 text-lg font-semibold text-green-800 text-center"
-                                                                },
-                                                                [
-                                                                  _vm._v(
-                                                                    "Are you sure?"
-                                                                  )
-                                                                ]
-                                                              ),
-                                                              _vm._v(" "),
-                                                              _c(
-                                                                "div",
-                                                                {
-                                                                  staticClass:
-                                                                    "mt-6 mb-3 flex justify-end"
-                                                                },
-                                                                [
-                                                                  _c(
-                                                                    "button",
-                                                                    {
-                                                                      staticClass:
-                                                                        "cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4",
-                                                                      on: {
-                                                                        click: function(
-                                                                          $event
-                                                                        ) {
-                                                                          return _vm.toggleDeleteModal()
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "flex flex-col items-center"
+                                                              },
+                                                              [
+                                                                _c(
+                                                                  "svg",
+                                                                  {
+                                                                    staticClass:
+                                                                      "feather feather-alert-circle text-yellow-600 h-10 w-10 ",
+                                                                    attrs: {
+                                                                      xmlns:
+                                                                        "http://www.w3.org/2000/svg",
+                                                                      viewBox:
+                                                                        "0 0 24 24",
+                                                                      fill:
+                                                                        "none",
+                                                                      stroke:
+                                                                        "currentColor",
+                                                                      "stroke-width":
+                                                                        "2",
+                                                                      "stroke-linecap":
+                                                                        "round",
+                                                                      "stroke-linejoin":
+                                                                        "round"
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _c(
+                                                                      "circle",
+                                                                      {
+                                                                        attrs: {
+                                                                          cx:
+                                                                            "12",
+                                                                          cy:
+                                                                            "12",
+                                                                          r:
+                                                                            "10"
                                                                         }
                                                                       }
-                                                                    },
-                                                                    [
-                                                                      _vm._v(
-                                                                        "Cancel"
-                                                                      )
-                                                                    ]
-                                                                  ),
-                                                                  _vm._v(" "),
-                                                                  _c(
-                                                                    "button",
-                                                                    {
-                                                                      staticClass:
-                                                                        "cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg",
-                                                                      on: {
-                                                                        click: function(
-                                                                          $event
-                                                                        ) {
-                                                                          return _vm.deleteClient()
-                                                                        }
+                                                                    ),
+                                                                    _c("line", {
+                                                                      attrs: {
+                                                                        x1:
+                                                                          "12",
+                                                                        y1: "8",
+                                                                        x2:
+                                                                          "12",
+                                                                        y2: "12"
                                                                       }
-                                                                    },
-                                                                    [
-                                                                      _vm._v(
-                                                                        "Delete"
-                                                                      )
-                                                                    ]
-                                                                  )
-                                                                ]
-                                                              )
-                                                            ])
+                                                                    }),
+                                                                    _c("line", {
+                                                                      attrs: {
+                                                                        x1:
+                                                                          "12",
+                                                                        y1:
+                                                                          "16",
+                                                                        x2:
+                                                                          "12.01",
+                                                                        y2: "16"
+                                                                      }
+                                                                    })
+                                                                  ]
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "p",
+                                                                  {
+                                                                    staticClass:
+                                                                      "mt-2 text-lg font-semibold text-yellow-600 text-center"
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t             Are you sure? Projects and Invoices related to clients will also be deleted."
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "div",
+                                                                  {
+                                                                    staticClass:
+                                                                      "mt-6 mb-3 flex justify-end"
+                                                                  },
+                                                                  [
+                                                                    _c(
+                                                                      "button",
+                                                                      {
+                                                                        staticClass:
+                                                                          "cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4",
+                                                                        on: {
+                                                                          click: function(
+                                                                            $event
+                                                                          ) {
+                                                                            return _vm.toggleDeleteModal()
+                                                                          }
+                                                                        }
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          "Cancel"
+                                                                        )
+                                                                      ]
+                                                                    ),
+                                                                    _vm._v(" "),
+                                                                    _c(
+                                                                      "button",
+                                                                      {
+                                                                        staticClass:
+                                                                          "cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg",
+                                                                        on: {
+                                                                          click: function(
+                                                                            $event
+                                                                          ) {
+                                                                            return _vm.deleteClient()
+                                                                          }
+                                                                        }
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          "Delete"
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]
+                                                            )
                                                           ]
                                                         )
                                                       ]
@@ -88753,314 +88761,6 @@ var render = function() {
                         )
                       ])
                     ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: " overflow-x-auto" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "inline-block min-w-full  rounded-lg overflow-hidden"
-                    },
-                    [
-                      _c(
-                        "table",
-                        { staticClass: "min-w-full leading-normal" },
-                        [
-                          _c("thead", [
-                            _c("tr", [
-                              _c(
-                                "th",
-                                {
-                                  staticClass:
-                                    "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t                            Status\n\t\t\t\t\t\t                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "th",
-                                {
-                                  staticClass:
-                                    "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t                            Discount\n\t\t\t\t\t\t                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "th",
-                                {
-                                  staticClass:
-                                    "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t                            Amount\n\t\t\t\t\t\t                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "th",
-                                {
-                                  staticClass:
-                                    "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t                            Created\n\t\t\t\t\t\t                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "th",
-                                {
-                                  staticClass:
-                                    "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t                            Action\n\t\t\t\t\t\t                        "
-                                  )
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "tbody",
-                            [
-                              _vm.processing
-                                ? _c("div", {
-                                    staticClass: "spinner text-center py-3"
-                                  })
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm._l(_vm.invoices.data, function(invoice) {
-                                return _c("tr", [
-                                  _c(
-                                    "td",
-                                    {
-                                      staticClass:
-                                        "px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm"
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        { staticClass: "flex items-center" },
-                                        [
-                                          _c("span", {
-                                            staticClass:
-                                              "mr-3 px-2 py-2 rounded text-white ",
-                                            class: Number(invoice.is_paid)
-                                              ? "bg-green-600 hover:bg-green-500"
-                                              : "bg-red-600",
-                                            domProps: {
-                                              textContent: _vm._s(
-                                                Number(invoice.is_paid)
-                                                  ? "Paid"
-                                                  : "Unpaid"
-                                              )
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    {
-                                      staticClass:
-                                        "px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm"
-                                    },
-                                    [
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass:
-                                            "text-gray-900 font-bold whitespace-no-wrap"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n\t\t\t\t\t\t                                $ " +
-                                              _vm._s(invoice.discount) +
-                                              "\n\t\t\t\t\t\t                            "
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    {
-                                      staticClass:
-                                        "px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm"
-                                    },
-                                    [
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass:
-                                            "text-gray-900 font-bold whitespace-no-wrap"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n\t\t\t\t\t\t                                $ " +
-                                              _vm._s(invoice.grand_total) +
-                                              "\n\t\t\t\t\t\t                            "
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    {
-                                      staticClass:
-                                        "px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm"
-                                    },
-                                    [
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass:
-                                            "text-gray-900 whitespace-no-wrap"
-                                        },
-                                        [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.format(invoice.updated_at)
-                                            )
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    {
-                                      staticClass:
-                                        "px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm"
-                                    },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass: "hover:font-semibold",
-                                          attrs: {
-                                            href: "/invoices/" + invoice.id
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "svg",
-                                            {
-                                              staticClass:
-                                                "feather feather-eye text-gray-900 hover:opacity-75",
-                                              attrs: {
-                                                xmlns:
-                                                  "http://www.w3.org/2000/svg",
-                                                width: "24",
-                                                height: "24",
-                                                viewBox: "0 0 24 24",
-                                                fill: "none",
-                                                stroke: "currentColor",
-                                                "stroke-width": "2",
-                                                "stroke-linecap": "round",
-                                                "stroke-linejoin": "round"
-                                              }
-                                            },
-                                            [
-                                              _c("path", {
-                                                attrs: {
-                                                  d:
-                                                    "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
-                                                }
-                                              }),
-                                              _c("circle", {
-                                                attrs: {
-                                                  cx: "12",
-                                                  cy: "12",
-                                                  r: "3"
-                                                }
-                                              })
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              }),
-                              _vm._v(" "),
-                              _c("tr", [
-                                _vm.invoices.data.length < 1
-                                  ? _c("td", {}, [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            " flex flex-col justify-center w-full items-center"
-                                        },
-                                        [
-                                          _c(
-                                            "svg",
-                                            {
-                                              staticClass:
-                                                "h-10 w-10 text-red-600",
-                                              attrs: {
-                                                fill: "currentColor",
-                                                viewBox: "0 0 20 20"
-                                              }
-                                            },
-                                            [
-                                              _c("path", {
-                                                attrs: {
-                                                  d:
-                                                    "M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"
-                                                }
-                                              })
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("p", { staticClass: "mt-3" }, [
-                                            _vm._v("Oops! No Invoices .")
-                                          ])
-                                        ]
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ])
-                            ],
-                            2
-                          )
-                        ]
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "my-6" }, [
-                  _c(
-                    "div",
-                    [
-                      _c("pagination", { attrs: { links: _vm.invoices.links } })
-                    ],
-                    1
                   )
                 ])
               ])

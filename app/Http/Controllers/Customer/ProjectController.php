@@ -99,10 +99,7 @@ class ProjectController extends Controller
     {
         return Inertia::render('Projects/Show', [ 
             'project' => $project,
-            'client'  => $project->client,
-            'invoices'  => $project->invoices()
-                                ->latest()
-                                ->paginate(1)
+            'client'  => $project->client
         ]);
     }
     

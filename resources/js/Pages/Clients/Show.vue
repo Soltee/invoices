@@ -715,12 +715,6 @@
 						this.processing = false;
 						if(res.status === 200){
 							this.$swal(`${this.clientForm.first_name} is updated.`);
-							this.clientForm = {
-			        			first_name      : '',
-								last_name       : '',
-								email           : '',
-								gender          : ''			        		
-							}
 							this.editClientModal = false;
 							this.$inertia.reload({preserveScroll: true, preserveState: false})
 						}
@@ -750,12 +744,22 @@
 			},
 			deleteClient(){
 				this.processing = true;
-				this.$inertia.delete(`/clients/${this.selected}`, {
-			        onStart: () => this.processing = true,
-			        onFinish: () => {
-			        		this.processing = false;
-			        	},
-			    });
+				axios.delete(`/clients/${this.selected}`)
+				.then(res => {
+						this.processing = false;
+						if(res.status === 204){
+
+							this.$swal(`Client deleted.`);
+							this.deleteModal = false;
+							this.$inertia.replace('/clients');
+
+						}
+					}).catch(err => {
+
+						this.processing = false;
+						this.$swal(`Our server may have been a problem. Please try again.`);
+
+					});
 			},
 			createProject(){
 				this.processing = true;

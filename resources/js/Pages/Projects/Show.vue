@@ -253,96 +253,7 @@
 						    </div>
 
 						  
-						    <!--- ProjectsInvoices -->
-					        <!-- Projects -->
-							<div  class=" overflow-x-auto">
-						        <div  class="inline-block min-w-full  rounded-lg overflow-hidden">
-						            <table class="min-w-full leading-normal">
-						                <thead>
-						                    <tr>
-						                        <th
-						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Status
-						                        </th>
-						                        <th
-						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Discount
-						                        </th>
-						                        <th
-						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Amount
-						                        </th>
-						                        <th
-						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Created
-						                        </th>
-						                        <th
-						                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-						                            Action
-						                        </th>
-						                      
-						                    </tr>
-						                </thead>
-						                <tbody>
-
-						                	<!-- Loading-->
-						             		<div v-if="processing" class="spinner text-center py-3"></div>
-
-						                    <tr   v-for="invoice in invoices.data" >
-						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                           <div class="flex items-center">
-						                        		<span 
-						                        			v-text="(Number(invoice.is_paid)) ? 'Paid' : 'Unpaid' "
-						                        			:class="(Number(invoice.is_paid)) ? 'bg-green-600 hover:bg-green-500' : 'bg-red-600'"
-						                        			class="mr-3 px-2 py-2 rounded text-white " 
-						                        			>
-						                        		</span>
-						                        	</div>
-						                        </td>
-						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 font-bold whitespace-no-wrap">
-						                                $ {{ 	invoice.discount }}
-						                            </p>
-						                        </td>
-						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 font-bold whitespace-no-wrap">
-						                                $ {{ 	invoice.grand_total }}
-						                            </p>
-						                        </td>
-						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                            <p class="text-gray-900 whitespace-no-wrap">{{ format(invoice.updated_at) }}</p>
-						                        </td>
-
-						                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-						                            <a 	:href="`/invoices/${invoice.id}`"
-						                                    class="hover:font-semibold" 
-						                                     >
-						                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-900 hover:opacity-75"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-						                                </a>
-						                        </td>
-						                        
-						                    </tr>
-						                    <tr >
-						                        	<td v-if="invoices.data.length < 1 " class="">
-						                            <div class=" flex flex-col justify-center w-full items-center">
-											      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
-											      		<p class="mt-3">Oops! No Invoices .</p>
-										     		</div>
-						                            </td>
-						                        </tr>
-						                     
-						                </tbody>
-						            </table>
-
-						        </div>
-						    </div>
-
-						    <!-- Pagination -->
-						    <div class="my-6">
-						    	<div>
-						    		<pagination :links="invoices.links" />
-						    	</div>
-						    </div>
+						    
 							
 						</div>
 					</div>
@@ -370,7 +281,6 @@
 		props :  {
 			client   : Object,
 			project  : Object,
-			invoices : Object,
 
 		},
 		data (){
