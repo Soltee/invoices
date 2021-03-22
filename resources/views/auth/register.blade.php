@@ -1,52 +1,61 @@
-@section('title', 'Signup')
+@extends('layouts.guest')
+@section('title', 'Register')
 
 @section('head')
 
 @endsection
-<x-guest-layout>
+@section('content')
+<div class="w-full max-w-md  flex flex-col items-center">
+    <a href="/" class="italic font-black text-blue-600 text-2xl">
+        <img src="/img/invoice.svg" class="">
+    </a>
 
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <a href="/" class="italic font-black text-blue-600 text-2xl">
-                <img src="{{ asset('/img/invoice.svg') }}" class="">
-                {{-- <x-jet-authentication-card-logo /> --}}
-            </a>
-        </x-slot>
+    <div class="bg-white w-full px-6 py-3 mt-4 shadow rounded-lg">    
 
-        <x-jet-validation-errors class="mb-4" />
-
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <div>
-                <x-jet-label value="{{ __('Name') }}" class="text-blue-600"/>
-                <x-jet-input class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+        @if (session('status'))
+            <div class="mb-4 font-medium text-sm text-green-600">
+                {{ session('status') }}
             </div>
+        @endif
 
-            <div class="mt-4">
-                <x-jet-label value="{{ __('Email') }}" class="text-blue-600" />
-                <x-jet-input class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
 
-            <div class="mt-4">
-                <x-jet-label value="{{ __('Password') }}" class="text-blue-600" />
-                <x-jet-input class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
 
-            <div class="mt-4">
-                <x-jet-label value="{{ __('Confirm Password') }}" class="text-blue-600" />
-                <x-jet-input class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
+                <div>
+                    <label for="name"  class="text-blue-600">Name</label>
+                    <input class="block mt-1 w-full px-3 py-2 border border-gray-200 " type="name" name="name" value="" required autofocus  />
+                </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-blue-600 hover:text-blue-500 text-white" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
+                <div class="mt-4">
+                    <label for="email"  class="text-blue-600">Email</label>
+                    <input class="block mt-1 w-full px-3 py-2 border border-gray-200 " type="email" name="email" value="" required autofocus  />
+                </div>
 
-                <x-jet-button class="ml-4 bg-blue-600 hover:bg-blue-500 text-white">
-                    {{ __('Register') }}
-                </x-jet-button>
-            </div>
-        </form>
-    </x-jet-authentication-card>
-</x-guest-layout>
+                <div class="mt-4">
+                    <label for="password"  class="text-blue-600">Password</label>
+                    <input class="block mt-1 w-full px-3 py-2 border border-gray-200" type="password" name="password" required autocomplete="current-password" value="" />
+                </div>
+
+                <div class="mt-4">
+                    <label for="password"  class="text-blue-600">Confirm Password</label>
+                    <input class="block mt-1 w-full px-3 py-2 border border-gray-200" type="password" name="password_confirmation" required autocomplete="new-password" />
+                </div>
+
+                <div class="flex items-center justify-between mt-4">
+                    <a class="underline text-sm text-blue-600 hover:text-blue-500 text-white" href="{{ route('login') }}">
+                        {{ __('Already registered?') }}
+                    </a>
+                    <button type="submit" class=" ml-3 inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
+                        Register
+                    </button>
+                </div>
+
+                
+
+            </form>
+    </div>
+</div>
+@endsection
+
+

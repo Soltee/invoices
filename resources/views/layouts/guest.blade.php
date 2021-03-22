@@ -6,13 +6,13 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         
         <title>@yield('title')</title>
-        <link rel="icon" href="{{ asset('/img/invoice.svg') }}">
+        <link rel="icon" href="/img/invoice.svg">
         @yield('head')
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.2.1/dist/alpine.js" defer></script>
@@ -20,8 +20,8 @@
     <body>
         @include('sweetalert::alert')
 
-        <div class="font-sans text-gray-900 antialiased">
-            {{ $slot }}
+        <div class="font-sans text-gray-900 antialiased p-6 min-h-screen flex justify-center items-center bg-gray-100">
+            @yield('content')
         </div>
     </body>
 </html>

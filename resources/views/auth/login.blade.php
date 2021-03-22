@@ -1,18 +1,16 @@
+@extends('layouts.guest')
 @section('title', 'Login')
 
 @section('head')
 
 @endsection
-<x-guest-layout>
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <a href="/" class="italic font-black text-blue-600 text-2xl">
-                <img src="{{ asset('/img/invoice.svg') }}" class="">
-                {{-- <x-jet-authentication-card-logo /> --}}
-            </a>
-        </x-slot>
+@section('content')
+<div class="w-full max-w-md  flex flex-col items-center">
+    <a href="/" class="italic font-black text-blue-600 text-2xl">
+        <img src="/img/invoice.svg" class="">
+    </a>
 
-        <x-jet-validation-errors class="mb-4" />
+    <div class="bg-white w-full px-6 py-3 mt-4 shadow rounded-lg">    
 
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
@@ -27,43 +25,36 @@
             </a>
         </div>
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
 
-            <div>
-                <x-jet-label value="{{ __('Email') }}" class="text-blue-600" />
-                <x-jet-input class="block mt-1 w-full " type="email" name="email" value="{{ old('email') ?? 'example@gmail.com' }}" required autofocus  />
-            </div>
+                <div>
+                    <label for="email"  class="text-blue-600">Email</label>
+                    <input class="block mt-1 w-full px-3 py-2 border border-gray-200 " type="email" name="email" value="{{ old('email') ?? 'example@gmail.com' }}" required autofocus  />
+                </div>
 
-            <div class="mt-4">
-                <x-jet-label value="{{ __('Password') }}" class="text-blue-600" />
-                <x-jet-input class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" value="11111111" />
-            </div>
+                <div class="mt-4">
+                    <label for="password"  class="text-blue-600">Password</label>
+                    <input class="block mt-1 w-full px-3 py-2 border border-gray-200" type="password" name="password" required autocomplete="current-password" value="11111111" />
+                </div>
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox" name="remember">
-                    <span class="ml-2 text-sm text-gray-600 text-blue-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
+                <div class="block mt-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="form-checkbox" name="remember">
+                        <span class="ml-2 text-sm text-gray-600 text-blue-600">{{ __('Remember me') }}</span>
+                    </label>
+                </div>
 
-            <div class="flex items-center justify-end mt-4">
-                {{-- @if (Route::has('password.request'))
-                    <a class="underline text-sm text-blue-500 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif --}}
+                <div class="flex items-center justify-end mt-4">
+                    <button type="submit" class=" ml-3 inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
+                        Login
+                    </button>
+                </div>
 
-                {{-- <x-jet-button class="ml-4">
-                    {{ __('Login') }}
-                </x-jet-button> --}}
-                <button type="submit" class=" ml-3 inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
-                    Login
-                </button>
-            </div>
+                
 
-            
+            </form>
+    </div>
+</div>
+@endsection
 
-        </form>
-    </x-jet-authentication-card>
-</x-guest-layout>

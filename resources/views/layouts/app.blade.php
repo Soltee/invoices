@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <link rel="icon" href="{{ asset('/img/invoice.svg') }}">
+        <link rel="icon" href="/img/invoice.svg">
         <meta name="theme-color" content="#ffffff" />
         <title>@yield('title')</title>
         @yield('head')
@@ -22,7 +22,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.2.1/dist/alpine.js" defer></script>
@@ -41,7 +41,7 @@
                     <div class="flex items-center">
 
                         <a href="/" class="ml-3 md:ml-0 italic font-black text-blue-600">
-                            <img src="{{ asset('/img/invoice.svg') }}" class="">
+                            <img src="/img/invoice.svg" class="">
                         </a>
                     </div>
 

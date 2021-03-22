@@ -9,12 +9,15 @@ use App\Http\Controllers\Customer\InvoiceController;
 
 use App\Http\Controllers\WelcomeController;
 
+// Auth::routes();
+
 Route::get('/', [WelcomeController::class, 'index'])
 									->name('welcome');
 Route::get('/contact-us', [WelcomeController::class, 'contact'])
 									->name('contact');
 Route::post('/new_contact', [WelcomeController::class, 'contact'])
 									->name('contact.save');
+
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 

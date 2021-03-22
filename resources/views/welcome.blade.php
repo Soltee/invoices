@@ -21,7 +21,7 @@
             </p>
 
             <div class="mt-4">
-                <img src="{{ asset('/img/dashboard.png') }}" class="object-contain w-full rounded-lg shadow-lg">
+                <img src="/img/dashboard.png" class="object-contain w-full rounded-lg shadow-lg">
             </div>
         </div>
 
@@ -30,7 +30,7 @@
         <div class="mt-16">
             <div class="flex flex-col md:flex-row justify-center items-center px-6 py-6">
                 <div class="md:w-1/3 flex justify-center mb-3 md:mb-0">
-                    <img src="{{ asset('/img/marc.jpg') }}" class="w-40 h-40 rounded-full object-cover object-center">
+                    <img src="/img/marc.jpg" class="w-40 h-40 rounded-full object-cover object-center">
                 </div>
                 <div class="flex flex-col md:w-2/3 flex justify-center items-center md:items-start">
                     <p class="text-blue-600 text-lg font-bold text-center md:text-left italic">Invoices is such an awesome tool for a freelancer like me. So I definitely recommend it. </p>
@@ -43,7 +43,7 @@
         <!-- Benefits -->
         <div id="features" class="mt-24  px-6 py-6">
             <div class="flex  flex-col md:flex-row ">
-                <img src="{{ asset('/img/features.svg') }}" class="w-full md:w-1/2">
+                <img src="/img/features.svg" class="w-full md:w-1/2">
 
                 <div class="w-full md:w-1/2 md:ml-3 flex flex-col items-start my-6 md:my-8">
                     <h3 class="text-xl text-blue-600 font-bold text-center">Features</h3>
