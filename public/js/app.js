@@ -83817,29 +83817,6 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c(
-                    "div",
-                    { staticClass: "py-3 px-3" },
-                    [
-                      _c("multiselect", {
-                        attrs: {
-                          options: _vm.options,
-                          placeholder: "Filters",
-                          label: "name",
-                          "track-by": "name"
-                        },
-                        model: {
-                          value: _vm.selectedFilter,
-                          callback: function($$v) {
-                            _vm.selectedFilter = $$v
-                          },
-                          expression: "selectedFilter"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
                     "button",
                     {
                       staticClass: "px-3 py-3 rounded-r bg-red-600 text-white",

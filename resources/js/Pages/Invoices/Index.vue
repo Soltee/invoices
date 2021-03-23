@@ -29,7 +29,7 @@
 
 						    <div class="mb-6 flex items-center">
 						        <input class="flex-1 px-3 py-3 rounded border border-indigo-500 focus:border-indigo-600" v-model="keyword"  />
-						        <div class="py-3 px-3">
+						        <!-- <div class="py-3 px-3">
 						        <multiselect 
 									v-model="selectedFilter" 
 									:options="options"  
@@ -37,7 +37,7 @@
 									label="name" track-by="name">
 									
 								</multiselect>
-						    	</div>
+						    	</div> -->
 
 						    	<button
 						    		@click="
