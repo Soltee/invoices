@@ -14,7 +14,16 @@ use Inertia\Inertia;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SendInvoice;
+// use App\Mail\SendInvoice;
+use App\Mail\InvoiceSent;
+
+use Illuminate\Support\Facades\Storage;
+
+// use LaravelDaily\Invoices\Invoice as PDF;
+// use LaravelDaily\Invoices\Classes\Party;
+// use LaravelDaily\Invoices\Classes\InvoiceItem;
+use PDF;
+// use Michelf\MarkdownExtra;
 
 class InvoiceController extends Controller
 {
@@ -45,7 +54,9 @@ class InvoiceController extends Controller
                                     'is_sent'       => $invoice->is_sent,
                                     'due'           => $invoice->due,
                                     'grand_total'   => $invoice->grand_total,
-                                    'created'       => $invoice->created_at
+                                    'created'       => $invoice->created_at,
+                                    'link'          => $invoice->link,
+                                    'file_name'          => $invoice->file_name
                                 ];
                             }),
             ]);
@@ -65,7 +76,9 @@ class InvoiceController extends Controller
                             ->transform(function ($client) {
                                 return [
                                     'name'    => $client->first_name . ' ' . $client->last_name,
-                                    'id' => $client->id
+                                    'id' => $client->id,
+                                    'email'   => $client->email,
+                                    'gender'  => $client->gender
                                 ];
                             }),
             ]);
@@ -81,32 +94,69 @@ class InvoiceController extends Controller
     {
         // dd($request->all());
         $data = $request->validate([
+                'num'       => 'required|string|unique:invoices',
                 'client'    => 'bail|numeric|required',
                 'project'   => 'bail|numeric|required',
                 'amount'    => 'required|numeric|min:0',
                 'discount'  => 'nullable|numeric',
                 'grand'     => 'required|numeric|min:0',
-                'due'       => 'nullable|date'
+                'due'       => 'nullable|date',
+                'from_name' => 'string',
+                'from_about' => 'required',
+                'client_name' => 'string',
+                'client_email' => 'required|string',
+                'project_name'  => 'required|string',
+                'tax'       => 'numeric|min:0',
+                'created'   => 'date',
+                'delivery'  => 'date'
             ]);
 
-        if($data['discount']){
-            $discountArr =  ['discount'     => $data['discount']];
-        }
+
+        $file_name = $data['client_name'] . Str::random(10) . '.pdf';
+
+        $details = [
+            'title'   => 'Payment Invoice',
+            'num'   => $data['num'],
+            'from_name'   => $data['from_name'],
+            'from_about'   => $data['from_about'],
+            'client_name'   => $data['client_name'],
+            'client_email'   => $data['client_email'],
+            'project_name'   => $data['project_name'],  
+            'created'   => $data['created'],
+            'delivery'   => $data['delivery'],
+            'amount'   => $data['amount'],
+            'tax'   => $data['tax'],
+            'grand'   => $data['grand']
+        ];
+
+        $pdf =  PDF::loadView('pdf/template', $details);
+        Storage::put('public/' . $file_name, $pdf->output());
+
+        $link      = env('APP_URL') . '/storage/' . $file_name;
 
         Auth::user()->invoices()->create(
             array_merge(
                 [
-                    'generatedId'     => Str::random(20),
+                    'generatedId'     => $data['num'],
                     'client_id'       => $data['client'],
                     'project_id'      => $data['project'],
                     'sub_total'       => $data['amount'],
-                    'grand_total'     => $data['grand']
+                    'sales_tax'       => $data['tax'],
+                    'grand_total'     => $data['grand'],
+                    'created_at'      => $data['created'],
+                    'delivery'        => $data['delivery'],
+                    'link'            => $link,
+                    'file_name'       => $file_name
                 ],
 
                 $discountArr ?? []
             ));
 
-        return redirect()->route('invoice.create')->with('success', 'Client added to the list.');
+        Mail::to($data['client_email'])
+                ->send( new InvoiceSent($link, $data['client_name']) );
+
+
+        return response()->json([], 201);
 
     }
 
@@ -116,21 +166,21 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Invoice $invoice)
-    {
-         return Inertia::render('Invoices/Show', [
-                'invoice'   => $invoice,
-                'project'   => $invoice->project,
-                'client'    => $invoice->client,
-                'clients'   => Auth::user()->clients()->get()
-                            ->transform(function ($client) {
-                                return [
-                                    'name'    => $client->first_name . ' ' . $client->last_name,
-                                    'id' => $client->id
-                                ];
-                            }),
-            ]);
-    }
+    // public function show(Invoice $invoice)
+    // {
+    //      return Inertia::render('Invoices/Show', [
+    //             'invoice'   => $invoice,
+    //             'project'   => $invoice->project,
+    //             'client'    => $invoice->client,
+    //             'clients'   => Auth::user()->clients()->get()
+    //                         ->transform(function ($client) {
+    //                             return [
+    //                                 'name'    => $client->first_name . ' ' . $client->last_name,
+    //                                 'id' => $client->id
+    //                             ];
+    //                         }),
+    //         ]);
+    // }
 
 
     /**
@@ -140,51 +190,51 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Invoice $invoice)
-    {   
-       $data = $request->validate([
-                'client'    => 'bail|numeric|required',
-                'project'   => 'bail|numeric|required',
-                'amount'    => 'required|numeric|min:0',
-                'discount'  => 'nullable|numeric',
-                'grand'     => 'required|numeric|min:0',
-                'due'       => 'nullable|date'
-            ]);
+    // public function update(Request $request, Invoice $invoice)
+    // {   
+    //    $data = $request->validate([
+    //             'client'    => 'bail|numeric|required',
+    //             'project'   => 'bail|numeric|required',
+    //             'amount'    => 'required|numeric|min:0',
+    //             'discount'  => 'nullable|numeric',
+    //             'grand'     => 'required|numeric|min:0',
+    //             'due'       => 'nullable|date'
+    //         ]);
 
-        if($data['discount']){
-            $discountArr =  ['discount'     => $data['discount']];
-        }
+    //     if($data['discount']){
+    //         $discountArr =  ['discount'     => $data['discount']];
+    //     }
 
-        $invoice->update(
-            array_merge(
-                [
-                    'client_id'       => $data['client'],
-                    'project_id'      => $data['project'],
-                    'sub_total'       => $data['amount'],
-                    'grand_total'     => $data['grand']
-                ],
+    //     $invoice->update(
+    //         array_merge(
+    //             [
+    //                 'client_id'       => $data['client'],
+    //                 'project_id'      => $data['project'],
+    //                 'sub_total'       => $data['amount'],
+    //                 'grand_total'     => $data['grand']
+    //             ],
 
-                $discountArr ?? []
-            ));
+    //             $discountArr ?? []
+    //         ));
 
-        return redirect()->to('invoices/' .$invoice->id)
-                                ->with('success', 'Client updated.');
-    }
+    //     return redirect()->to('invoices/' .$invoice->id)
+    //                             ->with('success', 'Client updated.');
+    // }
 
     /**
      * Send Invoice
      */
-    public function send(Invoice $invoice)
-    {   
-        Mail::to($invoice->client->email)
-                ->send( new SendInvoice($invoice) );
-        // return (new \App\Mail\SendInvoice($invoice))->render();
-        $invoice->update([
-            'is_sent'  => true
-        ]);
+    // public function send(Invoice $invoice)
+    // {   
+    //     Mail::to($invoice->client->email)
+    //             ->send( new SendInvoice($invoice) );
+    //     // return (new \App\Mail\SendInvoice($invoice))->render();
+    //     $invoice->update([
+    //         'is_sent'  => true
+    //     ]);
         
-        return redirect()->back()->with('success', 'Invoice sent.');
-    }
+    //     return redirect()->back()->with('success', 'Invoice sent.');
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -195,8 +245,9 @@ class InvoiceController extends Controller
     public function destroy(Invoice $invoice)
     {
 
-        $invoice->delete();
+        Storage::disk('public')->delete($invoice->file_name);
 
-        return redirect('invoices')->with('success', 'Invoice deleted.');
+        $invoice->delete();
+        return response()->json([], 204);
     }
 }
