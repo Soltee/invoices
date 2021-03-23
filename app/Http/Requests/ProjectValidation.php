@@ -25,7 +25,7 @@ class ProjectValidation extends FormRequest
     {
         return [
             'client'           => 'required|numeric',
-            'project_name'     => 'required|string|min:3|unique:projects',
+            'project_name'             => 'required|string|min:3|unique:projects',
             'is_completed'     => 'nullable|bool',
             'amount'           => 'required|numeric',
             'description'      => 'required',

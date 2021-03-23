@@ -24,12 +24,12 @@
 
                 <div>
                     <label for="name"  class="text-blue-600">Name</label>
-                    <input class="block mt-1 w-full px-3 py-2 border border-gray-200 " type="name" name="name" value="" required autofocus  />
+                    <input class="block mt-1 w-full px-3 py-2 border border-gray-200 " type="name" name="name" value="{{ old('name') }}" required autofocus  />
                 </div>
 
                 <div class="mt-4">
                     <label for="email"  class="text-blue-600">Email</label>
-                    <input class="block mt-1 w-full px-3 py-2 border border-gray-200 " type="email" name="email" value="" required autofocus  />
+                    <input class="block mt-1 w-full px-3 py-2 border border-gray-200 " type="email" name="email" value="{{ old('email') }}" required autofocus  />
                 </div>
 
                 <div class="mt-4">
