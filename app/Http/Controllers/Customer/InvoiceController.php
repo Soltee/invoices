@@ -94,7 +94,7 @@ class InvoiceController extends Controller
     {
         // dd($request->all());
         $data = $request->validate([
-                'num'       => 'required|string|unique:invoices',
+                'num'       => 'required|string',
                 'client'    => 'bail|numeric|required',
                 'project'   => 'bail|numeric|required',
                 'amount'    => 'required|numeric|min:0',

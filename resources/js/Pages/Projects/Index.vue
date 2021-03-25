@@ -442,7 +442,7 @@
 					.then(res => {
 						this.processing = false;
 						if(res.status === 201){
-							this.$swal(`${this.form.project_name} is created.`);
+							this.$swal(`Project created.`);
 							this.form = {
 			        			client          : {},
 			        			project_name    : '',

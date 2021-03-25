@@ -34,6 +34,7 @@ class ClientProjectController extends Controller
 
         return response()->json([
             'projects' => $client->projects
+                                ->where('is_completed', true)
                                 ->map(function($p){
                                     return [
                                         'id'          => $p->id, 
